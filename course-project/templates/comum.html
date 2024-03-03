@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --primary-color: #2e3b50;
+        --dark-bg-color: #0a0f18;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        color: white;
+        user-select: none;
+        text-decoration: none;
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+      }
+
+      body {
+        position: relative;
+
+        width: 100%;
+        min-height: 100vh;
+        background-color: var(--dark-bg-color);
+      }
+
+      .header,
+      .main {
+        width: 100%;
+        padding: 15px 20px;
+        background-color: var(--primary-color);
+      }
+      .header__container,
+      .main__container {
+        display: flex;
+        align-items: center;
+
+        gap: 15px;
+        margin: auto;
+        width: 100%;
+        max-width: 1115px;
+        min-width: max-content;
+      }
+      .header__container__logo-text {
+        color: white;
+        font-size: 1.25em;
+        min-width: fit-content;
+      }
+      .header__container__container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+        min-width: max-content;
+      }
+      .header__container__container__nav-links {
+        display: flex;
+        align-items: center;
+
+        gap: 5px;
+      }
+      .header__container__container__nav-links__link {
+        color: white;
+        padding: 5px 10px;
+      }
+      .header__container__container__nav-links__link.active {
+        background-color: red;
+      }
+
+      table {
+        width: 100%;
+        text-align: left;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 5px;
+      }
+      td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      }
+    </style>
+    <title>
+      My Market |
+      {% block title %}
+      {% endblock %}
+    </title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__container">
+        <h1 class="header__container__logo-text">My Market</h1>
+        <div class="header__container__container">
+          <nav class="header__container__container__nav-links">
+            <a class="header__container__container__nav-links__link" href="/"
+              >Home</a
+            >
+            <a
+              class="header__container__container__nav-links__link"
+              href="/market"
+              >Market</a
+            >
+          </nav>
+          <nav
+            class="header__container__container__nav-links header__container__container__auth-nav-links"
+          >
+            <a
+              class="header__container__container__nav-links__link"
+              href="/login"
+              >Login</a
+            >
+            <a
+              class="header__container__container__nav-links__link"
+              href="/register"
+              >Register</a
+            >
+          </nav>
+        </div>
+      </div>
+    </header>
+    {% block page_content %}
+    {% endblock %}
+  </body>
+</html>

@@ -18,6 +18,7 @@ def getNavigationBar() :
 def sayHelloWorld() :
   return "<h1><strong>Home Page</strong></h1>" + getNavigationBar();
 
+@app.route("/")
 @app.route("/about")
 def getAboutPage() :
   return "<h1><strong>About Page</strong></h1>" + getNavigationBar();
@@ -28,7 +29,7 @@ def getContactPage() :
 
 @app.route("/products")
 def getProductsPage() :
-  return "<h1>Products Page</h1>";
+  return "<h1>Products Page</h1>" + getNavigationBar();
 
 @app.route("/products/<product_name>")
 def getProductInspectionPage(product_name) :
