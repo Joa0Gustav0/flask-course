@@ -5,27 +5,31 @@
 {% endblock %}
 
 {% block page_content %}
-  <h1>Market</h1>
-    <main class="main">
-      <div class="main__container">
-        <table>
-          <thead>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Barcode</th>
-            <th>Price</th>
-          </thead>
-          <tbody>
-            {% for item in market_items %}
-            <tr>
-              <td>{{ item["id"] }}</td>
-              <td>{{ item["name"] }}</td>
-              <td>{{ item["barcode"] }}</td>
-              <td>${{ item["price"] }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </main>
+  <main class="main">
+    <div class="main__container">
+      <table>
+        <thead>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Barcode</th>
+          <th>Price</th>
+          <th>Options</th>
+        </thead>
+        <tbody>
+          {% for item in market_items %}
+          <tr>
+            <td>{{ item["id"] }}</td>
+            <td>{{ item["name"] }}</td>
+            <td>{{ item["barcode"] }}</td>
+            <td>${{ item["price"] }}</td>
+            <td>
+              <button class="item-action-button more-info">More Info</button>
+              <button class="item-action-button purchase">Purchase Item</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
 {% endblock %}

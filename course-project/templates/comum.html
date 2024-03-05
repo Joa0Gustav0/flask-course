@@ -85,12 +85,33 @@
       td {
         border-bottom: 1px solid rgba(255, 255, 255, 0.5);
       }
+      td .item-action-button {
+        transition: all 0.125s;
+
+        border: 0;
+        outline: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      td .item-action-button.more-info {
+        background-color: #1877f2;
+      }
+      td .item-action-button.purchase {
+        background-color: green;
+      }
+      td .item-action-button:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+      td .item-action-button:active {
+        opacity: 0.75;
+      }
+      tr > td:last-of-type,
+      th:last-of-type {
+        text-align: right;
+      }
     </style>
-    <title>
-      My Market |
-      {% block title %}
-      {% endblock %}
-    </title>
+    <title>My Market | {% block title %} {% endblock %}</title>
   </head>
   <body>
     <header class="header">
@@ -124,7 +145,6 @@
         </div>
       </div>
     </header>
-    {% block page_content %}
-    {% endblock %}
+    {% block page_content %} {% endblock %}
   </body>
 </html>

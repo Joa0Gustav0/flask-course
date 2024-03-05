@@ -3,5 +3,3 @@ market_items = [
   {'id': 2, 'name': 'Laptop', 'barcode': '123985473165', 'price': 900},
   {'id': 3, 'name': 'Keyboard', 'barcode': '231985128446', 'price': 150}
 ]
-
-print(market_items[0]["id"])

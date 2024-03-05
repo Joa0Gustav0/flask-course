@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Madimi+One&display=swap");
+
+:root {
+  --primary-bg-color: #7189ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: "Madimi One", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--secondary-bg-color);
+}
+
+.header {
+  width: 100%;
+  padding: 15px 20px;
+  background-color: var(--primary-bg-color);
+}
+.header__container {
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+  width: 100%;
+  margin: auto;
+  color: white;
+  max-width: 1115px;
+}
+.header__container__logo-text {
+  min-width: fit-content;
+  font-size: 1.75em;
+}
+.header__container__navbar {
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+  border-left: 2px solid white;
+  padding-left: 15px;
+}
+.header__container__navbar__nav-links {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+.header__container__navbar__nav-links__link {
+  position: relative;
+
+  color: white;
+  text-align: center;
+  padding: 5px 7.5px;
+}
+.header__container__navbar__nav-links__link::after {
+  transition: all 0.25s;
+
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  transform: translate(-50%, 50%);
+
+  display: flex;
+
+  content: " ";
+  min-width: 0px;
+  border-bottom: 2px solid white;
+}
+.header__container__navbar__nav-links__link:hover::after {
+  min-width: 100%;
+}
+.header__container__navbar__nav-links__link:hover {
+  cursor: pointer;
+}
+.header__container__navbar__nav-links__link:active::after {
+  min-width: 50%;
+}
