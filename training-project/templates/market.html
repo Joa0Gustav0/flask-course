@@ -1,4 +1,34 @@
-{% extends "comum.html" %} {% block title %} Market {% endblock %} {% block
-page_content %}
-<h1>Market</h1>
+{% extends "comum.html" %} {% block title %} Mercado {% endblock %} 
+
+{% block page_content %}
+<div class="container">
+  <h1 class="content-headline">
+    Bem vinde ao
+    <span class="highlighted-text">mercado</span>, UniCliente!
+  </h1>
+  {% if items == False %}
+  <p class="content-sub-headline">
+    🦄🔎 Ops! Os <span class="highlighted-text">unicórnios</span> não trouxeram os produtos.
+  </p>
+  {% else %}
+  <p class="content-sub-headline">
+    🦄 Os <span class="highlighted-text">unicórnios</span> deixaram alguns produtos!!!
+  </p>
+  <ul class="products-list">
+    {% for item_ID, item_name, item_price, item_description in items %}
+    <li class="products-list__product-container">
+      <h1 class="products-list__product-container__product-name">
+        {{ item_name }}
+      </h1>
+      <p class="products-list__product-container__product-description">
+        {{ item_description}}
+      </p>
+      <p class="products-list__product-container__product-price">
+        R$ {{ item_price }}
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
 {% endblock %}

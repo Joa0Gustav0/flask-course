@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/comum.css" />
+    {% if styles %}
+      {% for style_name in styles %}
+        <link rel="stylesheet" href="../static{{ style_name }}.css">
+      {% endfor %}
+    {% endif %}
     <title>🦄 UniMarket | {% block title %}{% endblock %}</title>
   </head>
   <body>
@@ -13,10 +18,10 @@
         <nav class="header__container__navbar">
           <div class="header__container__navbar__nav-links">
             <a class="header__container__navbar__nav-links__link" href="/"
-              >Home</a
+              >Início</a
             >
             <a class="header__container__navbar__nav-links__link" href="/market"
-              >Market</a
+              >Mercado</a
             >
           </div>
           <div class="header__container__navbar__nav-links">
@@ -26,12 +31,14 @@
             <a
               class="header__container__navbar__nav-links__link"
               href="/register"
-              >Register</a
+              >Registro</a
             >
           </div>
         </nav>
       </div>
     </header>
-    {% block page_content %} {% endblock %}
+    <main>
+      {% block page_content %} {% endblock %}
+    </main>
   </body>
 </html>
