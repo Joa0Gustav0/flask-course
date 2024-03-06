@@ -1,17 +1,19 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 app = Flask(__name__);
 
 from data import Crud;
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index() :
-  return render_template("index.html");
+  test_request = request.form["username"] if request.method == "POST" else "Ploft!";
+
+  return render_template("index.html", test=test_request);
 
 @app.route("/market")
 def market() :
   return render_template(
     "market.html", 
     items=Crud().executeCrudAction("read", "SELECT * FROM marketitems;"),
-    styles=[url_for("market")]
+    styles=[url_for("static", filename="market.css")],
   );

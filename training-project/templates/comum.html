@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../static/comum.css" />
     {% if styles %}
       {% for style_name in styles %}
-        <link rel="stylesheet" href="../static{{ style_name }}.css">
+        <link rel="stylesheet" href="{{ style_name }}">
       {% endfor %}
     {% endif %}
     <title>🦄 UniMarket | {% block title %}{% endblock %}</title>
