@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% if styles %}
-      {% for style_name in styles %}
-        <link rel="stylesheet" href="{{ style_name }}">
-      {% endfor %}
-    {% endif %}
+    {% if styles %} {% for style_name in styles %}
+    <link rel="stylesheet" href="{{ style_name }}" />
+    {% endfor %} {% endif %}
     <title>🦄 UniMarket | {% block title %}{% endblock %}</title>
   </head>
   <body>
     <header class="header">
       <div class="header__container">
-        <h1 class="header__container__logo-text">🦄 UniMarket</h1>
+        <a class="header__container__logo" href="/">
+          <h1 class="header__container__logo__text">🦄 UniMarket</h1>
+        </a>
         <nav class="header__container__navbar">
           <div class="header__container__navbar__nav-links">
             <a class="header__container__navbar__nav-links__link" href="/"
@@ -36,8 +36,6 @@
         </nav>
       </div>
     </header>
-    <main>
-      {% block page_content %} {% endblock %}
-    </main>
+    <main>{% block page_content %} {% endblock %}</main>
   </body>
 </html>

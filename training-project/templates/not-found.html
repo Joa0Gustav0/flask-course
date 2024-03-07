@@ -1,0 +1,27 @@
+{% extends "comum.html" %} {% block title %} Página Não Encontrada {% endblock
+%} {% block page_content %}
+<main>
+  <div class="not-found container">
+    <img
+      class="not-found container__main-image"
+      src="{{ main_image }}"
+      alt="Imagem de um unicornio."
+    />
+    <div class="not-found container__content-container">
+      <h1 class="not-found container__content-container__headline">
+        404 | Página Não Encontrada!
+      </h1>
+      <p class="not-found container__content-container__paragraph">
+        🦄🔎 Ops... Os <span class="highlighted-text">unicórnios</span> não
+        conseguiram encontrar uma página.
+      </p>
+      <p class="not-found container__content-container__enph-paragraph">
+        Deseja voltar a navegar?
+      </p>
+      <a href="/" class="not-found container__content-container__ca-button">
+        Voltar ao Início!
+      </a>
+    </div>
+  </div>
+</main>
+{% endblock %}

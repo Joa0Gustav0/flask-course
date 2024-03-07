@@ -2,7 +2,7 @@
 
 :root {
   --primary-color: #7189ff;
-  --secondary-color: #624CAB;
+  --secondary-color: #624cab;
 }
 
 * {
@@ -38,8 +38,12 @@ body {
   color: white;
   max-width: 1115px;
 }
-.header__container__logo-text {
+.header__container__logo {
+  color: white;
   min-width: fit-content;
+}
+.header__container__logo__text {
+  transition: all 0.125s;
   font-size: 1.75em;
 }
 .header__container__navbar {

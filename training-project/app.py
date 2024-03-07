@@ -31,6 +31,10 @@ def productPage(product_id) :
     styles=[url_for("static", filename="comum.css")]
   );
 
-@app.route("/cookies")
-def cookies() :
-  return request.cookies;
+@app.errorhandler(404)
+def notFoundPage(error) :
+  return render_template(
+    "not-found.html",
+    styles=[url_for("static", filename="comum.css"), url_for("static", filename="not-found.css")],
+    main_image=url_for("static", filename="not-found-image.gif")
+  ), 404;
