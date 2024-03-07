@@ -50,3 +50,14 @@ class Crud :
         return query;
     except Exception:
       return False;
+
+class MarketItems :
+  def getAllItems(self) :
+    return Crud().executeCrudAction("read", "SELECT * FROM marketitems;");
+
+  def getItemByID(self, entry_item_id) :
+    for item in self.getAllItems() :
+      if item[0] == entry_item_id :
+        return item;
+
+    return None;

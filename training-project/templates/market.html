@@ -16,17 +16,19 @@
   </p>
   <ul class="products-list">
     {% for item_ID, item_name, item_price, item_description in items %}
-    <li class="products-list__product-container">
-      <h1 class="products-list__product-container__product-name">
-        {{ item_name }}
-      </h1>
-      <p class="products-list__product-container__product-description">
-        {{ item_description}}
-      </p>
-      <p class="products-list__product-container__product-price">
-        R$ {{ item_price }}
-      </p>
-    </li>
+    <a href="/market/product/{{item_ID}}">
+      <li class="products-list__product-container">
+        <h1 class="products-list__product-container__product-name">
+          {{ item_name }}
+        </h1>
+        <p class="products-list__product-container__product-description">
+          {{ item_description}}
+        </p>
+        <p class="products-list__product-container__product-price">
+          R$ {{ item_price }}
+        </p>
+      </li>
+    </a>
     {% endfor %}
   </ul>
   {% endif %}

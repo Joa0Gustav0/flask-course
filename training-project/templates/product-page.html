@@ -1,0 +1,8 @@
+{% extends "comum.html" %} {% block title %} {% if item != None %} {{ item[1] }}
+{% else %} Produto {% endif %} {% endblock %} {% block page_content %}
+<div class="container">
+  <h1>{{ item[1] }}</h1>
+  <p>{{ item[3] }}</p>
+  <p>R$ {{ item[2] }}</p>
+</div>
+{% endblock %}

@@ -1,19 +1,36 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request;
 app = Flask(__name__);
 
-from data import Crud;
+from markupsafe import escape;
+from data import MarketItems;
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index() :
-  test_request = request.form["username"] if request.method == "POST" else "Ploft!";
-
-  return render_template("index.html", test=test_request);
+  return render_template(
+    "index.html",
+    styles=[url_for("static", filename="comum.css")]
+  );
 
 @app.route("/market")
 def market() :
   return render_template(
     "market.html", 
-    items=Crud().executeCrudAction("read", "SELECT * FROM marketitems;"),
-    styles=[url_for("static", filename="market.css")],
+    items=MarketItems().getAllItems(),
+    styles=[
+      url_for("static", filename="comum.css"),
+      url_for("static", filename="market.css")
+    ],
   );
+
+@app.route(f"/market/product/<int:product_id>")
+def productPage(product_id) :
+  return render_template(
+    "product-page.html", 
+    item=MarketItems().getItemByID(product_id),
+    styles=[url_for("static", filename="comum.css")]
+  );
+
+@app.route("/cookies")
+def cookies() :
+  return request.cookies;
