@@ -1,8 +1,25 @@
 {% extends "comum.html" %} {% block title %} {% if item != None %} {{ item[1] }}
 {% else %} Produto {% endif %} {% endblock %} {% block page_content %}
 <div class="container">
-  <h1>{{ item[1] }}</h1>
-  <p>{{ item[3] }}</p>
-  <p>R$ {{ item[2] }}</p>
+  <div class="product-container">
+    <div class="product-container__product-image-container">
+      <img
+        class="product-container__product-image-container__image None"
+        src="{{ product_image }}"
+        alt="Imagem de produtos."
+      />
+    </div>
+    <div class="product-container__product-informations">
+      <h1 class="product-container__product-informations__name">
+        {{ item[1] }}
+      </h1>
+      <p class="product-container__product-informations__description">
+        {{ item[3] }}
+      </p>
+      <p class="product-container__product-informations__price">
+        R$ {{ item[2] }}
+      </p>
+    </div>
+  </div>
 </div>
 {% endblock %}
