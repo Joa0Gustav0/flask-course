@@ -1,15 +1,15 @@
-from flask import Flask, render_template, url_for, request, abort;
+from flask import Flask, render_template, url_for, abort, request, make_response;
 app = Flask(__name__);
 
 from markupsafe import escape;
-from data import MarketItems;
-
+from data import MarketItems; 
+from datetime import datetime;
 
 @app.route("/")
 def index() :
+
   return render_template(
-    "index.html",
-    styles=[url_for("static", filename="comum.css")]
+    "index.html"
   );
 
 @app.route("/market")
@@ -18,7 +18,6 @@ def market() :
     "market.html", 
     items=MarketItems().getAllItems(),
     styles=[
-      url_for("static", filename="comum.css"),
       url_for("static", filename="market.css")
     ],
   );
@@ -35,7 +34,6 @@ def productPage(product_id) :
     item=target_item,
     product_image=url_for("static", filename="alt-product-image.png"),
     styles=[
-      url_for("static", filename="comum.css"),
       url_for("static", filename="product-page.css")
     ]
   );
@@ -44,6 +42,6 @@ def productPage(product_id) :
 def notFoundPage(error) :
   return render_template(
     "not-found.html",
-    styles=[url_for("static", filename="comum.css"), url_for("static", filename="not-found.css")],
+    styles=[url_for("static", filename="not-found.css")],
     main_image=url_for("static", filename="not-found-image.gif")
   ), 404;
