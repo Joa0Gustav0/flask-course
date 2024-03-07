@@ -2,8 +2,7 @@ from flask import Flask, render_template, url_for, abort, request, make_response
 app = Flask(__name__);
 
 from markupsafe import escape;
-from data import MarketItems; 
-from datetime import datetime;
+from data import MarketItems, listStylesURL; 
 
 @app.route("/")
 def index() :
@@ -17,9 +16,7 @@ def market() :
   return render_template(
     "market.html", 
     items=MarketItems().getAllItems(),
-    styles=[
-      url_for("static", filename="market.css")
-    ],
+    styles=listStylesURL("market.css"),
   );
 
 @app.route(f"/market/product/<int:product_id>")
@@ -33,15 +30,13 @@ def productPage(product_id) :
     "product-page.html", 
     item=target_item,
     product_image=url_for("static", filename="alt-product-image.png"),
-    styles=[
-      url_for("static", filename="product-page.css")
-    ]
+    styles=listStylesURL("product-page.css")
   );
 
 @app.errorhandler(404)
 def notFoundPage(error) :
   return render_template(
     "not-found.html",
-    styles=[url_for("static", filename="not-found.css")],
+    styles=listStylesURL("not-found.css"),
     main_image=url_for("static", filename="not-found-image.gif")
   ), 404;

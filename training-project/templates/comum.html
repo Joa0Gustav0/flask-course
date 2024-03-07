@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='comum.css') }}">
-    {% if styles %} {% for style_name in styles %}
-    <link rel="stylesheet" href="{{ style_name }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='cookies-popup.css') }}">
+    {% if styles %} {% for style_path in styles %}
+    <link rel="stylesheet" href="{{ style_path }}" />
     {% endfor %} {% endif %}
     <title>🦄 UniMarket | {% block title %}{% endblock %}</title>
   </head>
@@ -41,18 +42,23 @@
 
     {% if not request.cookies.get("UnIm@RkEt_cookies_usage_permission") != None %}
       <div class="cookies-request-container">
-        <div class="cookies-request-container__headline">
-          <img class="cookies-request-container__headline__cookie-icon" src="{{ url_for('static', filename='cookie-icon.png') }}" alt="Ícone de um cookie.">
-          <h1 class="cookies-request-container__headline__text">
-            Seu conforto e segurança são prioridades.
-          </h1>
+        <div class="cookies-request-container__container">
+          <div>
+            <div class="cookies-request-container__headline">
+              <img class="cookies-request-container__headline__cookie-icon" src="{{ url_for('static', filename='cookie-icon.png') }}" alt="Ícone de um cookie.">
+              <h1 class="cookies-request-container__headline__text">
+                Seu conforto e segurança são prioridades.
+              </h1>
+            </div>
+            <p class="cookies-request-container__paragraph">
+              A Unimarket utiliza cookies para armazenar informações que auxiliam na sua navegação durante a sua sessão no website - Os cookies são expirados automaticamente quando o seu navegador for fechado. A qualquer momento, você pode revogar o uso de cookies nesse website acessando a interface de configurações de cookies do seu navegador. A Unimarket agradece a atenção.
+            </p>
+            <button class="cookies-request-container__submit-button">
+              Aceitar Cookies
+            </button>
+          </div>
+          <img class="cookies-request-container__ilustration" src="{{ url_for('static', filename='cookies-unicorn.png') }}" alt="Imagem de um unicórnio nas nuvens.">
         </div>
-        <p class="cookies-request-container__paragraph">
-          A Unimarket utiliza cookies para armazenar informações que auxiliam na sua navegação em retornos futuros ao website. A qualquer momento, você pode revogar o uso de cookies nesse website acessando a interface de configurações de cookies do seu navegador. A Unimarket agradece a atenção.
-        </p>
-        <button class="cookies-request-container__submit-button">
-          Aceitar Cookies
-        </button>
       </div>
       <script src="{{ url_for('static', filename='cookies-handler.js') }}"></script>
     {% endif %}

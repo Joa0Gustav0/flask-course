@@ -1,4 +1,5 @@
 import mysql.connector;
+from flask import url_for;
 
 class InvalidCrudAction :
   def __init__(self) :
@@ -61,3 +62,6 @@ class MarketItems :
         return item;
 
     return None;
+
+def listStylesURL(*style_files) :
+  return map(lambda style_file : url_for('static', filename=style_file), style_files);
