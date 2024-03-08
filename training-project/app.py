@@ -25,13 +25,18 @@ def productPage(product_id) :
 
   if target_item == None :
     abort(404);
-
-  return render_template(
-    "product-page.html", 
-    item=target_item,
-    product_image=url_for("static", filename="alt-product-image.png"),
-    styles=listStylesURL("product-page.css")
-  );
+  
+  response = make_response(
+    render_template(
+      "product-page.html", 
+      item=target_item,
+      product_image=url_for("static", filename="alt-product-image.png"),
+      styles=listStylesURL("product-page.css")
+    )
+  )
+  response.set_cookie("UnIm@RkEt_last_viewed_item", str(target_item));
+  return response;
+  
 
 @app.errorhandler(404)
 def notFoundPage(error) :
