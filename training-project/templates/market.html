@@ -1,6 +1,5 @@
-{% extends "comum.html" %} {% block title %} Mercado {% endblock %} 
-
-{% block page_content %}
+{% extends "comum.html" %} {% block title %} Mercado {% endblock %} {% block
+page_content %}
 <div class="container">
   <h1 class="content-headline">
     Bem vinde ao
@@ -8,27 +7,34 @@
   </h1>
   {% if items == False %}
   <p class="content-sub-headline">
-    🦄🔎 Ops! Os <span class="highlighted-text">unicórnios</span> não trouxeram os produtos.
+    🦄🔎 Ops! Os <span class="highlighted-text">unicórnios</span> não trouxeram
+    os produtos.
   </p>
   {% else %}
   <p class="content-sub-headline">
-    🦄 Os <span class="highlighted-text">unicórnios</span> deixaram alguns produtos!!!
+    🦄 Os <span class="highlighted-text">unicórnios</span> deixaram alguns
+    produtos!!!
   </p>
-  {% if request.cookies.get("UnIm@RkEt_cookies_usage_permission") != None %}
-  <!-- <div>
-    <p>Ainda interessado em seu último visto?</p>
-    <li class="products-list__product-container">
-      <h1 class="products-list__product-container__product-name">
-        {{ item_name }}
-      </h1>
-      <p class="products-list__product-container__product-description">
-        {{ item_description}}
-      </p>
-      <p class="products-list__product-container__product-price">
-        R$ {{ item_price }}
-      </p>
-    </li>
-  </div> -->
+  {% if last_viewed_item != None %}
+  <div class="last-view-container">
+    <p class="last-view-container__headline">
+      Ei! Ainda interessado em seu
+      <span class="highlighted-text">último visto</span>?
+    </p>
+    <a href="/market/product/{{ last_viewed_item[0] }}">
+      <div class="last-view-container__product-container">
+        <h1 class="last-view-container__product-container__product-name">
+          {{ last_viewed_item[1] }}
+        </h1>
+        <p class="last-view-container__product-container__product-description">
+          {{ last_viewed_item[3] }}
+        </p>
+        <p class="last-view-container__product-container__product-price">
+          R$ {{ last_viewed_item[2] }}
+        </p>
+      </div>
+    </a>
+  </div>
   {% endif %}
   <ul class="products-list">
     {% for item_ID, item_name, item_price, item_description in items %}

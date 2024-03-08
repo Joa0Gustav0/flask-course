@@ -13,9 +13,14 @@ def index() :
 
 @app.route("/market")
 def market() :
+  last_viewed_item_cookie = request.cookies.get("UnIm@RkEt_last_viewed_item");
+
   return render_template(
     "market.html", 
     items=MarketItems().getAllItems(),
+    last_viewed_item=MarketItems().getItemByID(
+      int(last_viewed_item_cookie)
+    ) if last_viewed_item_cookie != None else None,
     styles=listStylesURL("market.css"),
   );
 
@@ -34,7 +39,7 @@ def productPage(product_id) :
       styles=listStylesURL("product-page.css")
     )
   )
-  response.set_cookie("UnIm@RkEt_last_viewed_item", str(target_item));
+  response.set_cookie("UnIm@RkEt_last_viewed_item", str(product_id));
   return response;
   
 
