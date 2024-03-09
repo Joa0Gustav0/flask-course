@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "unimarket-416714",
+  "private_key_id": "a351455fb7b222b04568e401635564402bb42e7d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyyUXqevuqagZg\n4vVFWrPjIH0jGRk688NGD4cNot4XieC9W9AH0QEumJbOYFLGsbPHrfwf5NhVknHJ\nFZ9gX24bg9h2gEZ7LdkSoybN9VXbIxIoO4N3/SyTZkMw/0S9Sq12YuGvfBhgEMcV\nCcYRybFelreXD9qbDTAyP0ZGanfSKCcJTx8tuTmJefYuofyktGTFRsv51r2nCWt3\no5eDBUORrlWInRLRQjVhT5N/IH3YSvwtd1X044nRe8ED20IMtLYKHOgimx7lSYdL\nVp9UnACiT5/ZXKBPFrUBL/6f9FR3vhixyCoBpYexhmJ6iTRKRRqPZs1Jm+Gc+vC8\nnfgCENXRAgMBAAECggEAQ19elfhnSvYuVidgpxSBklcFYQsNu23ticLDMWvNBpDC\nHIlzMObda6o7tiSNPOvtJBOX3Yr2zPRlJZIc34vGqd663RkEtll2IjRSJK3Nf0lN\nh9S5e6dvu1H/gwDG7hAsot6rTl5UryrTYsWumrhnOw5Pu8DRL7m+DklS2ak4Yvx1\nR5XhSQclWbIKKwAbzodV3xnVKGFaelP2c2ObIeS/JtU7GkOa5GuUk77tD3x2WYTo\nU8nRRYQ7NEF1mAtNXuQYREkZexUAwrp/6uLKDJ1tK79DesA9f6LjiJ91kAjrMA90\n1h2G2z5G20ttpAygrOh1PcFmupoO1f5HQzBNvzj1uwKBgQDvj9CrruyVjXNRMnby\nVQkVi3SfZ/BGDnjDULZ6nXKFw1P4q1+8bR8P75jkZJIKpJEkDYgmA4Zzixz2uKb9\nA9iAzQK3a3H57cecVeu/n/GVLw5VoTVviMcFAJXREfl3hy7N5tdM3tIyctACuW7G\nECkTu6rQl4Gis0OQ8H4HyfbUiwKBgQC/Dd0frEJtyyL4dfLGyBEjrKgnSp/nNqUP\nIg8SNvuLd/2+n+B5NF8sxPt9QVxZMcD3l+mJiqykfo5+0JpvsCOpyx7zXQUAFoOj\nE/Kqw2AFaDX+dd/MY1BALO/hfCVMagZxgidCRH9hBmb2RZDHvafi4EqDK/cvFsaC\nyEyQYFWekwKBgCqrSfaaZIdKt4R54ZfOL50HxtDxuWkxAK+BO89hJdnPbbB4DchJ\nA2RaP7hGdYCxySxLwLlMnXENES6cuxmLys8+NMKov5dNk+UzpJbwDR6OUBZObW8d\nRJ2OeiDP+8gfauW/vQ9zDKtxqb0ifCmJDVf3cDhRFAT/uwQg4cHPZkh7AoGAFe8d\nh9la9wfvR98itDeb4CCeXYRvvzfC023xlQHC90wbUZtBRikBFD65MLQkSgkwQjyq\njyPgljIBYgXI9TGfpoqvTvlK7auoCTztCzXK/FPufvxBaVGtkPCXyadbEN7LRpTO\ntQjwJs95WqS57nSTpbRiWZTemAVhXPpp79lfewkCgYEAp24yo73kxCT6VEXYpRTs\nbG3my40tsWnBxBgyh7bXn3iMBqQZNKm5rOOxPalwnGAYcYNPzqGQ+vLNjuVZTMRi\nye5J7scaL6DuvZpxvVsv87RXiFsotQb8YZY6PrFVIfy7QFNRvHn55BrqC3UNYzrs\n9kYH6aPGuMuEanGp7YgWfT8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "unimarketstorage@unimarket-416714.iam.gserviceaccount.com",
+  "client_id": "117575204115287205169",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/unimarketstorage%40unimarket-416714.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -18,6 +18,7 @@ def market() :
   return render_template(
     "market.html", 
     items=MarketItems().getAllItems(),
+    get_item_image=MarketItems().downloadItemsImages,
     last_viewed_item=MarketItems().getItemByID(
       int(last_viewed_item_cookie)
     ) if last_viewed_item_cookie != None else None,
@@ -31,11 +32,13 @@ def productPage(product_id) :
   if target_item == None :
     abort(404);
   
+  target_item_image_filename = MarketItems().downloadItemsImages(product_id);
+  
   response = make_response(
     render_template(
       "product-page.html", 
       item=target_item,
-      product_image=url_for("static", filename="media/alt-product-image.png"),
+      product_image=url_for("static", filename="media/market-items/"+target_item_image_filename),
       styles=listStylesURL("product-page.css")
     )
   )

@@ -23,32 +23,61 @@ page_content %}
     </p>
     <a href="/market/product/{{ last_viewed_item[0] }}">
       <div class="last-view-container__product-container">
-        <h1 class="last-view-container__product-container__product-name">
-          {{ last_viewed_item[1] }}
-        </h1>
-        <p class="last-view-container__product-container__product-description">
-          {{ last_viewed_item[3] }}
-        </p>
-        <p class="last-view-container__product-container__product-price">
-          R$ {{ last_viewed_item[2] }}
-        </p>
+        <img
+          src="{{ url_for('static', filename='media/market-items/'+get_item_image(last_viewed_item[0])) }}"
+          alt="Imagem de {{ item_name }}"
+          class="products-list__product-container__product-image"
+        />
+        <div
+          class="last-view-container__product-container__product-informations"
+        >
+          <h1
+            class="last-view-container__product-container__product-informations__product-name"
+          >
+            {{ last_viewed_item[1] }}
+          </h1>
+          <p
+            class="last-view-container__product-container__product-informations__product-description"
+          >
+            {{ last_viewed_item[3] }}
+          </p>
+          <p
+            class="last-view-container__product-container__product-informations__product-price"
+          >
+            R$ {{ last_viewed_item[2] }}
+          </p>
+        </div>
       </div>
     </a>
   </div>
   {% endif %}
   <ul class="products-list">
-    {% for item_ID, item_name, item_price, item_description, item_category in items %}
+    {% for item_ID, item_name, item_price, item_description, item_category in
+    items %}
     <a href="/market/product/{{item_ID}}">
       <li class="products-list__product-container">
-        <h1 class="products-list__product-container__product-name">
-          {{ item_name }}
-        </h1>
-        <p class="products-list__product-container__product-description">
-          {{ item_description}}
-        </p>
-        <p class="products-list__product-container__product-price">
-          R$ {{ item_price }}
-        </p>
+        <img
+          src="{{ url_for('static', filename='media/market-items/'+get_item_image(item_ID)) }}"
+          alt="Imagem de {{ item_name }}"
+          class="products-list__product-container__product-image"
+        />
+        <div class="products-list__product-container__product-informations">
+          <h1
+            class="products-list__product-container__product-informations__product-name"
+          >
+            {{ item_name }}
+          </h1>
+          <p
+            class="products-list__product-container__product-informations__product-description"
+          >
+            {{ item_description}}
+          </p>
+          <p
+            class="products-list__product-container__product-informations__product-price"
+          >
+            R$ {{ item_price }}
+          </p>
+        </div>
       </li>
     </a>
     {% endfor %}

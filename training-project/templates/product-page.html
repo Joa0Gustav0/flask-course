@@ -2,25 +2,31 @@
 {% else %} Produto {% endif %} {% endblock %} {% block page_content %}
 <div class="container">
   <div class="product-container">
-    <div class="product-container__product-image-container">
-      <img
-        class="product-container__product-image-container__image None"
-        src="{{ product_image }}"
-        alt="Imagem de produtos."
-      />
-    </div>
+    <img
+      class="product-container__product-image-container__image None"
+      src="{{ product_image }}"
+      alt="Imagem de {{ item[1] }}."
+    />
     <div class="product-container__inspection-aside">
       <div class="product-container__inspection-aside__product-informations">
-        <p class="product-container__inspection-aside__product-informations__category">
+        <p
+          class="product-container__inspection-aside__product-informations__category"
+        >
           Categoria: {{ item[4] }}
         </p>
-        <h1 class="product-container__inspection-aside__product-informations__name">
+        <h1
+          class="product-container__inspection-aside__product-informations__name"
+        >
           {{ item[1] }}
         </h1>
-        <p class="product-container__inspection-aside__product-informations__description">
+        <p
+          class="product-container__inspection-aside__product-informations__description"
+        >
           {{ item[3] }}
         </p>
-        <p class="product-container__inspection-aside__product-informations__price">
+        <p
+          class="product-container__inspection-aside__product-informations__price"
+        >
           R$ {{ item[2] }}
         </p>
       </div>
