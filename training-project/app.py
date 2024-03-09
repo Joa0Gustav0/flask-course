@@ -35,7 +35,7 @@ def productPage(product_id) :
     render_template(
       "product-page.html", 
       item=target_item,
-      product_image=url_for("static", filename="alt-product-image.png"),
+      product_image=url_for("static", filename="media/alt-product-image.png"),
       styles=listStylesURL("product-page.css")
     )
   )
@@ -48,5 +48,5 @@ def notFoundPage(error) :
   return render_template(
     "not-found.html",
     styles=listStylesURL("not-found.css"),
-    main_image=url_for("static", filename="not-found-image.gif")
+    main_image=url_for("static", filename="media/not-found-image.gif")
   ), 404;
