@@ -33,10 +33,6 @@
   font-weight: 600;
   font-size: 1.125em;
 }
-.highlighted-text {
-  color: var(--primary-color);
-  font-weight: 500;
-}
 .not-found.container__content-container__ca-button {
   transition: all 0.25s;
 

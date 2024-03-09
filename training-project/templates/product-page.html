@@ -9,16 +9,33 @@
         alt="Imagem de produtos."
       />
     </div>
-    <div class="product-container__product-informations">
-      <h1 class="product-container__product-informations__name">
-        {{ item[1] }}
-      </h1>
-      <p class="product-container__product-informations__description">
-        {{ item[3] }}
-      </p>
-      <p class="product-container__product-informations__price">
-        R$ {{ item[2] }}
-      </p>
+    <div class="product-container__inspection-aside">
+      <div class="product-container__inspection-aside__product-informations">
+        <p class="product-container__inspection-aside__product-informations__category">
+          Categoria: {{ item[4] }}
+        </p>
+        <h1 class="product-container__inspection-aside__product-informations__name">
+          {{ item[1] }}
+        </h1>
+        <p class="product-container__inspection-aside__product-informations__description">
+          {{ item[3] }}
+        </p>
+        <p class="product-container__inspection-aside__product-informations__price">
+          R$ {{ item[2] }}
+        </p>
+      </div>
+
+      <div class="product-container__inspection-aside__actions-container">
+        <button
+          class="product-container__inspection-aside__actions-container__ca-button"
+        >
+          Comprar Agora <ion-icon name="bag-outline"></ion-icon></button
+        ><button
+          class="product-container__inspection-aside__actions-container__ca-button"
+        >
+          Adicionar ao Carrinho <ion-icon name="cart-outline"></ion-icon>
+        </button>
+      </div>
     </div>
   </div>
 </div>

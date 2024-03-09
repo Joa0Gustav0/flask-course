@@ -125,3 +125,8 @@ main > section > .container {
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
     sans-serif;
 }
+
+.highlighted-text {
+  color: var(--primary-color);
+  font-weight: 500;
+}
