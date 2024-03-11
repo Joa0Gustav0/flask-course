@@ -15,40 +15,45 @@ page_content %}
     🦄 Os <span class="highlighted-text">unicórnios</span> deixaram alguns
     produtos!!!
   </p>
-  {% if last_viewed_item != None %}
+  {% if items_inspired_on_last_view != None %}
   <div class="last-view-container">
     <p class="last-view-container__headline">
-      <span class="highlighted-text">Ei!</span> Ainda interessado em seu
+      <span class="highlighted-text">Olha só!</span> Produtos inspirados em seu
       <span class="highlighted-text">último visto</span>?
     </p>
-    <a href="/market/product/{{ last_viewed_item[0] }}">
-      <div class="last-view-container__product-container">
-        <img
-          src="{{ url_for('static', filename='media/market-items/'+get_item_image(last_viewed_item[0])) }}"
-          alt="Imagem de {{ item_name }}"
-          class="products-list__product-container__product-image"
-        />
-        <div
-          class="last-view-container__product-container__product-informations"
-        >
-          <h1
-            class="last-view-container__product-container__product-informations__product-name"
+    <ul class="last-view-container__products_list">
+      {% for item_ID, item_name, item_price, item_description, item_category in
+      items_inspired_on_last_view %}
+      <a href="/market/product/{{ item_ID }}">
+        <li class="last-view-container__products_list__product-container">
+          <img
+            src="{{ url_for('static', filename='media/market-items/'+get_item_image(item_ID)) }}"
+            alt="Imagem de {{ item_name }}"
+            class="last-view-container__products_list__product-container__product-image"
+          />
+          <div
+            class="last-view-container__products_list__product-container__product-informations"
           >
-            {{ last_viewed_item[1] }}
-          </h1>
-          <p
-            class="last-view-container__product-container__product-informations__product-description"
-          >
-            {{ last_viewed_item[3] }}
-          </p>
-          <p
-            class="last-view-container__product-container__product-informations__product-price"
-          >
-            R$ {{ last_viewed_item[2] }}
-          </p>
-        </div>
-      </div>
-    </a>
+            <h1
+              class="last-view-container__products_list__product-container__product-informations__product-name"
+            >
+              {{ item_name }}
+            </h1>
+            <p
+              class="last-view-container__products_list__product-container__product-informations__product-description"
+            >
+              {{ item_description }}
+            </p>
+            <p
+              class="last-view-container__products_list__product-container__product-informations__product-price"
+            >
+              R$ {{ item_price }}
+            </p>
+          </div>
+        </li>
+      </a>
+      {% endfor %}
+    </ul>
   </div>
   {% endif %}
   <ul class="products-list">

@@ -13,15 +13,22 @@ def index() :
 
 @app.route("/market")
 def market() :
-  last_viewed_item_cookie = request.cookies.get("UnIm@RkEt_last_viewed_item");
+  last_viewed_item_ID = request.cookies.get("UnIm@RkEt_last_viewed_item");
+
+  if last_viewed_item_ID != None :
+    items_inspired_on_last_view = MarketItems().getItemsByCategory(
+      last_viewed_item_ID,
+      MarketItems().getItemByID(last_viewed_item_ID)[4]
+    )
+  else :
+    items_inspired_on_last_view = None
+
 
   return render_template(
     "market.html", 
     items=MarketItems().getAllItems(),
     get_item_image=MarketItems().downloadItemsImages,
-    last_viewed_item=MarketItems().getItemByID(
-      int(last_viewed_item_cookie)
-    ) if last_viewed_item_cookie != None else None,
+    items_inspired_on_last_view=items_inspired_on_last_view,
     styles=listStylesURL("market.css"),
   );
 

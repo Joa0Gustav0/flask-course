@@ -64,11 +64,10 @@ class MarketItems :
     return Crud().executeCrudAction("read", "SELECT * FROM marketitems;");
 
   def getItemByID(self, entry_item_id) :
-    for item in self.getAllItems() :
-      if item[0] == entry_item_id :
-        return item;
+    return Crud().executeCrudAction("read", f"SELECT * FROM marketitems WHERE ItemID = {entry_item_id};")[0];
 
-    return None;
+  def getItemsByCategory(self, last_viewed_product_ID, category) :
+    return Crud().executeCrudAction("read", f"SELECT * FROM marketitems WHERE ItemID = {last_viewed_product_ID} UNION SELECT * FROM marketitems WHERE ItemCategory = \'{category}\' AND ItemID != {last_viewed_product_ID} LIMIT 3;");
 
   def downloadItemsImages(self, target_index) :
     items_images_datas = list();
@@ -109,3 +108,5 @@ def dowloadImageFromCloudStorage(entry_blob_name) :
 
 def listStylesURL(*style_files) :
   return map(lambda style_file : url_for('static', filename=style_file), style_files);
+
+print(MarketItems().getItemsByCategory(1, "Notebooks"))
