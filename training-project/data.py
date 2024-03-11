@@ -92,7 +92,7 @@ def dowloadImageFromCloudStorage(entry_blob_name) :
 
   try :
     bucket = client_storage_manager.get_bucket("market_items");
-    bucket_blob = bucket.blob(blob_name);
+    bucket_blob = bucket.blob(blob_name + ".jpeg");
 
     if bucket_blob.exists() == False :
       return "alt-product-image.jpg";

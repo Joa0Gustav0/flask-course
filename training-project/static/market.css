@@ -80,6 +80,7 @@ body {
 .products-list__product-container__product-informations__product-name {
   font-size: 2em;
   font-weight: 700;
+  text-transform: capitalize;
 }
 .last-view-container__product-container__product-informations__product-description,
 .products-list__product-container__product-informations__product-description {
