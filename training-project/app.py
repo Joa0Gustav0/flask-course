@@ -36,7 +36,7 @@ def market() :
 def productPage(product_id) :
   target_item = MarketItems().getItemByID(product_id);
 
-  if target_item == None :
+  if target_item == False :
     abort(404);
   
   target_item_image_filename = MarketItems().downloadItemsImages(product_id);
