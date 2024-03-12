@@ -1,8 +1,10 @@
-from flask import Flask, render_template, url_for, abort, request, make_response;
+from flask import Flask, render_template, url_for, abort, request, make_response, send_file;
 app = Flask(__name__);
+
 
 from markupsafe import escape;
 from data import MarketItems, listStylesURL; 
+import os;
 
 @app.route("/")
 def index() :
@@ -27,7 +29,6 @@ def market() :
   return render_template(
     "market.html", 
     items=MarketItems().getAllItems(),
-    get_item_image=MarketItems().downloadItemsImages,
     items_inspired_on_last_view=items_inspired_on_last_view,
     styles=listStylesURL("market.css"),
   );
@@ -39,18 +40,25 @@ def productPage(product_id) :
   if target_item == False :
     abort(404);
   
-  target_item_image_filename = MarketItems().downloadItemsImages(product_id);
-  
   response = make_response(
     render_template(
       "product-page.html", 
       item=target_item,
-      product_image=url_for("static", filename="media/market-items/"+target_item_image_filename),
+      item_name=target_item[1],
       styles=listStylesURL("product-page.css")
     )
   )
   response.set_cookie("UnIm@RkEt_last_viewed_item", str(product_id));
   return response;
+
+@app.route("/static/media/market-items/<item_name>")
+def marketItemImage(item_name) :
+  image = MarketItems().serveItemImage(item_name)
+
+  if image == False : 
+    return send_file(os.path.dirname(os.path.realpath(__file__)).replace('\\', "/") + "/static/media/alt-product-image.jpg");
+
+  return image;
   
 
 @app.errorhandler(404)

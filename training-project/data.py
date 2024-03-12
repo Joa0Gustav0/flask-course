@@ -1,5 +1,7 @@
 import mysql.connector;
-from flask import url_for;
+from flask import url_for, send_file;
+from io import BytesIO;
+from PIL import Image; 
 import os;
 from google.cloud import storage;
 
@@ -72,44 +74,25 @@ class MarketItems :
   def getItemsByCategory(self, last_viewed_product_ID, category) :
     return Crud().executeCrudAction("read", f"SELECT * FROM marketitems WHERE ItemID = {last_viewed_product_ID} UNION SELECT * FROM marketitems WHERE ItemCategory = \'{category}\' AND ItemID != {last_viewed_product_ID} LIMIT 3;");
 
-  def downloadItemsImages(self, target_index) :
-    items_images_datas = list();
+  def serveItemImage(self, item_name) :
+    try :
+      bucket = client_storage_manager.get_bucket("market_items");
+      bucket_blob = bucket.blob(str(item_name).lower().replace(" ", "-") + ".jpeg");
 
-    for item_ID, item_name, item_price, item_description, item_category in self.getAllItems() :
-      items_images_datas.append((int(item_ID), dowloadImageFromCloudStorage(item_name)));
+      image_bytes = bucket_blob.download_as_bytes();
     
-    for item_ID, item_image_filename in items_images_datas :
-      if item_ID == target_index and target_index :
-        return str(item_image_filename);
+      converted_image = Image.open(BytesIO(image_bytes));
 
-    return items_images_datas;
-     
+      image_IO = BytesIO();
+      converted_image.save(image_IO, "JPEG", quality=70);
+      image_IO.seek(0);
 
-def dowloadImageFromCloudStorage(entry_blob_name) :
-  static_images_folder_path = os.path.dirname(os.path.realpath(__file__)).replace('\\', "/") + "/static/media/market-items/";
-
-  blob_name = str(entry_blob_name).lower().replace(" ", "-");
-
-  if os.path.exists(static_images_folder_path + blob_name + ".jpeg") : return blob_name + ".jpeg";
-
-  try :
-    bucket = client_storage_manager.get_bucket("market_items");
-    bucket_blob = bucket.blob(blob_name + ".jpeg");
-
-    if bucket_blob.exists() == False :
-      return "alt-product-image.jpg";
-
-    file_download__path = static_images_folder_path + blob_name + ".jpeg";
-
-    with open(file_download__path, "wb") as destiny_file :
-      client_storage_manager.download_blob_to_file(bucket_blob, destiny_file);
-      return blob_name + ".jpeg";
-  except Exception as e:
-    print(e)
-    return "alt-product-image.jpg";
-
+      return send_file(image_IO, mimetype="image/jpeg");
+    
+    except :
+      return False;
 
 def listStylesURL(*style_files) :
   return map(lambda style_file : url_for('static', filename=style_file), style_files);
 
-print(MarketItems().getItemByID(0))
+print(MarketItems().serveItemImage("notebook gamer"));

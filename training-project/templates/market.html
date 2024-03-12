@@ -27,7 +27,7 @@ page_content %}
       <a href="/market/product/{{ item_ID }}">
         <li class="last-view-container__products_list__product-container">
           <img
-            src="{{ url_for('static', filename='media/market-items/'+get_item_image(item_ID)) }}"
+            src="/static/media/market-items/{{ item_name }}"
             alt="Imagem de {{ item_name }}"
             class="last-view-container__products_list__product-container__product-image"
           />
@@ -62,7 +62,7 @@ page_content %}
     <a href="/market/product/{{item_ID}}">
       <li class="products-list__product-container">
         <img
-          src="{{ url_for('static', filename='media/market-items/'+get_item_image(item_ID)) }}"
+          src="/static/media/market-items/{{ item_name }}"
           alt="Imagem de {{ item_name }}"
           class="products-list__product-container__product-image"
         />
