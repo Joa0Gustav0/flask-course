@@ -31,7 +31,7 @@ body {
 }
 
 .header {
-  transition: all .25s;
+  transition: all 0.25s;
 
   position: fixed;
   top: -1px;
@@ -47,7 +47,7 @@ body {
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 }
 .header.disabled {
-  transition: .5s;
+  transition: 0.5s;
   top: -100%;
 }
 .header__container {
@@ -141,4 +141,57 @@ main > section > .container {
 .highlighted-text {
   color: var(--primary-color);
   font-weight: 500;
+}
+
+@keyframes image-loader {
+  0% {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateZ(360deg);
+  }
+}
+
+.image-loader {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 7.5px;
+  background-color: #f5f5f5;
+}
+.image-loader.decreased {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+
+  max-width: 150px;
+}
+.image-loader__loading-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+
+  width: 75px;
+  aspect-ratio: 1 / 1;
+  border-radius: 100%;
+  border: 2px solid var(--primary-color);
+  animation: image-loader 1s infinite linear;
+}
+.image-loader__loading-icon::after {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  display: flex;
+
+  width: 20px;
+  aspect-ratio: 1 / 1;
+  background-color: #F5F5F5;
+
+  content: " ";
 }

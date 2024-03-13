@@ -17,6 +17,7 @@ body {
 .product-container__product-image-container__image.None {
   width: 100%;
   max-width: 350px;
+  aspect-ratio: 1 / 1;
   border-radius: 5px;
   background-color: var(--primary-color);
 }

@@ -29,3 +29,13 @@ class HeaderToggler {
 }
 
 window.onscroll = () => HeaderToggler.execute();
+
+class ImageLoader {
+  constructor(imageLoaderID) {
+    this.imageLoaderElement = document.getElementById(imageLoaderID);
+  }
+
+  stop() {
+    this.imageLoaderElement.remove();
+  }
+}
