@@ -5,7 +5,18 @@
 {% endblock %}
 
 {% block page_content %}
-  <h1>
-    🦄 Home Page
-  </h1>
+  <section>
+    <div class="container hero-section">
+      <aside class="hero-section__text-content-container">
+        <p class="hero-section__text-content-container__initial-line">Boas-vindas ao</p>
+        <h1 class="hero-section__text-content-container__headline">
+          <img class="hero-section__text-content-container__headline__icon" src="{{ url_for('static', filename='media/unicorn-icon.png') }}" alt="Ícone de um unicórnio">
+          UniMarket
+        </h1>
+        <p class="hero-section__text-content-container__subheadline">Artigos de hardware e muito mais em alguns cliques!</p>
+        <button class="hero-section__text-content-container__ca-button">Vamos Lá!</button>
+      </aside>
+      <img class="hero-section__hero-image" src="{{ url_for('static', filename='media/hero-item-1.png') }}" alt="Imagem de um notebook">
+    </div>
+  </section>
 {% endblock %}

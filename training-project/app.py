@@ -8,9 +8,9 @@ import os;
 
 @app.route("/")
 def index() :
-
   return render_template(
-    "index.html"
+    "index.html",
+    styles=listStylesURL('index.css')
   );
 
 @app.route("/market")
