@@ -92,7 +92,7 @@ class MarketItems :
     except :
       return False;
 
-def listStylesURL(*style_files) :
+def listFilesURL(*style_files) :
   return map(lambda style_file : url_for('static', filename=style_file), style_files);
 
 print(MarketItems().serveItemImage("notebook gamer"));

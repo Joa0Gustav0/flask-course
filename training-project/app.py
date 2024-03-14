@@ -3,14 +3,15 @@ app = Flask(__name__);
 
 
 from markupsafe import escape;
-from data import MarketItems, listStylesURL; 
+from data import MarketItems, listFilesURL; 
 import os;
 
 @app.route("/")
 def index() :
   return render_template(
     "index.html",
-    styles=listStylesURL('index.css')
+    styles=listFilesURL('index.css'),
+    scripts=listFilesURL("index.js")
   );
 
 @app.route("/market")
@@ -30,7 +31,7 @@ def market() :
     "market.html", 
     items=MarketItems().getAllItems(),
     items_inspired_on_last_view=items_inspired_on_last_view,
-    styles=listStylesURL("market.css"),
+    styles=listFilesURL("market.css"),
   );
 
 @app.route(f"/market/product/<int:product_id>")
@@ -45,7 +46,7 @@ def productPage(product_id) :
       "product-page.html", 
       item=target_item,
       item_name=target_item[1],
-      styles=listStylesURL("product-page.css")
+      styles=listFilesURL("product-page.css")
     )
   )
   response.set_cookie("UnIm@RkEt_last_viewed_item", str(product_id));
@@ -65,6 +66,6 @@ def marketItemImage(item_name) :
 def notFoundPage(error) :
   return render_template(
     "not-found.html",
-    styles=listStylesURL("not-found.css"),
+    styles=listFilesURL("not-found.css"),
     main_image=url_for("static", filename="media/not-found-image.gif")
   ), 404;

@@ -39,3 +39,4 @@ class ImageLoader {
     this.imageLoaderElement.remove();
   }
 }
+
