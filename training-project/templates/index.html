@@ -29,7 +29,7 @@ page_content %}
         alt="Imagem de um notebook"
       />
       <img
-      id="hero-image-2"
+        id="hero-image-2"
         class="hero-section__hero-images-carrousel__hero-image"
         src="{{ url_for('static', filename='media/hero-item-2.png') }}"
         alt="Imagem de um notebook"
@@ -42,5 +42,87 @@ page_content %}
       />
     </aside>
   </div>
+</section>
+<section class="about-section">
+  <div class="about-section__border top"></div>
+  <div class="container about-section">
+    <div class="about-section__information-container">
+      <img
+        src="{{ url_for('static', filename='media/home-icon.png') }}"
+        alt="ícone de um personagem sentado em casa em frente a um notebook"
+        class="about-section__information-container__icon"
+      />
+      <p class="about-section__information-container__text">
+        Imagina só... <br />Poder comprar um mundo sem sair do conforto da sua
+        casa. Com o UniMarket você pode!
+      </p>
+    </div>
+    <div class="about-section__information-container">
+      <img
+        src="{{ url_for('static', filename='media/order-service-icon.png') }}"
+        alt="Ícone representativo de logisticas de serviços de entregas de qualidade"
+        class="about-section__information-container__icon"
+      />
+      <p class="about-section__information-container__text">
+        A UniMarket possui uma logistica de entrega eficiente e segura. Assim,
+        seus produtinhos chegam perfeitamente à sua casa!
+      </p>
+    </div>
+    <div class="about-section__information-container">
+      <img
+        src="{{ url_for('static', filename='media/payment-icon.png') }}"
+        alt="Ícone representativo de formas de pagamento"
+        class="about-section__information-container__icon"
+      />
+      <p class="about-section__information-container__text">
+        Não tenha dúvidas sobre as formas de pagamento! O UniMarket aceita a
+        maioria delas. Desde boletos até criptomoedas.
+      </p>
+    </div>
+    <div class="about-section__information-container">
+      <img
+        src="{{ url_for('static', filename='media/affiliate-icon.png') }}"
+        alt="Ícone representativo de parceria entre lojas e/ou serviços"
+        class="about-section__information-container__icon"
+      />
+      <p class="about-section__information-container__text">
+        O UniMarket é desenvolvido com diversas lojas parceiras. Então, não se
+        preocupe! Você está em boas mãos unicliente!
+      </p>
+    </div>
+  </div>
+  <div class="about-section__border bottom"></div>
+</section>
+<section class="bottom-section">
+  <div class="container bottom-section">
+    <p class="bottom-section__paragraph">🦄 Um pouquinho do que você pode <br>encontrar aqui no <span class="highlighted-text">UniMarket</span>!</p>
+    <div class="bottom-section__images-carrousel">
+      <img
+        src="{{ url_for('static', filename='media/hero-item-2.png') }}"
+        alt=""
+        class="bottom-section__images-carrousel__image"
+      />
+      <img
+        src="{{ url_for('static', filename='media/hero-item-3.png') }}"
+        alt=""
+        class="bottom-section__images-carrousel__image"
+      />
+      <img
+        src="{{ url_for('static', filename='media/extra-hero-item.png') }}"
+        alt=""
+        class="bottom-section__images-carrousel__image"
+      />
+    </div>
+    <aside class="bottom-section__ca-aside">
+      <p class="bottom-section__ca-aside__paragraph">
+        Eai... Pronto pra ser um novo
+        <span class="highlighted-text">unicliente</span>?
+      </p>
+      <button class="bottom-section__ca-aside__ca-button">
+        Vamos Lá!
+      </button>
+    </aside>
+  </div>
+  <div class="bottom-section__border bottom"></div>
 </section>
 {% endblock %}

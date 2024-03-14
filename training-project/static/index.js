@@ -1,29 +1,48 @@
-class HeroImagesCarrousel {
-  static carrousel = document.querySelector(
-    ".hero-section__hero-images-carrousel"
-  );
-  static heroImages = document.getElementsByClassName(
-    "hero-section__hero-images-carrousel__hero-image"
-  );
+class ImagesCarrousel {
+  carrousel;
+  images;
+  defaultImageClass;
 
-  static imagesOrder = ["1", "2", "3"];
+  imagesOrder = ["1", "2", "3"];
 
-  static setImagesOrder() {
-    HeroImagesCarrousel.imagesOrder.push(
-      HeroImagesCarrousel.imagesOrder.shift()
-    );
+  constructor(carrouselElement, imagesElements) {
+    this.carrousel = carrouselElement;
+    this.images = imagesElements;
 
-    HeroImagesCarrousel.organizeImages();
+    this.defaultImageClass = this.images[0].className;
+
+    setInterval(() => this.setImagesOrder(), 2500);
+
+    this.organizeImages();
   }
 
-  static organizeImages() {
-    Array.from(HeroImagesCarrousel.heroImages).forEach(function (image, index) {
-      image.className = "hero-section__hero-images-carrousel__hero-image";
+  setImagesOrder() {
+    this.imagesOrder.push(this.imagesOrder.shift());
 
-      image.classList.add("in-view-" + HeroImagesCarrousel.imagesOrder[index]);
+    this.organizeImages();
+  }
+
+  organizeImages() {
+    let imagesOrder = this.imagesOrder;
+
+    Array.from(this.images).forEach((image, index) => {
+      image.className = this.defaultImageClass;
+
+      image.classList.add("in-view-" + imagesOrder[index]);
     });
   }
 }
 
-HeroImagesCarrousel.organizeImages();
-setInterval(() => HeroImagesCarrousel.setImagesOrder(), 2500);
+//Hero Carrousel
+var heroCarrousel = new ImagesCarrousel(
+  document.querySelector(".hero-section__hero-images-carrousel"),
+  document.getElementsByClassName(
+    "hero-section__hero-images-carrousel__hero-image"
+  )
+);
+
+//Bottom Carrousel
+var bottomCarrousel = new ImagesCarrousel(
+  document.querySelector(".bottom-section__images-carrousel"),
+  document.getElementsByClassName("bottom-section__images-carrousel__image")
+);

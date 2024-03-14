@@ -11,7 +11,7 @@ body {
 
   overflow-x: visible;
   min-height: fit-content;
-  height: 100vh;
+  height: calc(100vh - 70px);
 }
 .hero-section__text-content-container {
   display: flex;
@@ -39,7 +39,8 @@ body {
   font-size: 20px;
   color: #636363;
 }
-.hero-section__text-content-container__ca-button {
+.hero-section__text-content-container__ca-button,
+.bottom-section__ca-aside__ca-button {
   transition: all 0.25s;
 
   display: flex;
@@ -57,13 +58,15 @@ body {
   border-radius: 10px;
   background-color: var(--primary-color);
 }
-.hero-section__text-content-container__ca-button:hover {
+.hero-section__text-content-container__ca-button:hover,
+.bottom-section__ca-aside__ca-button:hover {
   cursor: pointer;
   margin-top: 60px;
   transform: scale(107.5%, 107.5%);
   box-shadow: 0px 0px 10px var(--primary-color);
 }
-.hero-section__text-content-container__ca-button:active {
+.hero-section__text-content-container__ca-button:active,
+.bottom-section__ca-aside__ca-button:active {
   margin-top: 45px;
   transform: scale(97.5%, 97.5%);
   box-shadow: 0px 0px 5px var(--primary-color);
@@ -79,32 +82,142 @@ body {
   aspect-ratio: 1 / 1;
 }
 .hero-section__hero-images-carrousel__hero-image {
-  transition: all .5s;
+  transition: all 0.5s;
 
   position: absolute;
   transform: translate(-50%, -50%);
 
   max-width: 375px;
 }
-.in-view-1 {
+.hero-section__hero-images-carrousel__hero-image.in-view-1 {
   top: 50%;
   left: -12.5%;
   z-index: 3;
 }
-.in-view-2 {
+.hero-section__hero-images-carrousel__hero-image.in-view-2 {
   top: 100%;
   left: 62.5%;
   z-index: 2;
 }
-.in-view-3 {
+.hero-section__hero-images-carrousel__hero-image.in-view-3 {
   top: 0%;
   left: 62.5%;
   z-index: 1;
 }
 
-.in-view-2,
-.in-view-3 {
+.hero-section__hero-images-carrousel__hero-image.in-view-2,
+.hero-section__hero-images-carrousel__hero-image.in-view-3 {
   transform: translate(-50%, -50%) scale(75%, 75%);
   filter: blur(1.5px);
   opacity: 0.5;
+}
+
+.about-section {
+  position: relative;
+  background-color: var(--primary-color);
+  height: fit-content;
+
+  gap: 50px;
+  padding: 25px 0px;
+}
+.about-section__border{
+  position: absolute;
+  left: 0;
+
+  display: flex;
+
+  width: 100%;
+  height: 70px;
+  background-repeat: repeat-x;
+  background-image: url("/static/media/wave-border.png");
+}
+.about-section__border.top {
+  top: 2px;
+  transform: translateY(-100%);
+}
+.about-section__border.bottom {
+  bottom: 2px;
+  transform: translateY(100%) rotateZ(180deg);
+}
+.about-section__information-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 15px;
+  text-align: center;
+}
+.about-section__information-container__icon {
+  width: 100%;
+  max-width: 100px;
+}
+.about-section__information-container__text {
+  color: white;
+  font-weight: 500;
+}
+
+.bottom-section {
+  position: relative;
+
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 200px;
+  padding: 70px 20px;
+  min-height: fit-content;
+}
+.bottom-section__paragraph,
+.bottom-section__ca-aside__paragraph {
+  font-size: 20px;
+  text-align: center;
+}
+.bottom-section__images-carrousel {
+  position: relative;
+  width: 100%;
+}
+.bottom-section__images-carrousel__image {
+  transition: all 0.5s;
+
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+
+  width: 100%;
+  max-width: 275px;
+}
+.bottom-section__images-carrousel__image.in-view-1 {
+  left: 25%;
+}
+.bottom-section__images-carrousel__image.in-view-2 {
+  left: 50%;
+}
+.bottom-section__images-carrousel__image.in-view-3 {
+  left: 75%;
+}
+.bottom-section__images-carrousel__image.in-view-1,
+.bottom-section__images-carrousel__image.in-view-3 {
+  opacity: 0.5;
+  filter: blur(2px);
+  transform: translate(-50%, -50%) scale(85%, 85%);
+}
+.bottom-section__ca-aside {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.bottom-section__ca-aside__ca-button,
+.bottom-section__ca-aside__ca-button:hover,
+.bottom-section__ca-aside__ca-button:active {
+  margin-top: 15px;
+}
+.bottom-section__border.bottom {
+  position: absolute;
+  left: 0;
+
+  display: flex;
+
+  width: 100%;
+  height: 70px;
+  background-repeat: repeat-x;
+  background-image: url("/static/media/wave-border.png");
 }
