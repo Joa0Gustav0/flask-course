@@ -1,0 +1,12 @@
+{% extends 'comum.html' %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block page_content %}
+<form action="/login" method="POST">
+  <input type="text" name="username">
+  <input type="submit" value="Login">
+</form>
+{% endblock %}

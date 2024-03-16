@@ -1,10 +1,12 @@
-from flask import Flask, render_template, url_for, abort, request, make_response, send_file;
+from flask import Flask, render_template, url_for, abort, redirect, request, session, make_response, send_file;
 app = Flask(__name__);
 
 
 from markupsafe import escape;
 from data import MarketItems, listFilesURL; 
 import os;
+
+app.secret_key = "287329kjsda879";
 
 @app.route("/")
 def index() :
@@ -33,6 +35,30 @@ def market() :
     items_inspired_on_last_view=items_inspired_on_last_view,
     styles=listFilesURL("market.css"),
   );
+
+@app.route("/login", methods=["GET", "POST"])
+def login() :
+  if request.method == "POST" :
+    session["user"] = request.form["username"];
+    return redirect(url_for("dashboard"));
+
+  return render_template("login.html");
+
+@app.route("/logout")
+def logout() :
+  if "user" in session :
+    session.pop("user", None);
+
+  return redirect(url_for("login"));
+
+@app.route("/dashboard")
+def dashboard() :
+  if "user" in session :
+    user = session["user"];
+
+    return f"<h1>Olá, {user}</h1>";
+
+  return redirect(url_for("login"));
 
 @app.route(f"/market/product/<int:product_id>")
 def productPage(product_id) :
