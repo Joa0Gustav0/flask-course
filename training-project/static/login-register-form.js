@@ -83,7 +83,7 @@ class FormularyValidation {
         "O usuário deve conter ao menos 8 caracteres."
       );
     }
-    if (verifyNumberPresence(input.value)) {
+    if (verifyPresence(input.value, "numbers")) {
       return this.displayValidationMessage(
         input,
         "error",
@@ -112,8 +112,8 @@ class FormularyValidation {
       );
     }
     if (
-      !verifyLetterPresence(input.value) ||
-      !verifyNumberPresence(input.value)
+      !verifyPresence(input.value, "letters") ||
+      !verifyPresence(input.value, "numbers")
     ) {
       return this.displayValidationMessage(
         input,
@@ -121,7 +121,7 @@ class FormularyValidation {
         "A senha deve conter ao menos uma letra e um número."
       );
     }
-    if (!verifySpecialCharsPresence(input.value)) {
+    if (!verifyPresence(input.value, "special-characters")) {
       return this.displayValidationMessage(
         input,
         "error",
@@ -191,14 +191,16 @@ class FormularyValidation {
     let allInputs = document.querySelectorAll(
       ".actions-container__aside__form__input-label__input"
     );
-    let allValidationMessageElements = document.querySelectorAll(".actions-container__aside__form__input-label__input-error-text");
+    let allValidationMessageElements = document.querySelectorAll(
+      ".actions-container__aside__form__input-label__input-error-text"
+    );
 
     allInputs.forEach((input) => {
       input.value = "";
-    })
+    });
     allValidationMessageElements.forEach((element) => {
       element.innerHTML = "";
-    })
+    });
 
     new FormularyValidation();
   }
@@ -223,44 +225,25 @@ function getInputType(inputID) {
   }
 }
 
-function verifyLetterPresence(value) {
+function verifyPresence(value, mirrorValues) {
   value = String(value);
-  let letters = "abcdefghijklmnopqrstuvwxyz";
 
-  let containsLetter = false;
-  [...letters].forEach((letter) => {
-    [...value].forEach((character) => {
-      if (character.toLowerCase() == letter) containsLetter = true;
+  if (mirrorValues == "letters") {
+    mirrorValues = "abcdefghijklmnopqrstuvwxyz";
+  } else if (mirrorValues == "numbers") {
+    mirrorValues = "0123456789";
+  } else if (mirrorValues == "special-characters") {
+    mirrorValues = "!@#$%&*";
+  }
+
+  let isPresent = false;
+  [...mirrorValues].forEach((letter) => {
+    [...value].forEach((valueUnity) => {
+      if (valueUnity == letter) isPresent = true;
     });
   });
 
-  return containsLetter;
-}
-function verifyNumberPresence(value) {
-  value = String(value);
-  let numbers = "0123456789";
-
-  let containsNumber = false;
-  [...numbers].forEach((number) => {
-    [...value].forEach((character) => {
-      if (character == number) containsNumber = true;
-    });
-  });
-
-  return containsNumber;
-}
-function verifySpecialCharsPresence(value) {
-  value = String(value);
-  let specialCharacters = "!@#$%&*";
-
-  let containsSpecialCharacter = false;
-  [...specialCharacters].forEach((specialCharacter) => {
-    [...value].forEach((character) => {
-      if (character == specialCharacter) containsSpecialCharacter = true;
-    });
-  });
-
-  return containsSpecialCharacter;
+  return isPresent;
 }
 function verifyEmailProviders(value) {
   let emailProviders = [
