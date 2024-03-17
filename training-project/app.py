@@ -36,10 +36,6 @@ def market() :
 @app.route("/login", methods=["GET", "POST"])
 @app.route("/register", methods=["GET", "POST"])
 def login() :
-  if request.method == "POST" :
-    session["user"] = request.form["username"];
-    return redirect(url_for("dashboard"));
-
   if "login" in request.path :
     focus_action = "on-login";
   else :
@@ -47,7 +43,8 @@ def login() :
 
   return render_template(
     "login.html",
-    container_focus=focus_action
+    container_focus=focus_action,
+    styles=listFilesURL("login.css")
   );
 
 @app.route(f"/market/product/<int:product_id>")
