@@ -37,14 +37,15 @@ def market() :
 @app.route("/register", methods=["GET", "POST"])
 def login() :
   if "login" in request.path :
-    focus_action = "on-login";
+    focus_action = "on-login-view";
   else :
-    focus_action = "on-register";
+    focus_action = "on-register-view";
 
   return render_template(
-    "login.html",
+    "login-register.html",
     container_focus=focus_action,
-    styles=listFilesURL("login.css")
+    styles=listFilesURL("login-register.css"),
+    scripts=listFilesURL("login-register.js")
   );
 
 @app.route(f"/market/product/<int:product_id>")

@@ -102,8 +102,8 @@ page_content %}
         />
       </form>
     </aside>
-    <span class="actions-container__overflow-container">
-      <aside class="actions-container__overflow-container__aside">
+    <span class="actions-container__overflow-container {{ container_focus }}">
+      <aside class="actions-container__overflow-container__aside actions-container__overflow-container__aside--left-side">
         <p class="actions-container__overflow-container__aside__headline">
           Ué! Ainda não é um UniAliado?!
         </p>
@@ -119,7 +119,7 @@ page_content %}
             class="actions-container__overflow-container__aside__center-container__ca-container"
           >
             <button
-              class="actions-container__overflow-container__aside__center-container__ca-container__ca-button"
+              class="actions-container__overflow-container__aside__center-container__ca-container__ca-button set-register-view"
             >
               Registrar <ion-icon name="arrow-forward"></ion-icon>
             </button>
@@ -155,7 +155,7 @@ page_content %}
             class="actions-container__overflow-container__aside__center-container__ca-container"
           >
             <button
-              class="actions-container__overflow-container__aside__center-container__ca-container__ca-button"
+              class="actions-container__overflow-container__aside__center-container__ca-container__ca-button set-login-view"
             >
               <ion-icon name="arrow-back"></ion-icon> Fazer Login
             </button>

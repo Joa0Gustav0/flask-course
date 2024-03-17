@@ -117,6 +117,7 @@ body {
 }
 
 .actions-container__overflow-container {
+  transition: all .5s;
   position: absolute;
   top: 0;
   left: 0;
@@ -129,10 +130,15 @@ body {
   max-width: 320px;
   overflow: hidden;
   border-radius: 7.5px;
-  background-color: var(--primary-color);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  background-image: linear-gradient(to bottom, var(--primary-color), #6376D2);
+}
+.actions-container__overflow-container.on-register-view {
+  left: 50%;
 }
 .actions-container__overflow-container__aside {
+  transition: all 0.5s;
+
   position: absolute;
   top: 0;
 
@@ -148,8 +154,14 @@ body {
 .actions-container__overflow-container__aside--left-side {
   left: 0;
 }
+.on-register-view .actions-container__overflow-container__aside--left-side {
+  left: -100%;
+}
 .actions-container__overflow-container__aside--right-side {
   left: 100%;
+}
+.on-register-view .actions-container__overflow-container__aside--right-side {
+  left: 0;
 }
 .actions-container__overflow-container__aside__headline {
   color: white;
