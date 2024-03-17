@@ -102,6 +102,78 @@ page_content %}
         />
       </form>
     </aside>
+    <span class="actions-container__overflow-container">
+      <aside class="actions-container__overflow-container__aside">
+        <p class="actions-container__overflow-container__aside__headline">
+          Ué! Ainda não é um UniAliado?!
+        </p>
+        <span
+          class="actions-container__overflow-container__aside__center-container"
+        >
+          <img
+            src="{{ url_for('static', filename='media/wave-unicorn-icon.png') }}"
+            alt="Ícone de um unicórnio acenando"
+            class="actions-container__overflow-container__aside__center-container__image"
+          />
+          <div
+            class="actions-container__overflow-container__aside__center-container__ca-container"
+          >
+            <button
+              class="actions-container__overflow-container__aside__center-container__ca-container__ca-button"
+            >
+              Registrar <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+            <p
+              class="actions-container__overflow-container__aside__center-container__ca-container__text"
+            >
+              Clique acima para fazer um registro!
+            </p>
+          </div>
+        </span>
+        <p class="actions-container__overflow-container__rights-text">
+          Unimarket<span
+            class="actions-container__overflow-container__rights-text__year-text"
+          ></span
+          >. <br />All rights reserved. ©
+        </p>
+      </aside>
+      <aside
+        class="actions-container__overflow-container__aside actions-container__overflow-container__aside--right-side"
+      >
+        <p class="actions-container__overflow-container__aside__headline">
+          Ei! Já possui uma conta aqui?
+        </p>
+        <span
+          class="actions-container__overflow-container__aside__center-container"
+        >
+          <img
+            src="{{ url_for('static', filename='media/glasses-unicorn-icon.png') }}"
+            alt="Ícone de um unicórnio usando óculos"
+            class="actions-container__overflow-container__aside__center-container__image"
+          />
+          <div
+            class="actions-container__overflow-container__aside__center-container__ca-container"
+          >
+            <button
+              class="actions-container__overflow-container__aside__center-container__ca-container__ca-button"
+            >
+              <ion-icon name="arrow-back"></ion-icon> Fazer Login
+            </button>
+            <p
+              class="actions-container__overflow-container__aside__center-container__ca-container__text"
+            >
+              Clique acima para fazer login!
+            </p>
+          </div>
+        </span>
+        <p class="actions-container__overflow-container__rights-text">
+          Unimarket<span
+            class="actions-container__overflow-container__rights-text__year-text"
+          ></span
+          >. <br />All rights reserved. ©
+        </p>
+      </aside>
+    </span>
   </div>
 </div>
 {% endblock %}
