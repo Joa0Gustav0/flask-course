@@ -55,7 +55,7 @@ page_content %}
             class="actions-container__aside__form__input-label__input-error-text"
           ></p
         ></label>
-        
+
         <input
           id="registering-submit-button"
           class="actions-container__aside__form__submit-button submit-button"
@@ -194,4 +194,8 @@ page_content %}
     </span>
   </div>
 </div>
+{% endblock %} {% block handfull_scripts %}
+<script>
+  const usersInDatabase = "{{ users_in_database }}".replace(/&#39;/g, "\"");
+</script>
 {% endblock %}

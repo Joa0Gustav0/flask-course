@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, abort, redirect, request, ses
 app = Flask(__name__);
 
 from markupsafe import escape;
-from data import MarketItems, listFilesURL; 
+from data import MarketItems, Users, listFilesURL; 
 import os;
 
 @app.route("/")
@@ -44,6 +44,7 @@ def login() :
   return render_template(
     "login-register.html",
     container_focus=focus_action,
+    users_in_database=Users.getUsers(),
     styles=listFilesURL("login-register.css"),
     scripts=listFilesURL("login-register.js", "login-register-form.js")
   );

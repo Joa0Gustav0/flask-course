@@ -262,4 +262,3 @@ function verifyEmailProviders(value) {
 
   return containsProvider;
 }
-//console.log(new FormularyValidation().formularyInputs)

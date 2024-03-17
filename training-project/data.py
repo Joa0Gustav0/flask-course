@@ -92,7 +92,19 @@ class MarketItems :
     except :
       return False;
 
+
 def listFilesURL(*style_files) :
   return map(lambda style_file : url_for('static', filename=style_file), style_files);
 
-print(MarketItems().serveItemImage("notebook gamer"));
+class Users :
+  def getUsers() :
+    try :
+      users = Crud().executeCrudAction("read", "SELECT CustomerUsername, CustomerEmail FROM customers;");
+
+      formated_users_list = list();
+      for username, user_email in users :
+        formated_users_list.append([username, user_email]);
+    
+      return formated_users_list;
+    except :
+      return False;
