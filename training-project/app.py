@@ -45,7 +45,7 @@ def login() :
     "login-register.html",
     container_focus=focus_action,
     styles=listFilesURL("login-register.css"),
-    scripts=listFilesURL("login-register.js")
+    scripts=listFilesURL("login-register.js", "login-register-form.js")
   );
 
 @app.route(f"/market/product/<int:product_id>")

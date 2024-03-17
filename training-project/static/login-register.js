@@ -11,6 +11,7 @@ CONTAINER_CONTROL_BUTTONS.forEach((button) => {
     let targetAction = getButtonAction(button);
 
     executeButtonAction(targetAction);
+    FormularyValidation.clearInputs();
   });
 });
 

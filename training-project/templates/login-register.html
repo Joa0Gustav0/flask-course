@@ -23,7 +23,11 @@ page_content %}
             name="username"
             id="username-input"
             placeholder="Insira o seu novo nome de usuário..."
-            class="actions-container__aside__form__input-label__input" /></label
+            class="actions-container__aside__form__input-label__input registering-input" />
+          <p
+            id="username-input-error"
+            class="actions-container__aside__form__input-label__input-error-text"
+          ></p></label
         ><label class="actions-container__aside__form__input-label"
           ><span class="actions-container__aside__form__input-label__text"
             >Email</span
@@ -32,30 +36,32 @@ page_content %}
             name="email"
             id="email-input"
             placeholder="Insira o seu melhor email..."
-            class="actions-container__aside__form__input-label__input" /></label
+            class="actions-container__aside__form__input-label__input registering-input" />
+          <p
+            id="email-input-error"
+            class="actions-container__aside__form__input-label__input-error-text"
+          ></p></label
         ><label class="actions-container__aside__form__input-label"
           ><span class="actions-container__aside__form__input-label__text"
             >Senha</span
           ><input
-            type="password"
+            type="text"
             name="password"
             id="password-input"
             placeholder="Insira a sua nova senha..."
-            class="actions-container__aside__form__input-label__input" /></label
-        ><label class="actions-container__aside__form__input-label"
-          ><span class="actions-container__aside__form__input-label__text"
-            >Repita a senha</span
-          ><input
-            type="password"
-            id="repeat-password"
-            placeholder="Mostre que não a esquecerá..."
-            class="actions-container__aside__form__input-label__input"
-        /></label>
-
+            class="actions-container__aside__form__input-label__input registering-input" />
+          <p
+            id="password-input-error"
+            class="actions-container__aside__form__input-label__input-error-text"
+          ></p
+        ></label>
+        
         <input
-          class="actions-container__aside__form__submit-button"
+          id="registering-submit-button"
+          class="actions-container__aside__form__submit-button submit-button"
           type="submit"
           value="Registrar"
+          disabled
         />
       </form>
     </aside>
@@ -79,31 +85,43 @@ page_content %}
           ><input
             type="text"
             name="username"
-            id="login-username"
+            id="login-username-input"
             placeholder="Insira o seu nome de usuário..."
-            class="actions-container__aside__form__input-label__input" /></label
+            class="actions-container__aside__form__input-label__input" />
+          <p
+            id="login-username-input-error"
+            class="actions-container__aside__form__input-label__input-error-text"
+          ></p></label
         ><label class="actions-container__aside__form__input-label"
           ><span class="actions-container__aside__form__input-label__text"
             >Senha</span
           ><input
             type="password"
             name="password"
-            id="login-password"
+            id="login-password-input"
             placeholder="Insira a sua senha..."
-            class="actions-container__aside__form__input-label__input"
-        /></label>
+            class="actions-container__aside__form__input-label__input" />
+          <p
+            id="login-password-input-error"
+            class="actions-container__aside__form__input-label__input-error-text"
+          ></p
+        ></label>
         <a href="#" class="actions-container__aside__form__forgot-password-link"
           >Esqueceu seus dados?</a
         >
         <input
-          class="actions-container__aside__form__submit-button"
+          id="login-submit-button"
+          class="actions-container__aside__form__submit-button submit-button"
           type="submit"
           value="Fazer Login"
+          disabled
         />
       </form>
     </aside>
     <span class="actions-container__overflow-container {{ container_focus }}">
-      <aside class="actions-container__overflow-container__aside actions-container__overflow-container__aside--left-side">
+      <aside
+        class="actions-container__overflow-container__aside actions-container__overflow-container__aside--left-side"
+      >
         <p class="actions-container__overflow-container__aside__headline">
           Ué! Ainda não é um UniAliado?!
         </p>
