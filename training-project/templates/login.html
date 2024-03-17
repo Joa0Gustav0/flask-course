@@ -1,12 +1,92 @@
-{% extends 'comum.html' %}
+{% extends 'comum.html' %} {% block title %} Login {% endblock %} {% block
+page_content %}
+<div class="container">
+  <div class="actions-container">
+    <aside class="actions-container__aside">
+      <div class="actions-container__aside__top-lines">
+        <h1 class="actions-container__aside__top-lines__headline">Registro</h1>
+        <p class="actions-container__aside__top-lines__sub-headline">
+          Hora de se aliar ao UniMarket!
+        </p>
+      </div>
+      <form class="actions-container__aside__form" action="" method="post">
+        <label class="actions-container__aside__form__input-label"
+          ><span class="actions-container__aside__form__input-label__text"
+            >Usuário</span
+          ><input
+            type="text"
+            name="username"
+            id="username-input"
+            placeholder="Insira o seu novo nome de usuário..."
+            class="actions-container__aside__form__input-label__input" /></label
+        ><label class="actions-container__aside__form__input-label"
+          ><span class="actions-container__aside__form__input-label__text"
+            >Email</span
+          ><input
+            type="text"
+            name="email"
+            id="email-input"
+            placeholder="Insira o seu melhor email..."
+            class="actions-container__aside__form__input-label__input" /></label
+        ><label class="actions-container__aside__form__input-label"
+          ><span class="actions-container__aside__form__input-label__text"
+            >Senha</span
+          ><input
+            type="password"
+            name="password"
+            id="password-input"
+            placeholder="Insira a sua nova senha..."
+            class="actions-container__aside__form__input-label__input" /></label
+        ><label class="actions-container__aside__form__input-label"
+          ><span class="actions-container__aside__form__input-label__text"
+            >Repita a senha</span
+          ><input
+            type="password"
+            id="repeat-password"
+            placeholder="Mostre que não a esquecerá..."
+            class="actions-container__aside__form__input-label__input"
+        /></label>
 
-{% block title %}
-  Login
-{% endblock %}
-
-{% block page_content %}
-<form action="/login" method="POST">
-  <input type="text" name="username">
-  <input type="submit" value="Login">
-</form>
+        <input
+          class="actions-container__aside__form__submit-button"
+          type="submit"
+          value="Registrar"
+        />
+      </form>
+    </aside>
+    <aside class="actions-container__aside">
+      <div class="actions-container__aside__top-lines">
+        <h1 class="actions-container__aside__top-lines__headline"></h1>
+        <p class="actions-container__aside__top-lines__sub-headline"></p>
+      </div>
+      <form class="actions-container__aside__form" action="" method="post">
+        <label class="actions-container__aside__form__input-label"
+          ><span class="actions-container__aside__form__input-label__text"
+            >Usuário</span
+          ><input
+            type="text"
+            name="username"
+            id="login-username"
+            placeholder="Insira o seu nome de usuário..."
+            class="actions-container__aside__form__input-label__input" /></label
+        ><label class="actions-container__aside__form__input-label"
+          ><span class="actions-container__aside__form__input-label__text"
+            >Senha</span
+          ><input
+            type="password"
+            name="password"
+            id="login-password"
+            placeholder="Insira a sua senha..."
+            class="actions-container__aside__form__input-label__input"
+        /></label>
+        <a href="#">Esqueceu seus dados?</a>
+        <input
+          class="actions-container__aside__form__submit-button"
+          type="submit"
+          value="Fazer Login"
+        />
+      </form>
+    </aside>
+  </div>
+</div>
 {% endblock %}
