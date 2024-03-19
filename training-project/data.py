@@ -112,42 +112,29 @@ class Users :
       return None;
 
 class APIsStatus :
-  def sendError(self, message) :
+  def sendError(message) :
     return { 'error' : message };
-  def sendSuccess(self, message, content) :
+  def sendSuccess(message, content) :
     return { 
       'success' : message,
       'content' : content
     };
 
 class LoginValidation :
-  def checkAlreadyInUse(self, data_for_validation) :
-    data_type = None;
-    if data_for_validation.get("username") :
-      data_type = "username";
-    elif data_for_validation.get("email") :
-      data_type = "email"
-
-    if not data_type :
-      return APIsStatus.sendError('Data for validation does not follow the validation parameters.');
-
-    users = Users().getUsers();
+  def checkAlreadyInUse(data_for_validation, data_type) :
+    users = Users.getUsers();
 
     if users == None :
-      return APIsStatus.sendError('Could not contact database for validation.');
-  
-    data_already_in_usage_count = list(filter(lambda user : user[data_type] == data_for_validation[data_type], users));
+      return APIsStatus.sendError('Could not contact database for validation. (400)');
+
+    data_already_in_usage_count = list(filter(lambda user : user[data_type] == data_for_validation, users));
     already_in_use = len(data_already_in_usage_count) > 0;
 
     return APIsStatus.sendSuccess(
       'Validation ocurred successfully.', 
       {
-        'value' : already_in_use,
+        'alreadyUsed' : already_in_use,
         'message' : f'{data_type.capitalize()} is already in use.' if already_in_use else f'{data_type.capitalize()} can be used.'
       }
     )
-    
-
-    
-
 

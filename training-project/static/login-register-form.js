@@ -91,6 +91,8 @@ class FormularyValidation {
       );
     }
 
+    this.seeUsageInDatabase(input);
+
     return this.displayValidationMessage(input, "success", "");
   }
   static validatePassword(input) {
@@ -152,6 +154,30 @@ class FormularyValidation {
 
     return this.displayValidationMessage(input, "success", "");
   }
+
+  static async seeUsageInDatabase(input) {
+    let request = new Request(
+      `${document.location.origin}/api/login-validation`,
+      {
+        method: "GET",
+        headers:  {
+          authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY",
+          data: input.value,
+          dataType: input.type
+        },
+      }
+    );
+
+    let response = await fetch(request).catch((error) => window.location = document.location.origin);
+    let data = await response.json();
+
+    if ("error" in data) {
+      return "Um erro inesperado ocorreu. Tente novamente mais tarde.";
+    }
+
+    return data.content.alreadyUsed;
+  }
+
   static displayValidationMessage(input, type, message) {
     input.errorTextElement.innerHTML = message;
     if (type == "error") {

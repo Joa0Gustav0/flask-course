@@ -76,7 +76,7 @@ def marketItemImage(item_name) :
 
   return image;
 
-@app.route("/api/register-validation", methods=["GET"])
+@app.route("/api/login-validation", methods=["GET"])
 def registerValidation() :
   API_AUTHORIZATION_CODE = 'sLGDqCAyM7UnIm@rKeTf9BX58JvxY';
 
@@ -85,7 +85,13 @@ def registerValidation() :
   elif not request.headers['authorization'] == API_AUTHORIZATION_CODE:
     return APIsStatus.sendError('Incorrect API authorization code.');
 
-  return LoginValidation().checkAlreadyInUse(request.headers);
+  if not request.headers.get("data") or not request.headers.get("dataType") :
+    return APIsStatus.sendError('Data for validation does not follow the validation parameters.');
+
+  return LoginValidation.checkAlreadyInUse(
+    request.headers["data"], 
+    request.headers["dataType"]
+  );
 
 @app.errorhandler(404)
 def notFoundPage(error) :
