@@ -99,12 +99,55 @@ def listFilesURL(*style_files) :
 class Users :
   def getUsers() :
     try :
-      users = Crud().executeCrudAction("read", "SELECT CustomerUsername, CustomerEmail FROM customers;");
+      users_data = Crud().executeCrudAction("read", "SELECT CustomerUsername, CustomerEmail FROM customers;");
 
-      formated_users_list = list();
-      for username, user_email in users :
-        formated_users_list.append([username, user_email]);
+      users_list = [{
+        'username' : user_name,
+        'email' : user_email
+      } for user_name, user_email in users_data];
     
-      return formated_users_list;
+      return users_list;
+  
     except :
-      return False;
+      return None;
+
+class APIsStatus :
+  def sendError(self, message) :
+    return { 'error' : message };
+  def sendSuccess(self, message, content) :
+    return { 
+      'success' : message,
+      'content' : content
+    };
+
+class LoginValidation :
+  def checkAlreadyInUse(self, data_for_validation) :
+    data_type = None;
+    if data_for_validation.get("username") :
+      data_type = "username";
+    elif data_for_validation.get("email") :
+      data_type = "email"
+
+    if not data_type :
+      return APIsStatus.sendError('Data for validation does not follow the validation parameters.');
+
+    users = Users().getUsers();
+
+    if users == None :
+      return APIsStatus.sendError('Could not contact database for validation.');
+  
+    data_already_in_usage_count = list(filter(lambda user : user[data_type] == data_for_validation[data_type], users));
+    already_in_use = len(data_already_in_usage_count) > 0;
+
+    return APIsStatus.sendSuccess(
+      'Validation ocurred successfully.', 
+      {
+        'value' : already_in_use,
+        'message' : f'{data_type.capitalize()} is already in use.' if already_in_use else f'{data_type.capitalize()} can be used.'
+      }
+    )
+    
+
+    
+
+

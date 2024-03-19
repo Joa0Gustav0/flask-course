@@ -30,7 +30,7 @@ page_content %}
             <div class="image-loader__loading-icon"></div>
           </div>
           <img
-            src="/static/media/market-items/{{ item_name }}"
+            src="/api/images/market-items/{{ item_name }}"
             alt="Imagem de {{ item_name }}"
             onload="new ImageLoader('last-viewed-item-{{ item_ID }}').stop()"
             class="last-view-container__products_list__product-container__product-image"
@@ -69,7 +69,7 @@ page_content %}
           <div class="image-loader__loading-icon"></div>
         </div>
         <img
-          src="/static/media/market-items/{{ item_name }}"
+          src="/api/images/market-items/{{ item_name }}"
           alt="Imagem de {{ item_name }}"
           onload="new ImageLoader('item-{{ item_ID }}').stop()"
           class="products-list__product-container__product-image"

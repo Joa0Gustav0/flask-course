@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, abort, redirect, request, ses
 app = Flask(__name__);
 
 from markupsafe import escape;
-from data import MarketItems, Users, listFilesURL; 
+from data import MarketItems, Users, APIsStatus, LoginValidation, listFilesURL; 
 import os;
 
 @app.route("/")
@@ -67,7 +67,7 @@ def productPage(product_id) :
   response.set_cookie("UnIm@RkEt_last_viewed_item", str(product_id));
   return response;
 
-@app.route("/static/media/market-items/<item_name>")
+@app.route("/api/images/market-items/<item_name>")
 def marketItemImage(item_name) :
   image = MarketItems().serveItemImage(item_name)
 
@@ -75,7 +75,17 @@ def marketItemImage(item_name) :
     return send_file(os.path.dirname(os.path.realpath(__file__)).replace('\\', "/") + "/static/media/alt-product-image.jpg");
 
   return image;
-  
+
+@app.route("/api/register-validation", methods=["GET"])
+def registerValidation() :
+  API_AUTHORIZATION_CODE = 'sLGDqCAyM7UnIm@rKeTf9BX58JvxY';
+
+  if not request.headers.get('authorization') :
+    return APIsStatus.sendError('API authorization not provided.');
+  elif not request.headers['authorization'] == API_AUTHORIZATION_CODE:
+    return APIsStatus.sendError('Incorrect API authorization code.');
+
+  return LoginValidation().checkAlreadyInUse(request.headers);
 
 @app.errorhandler(404)
 def notFoundPage(error) :
