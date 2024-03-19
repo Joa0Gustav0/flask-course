@@ -41,31 +41,31 @@ class FormularyValidation {
 
   validateLoginForm() {}
 
-  validateRegisteringForm() {
+  async validateRegisteringForm() {
     let inputKeys = Object.keys(this.formularyInputs);
 
     let validationsResults = [];
-    inputKeys.forEach((key) => {
+    inputKeys.forEach(async (key) => {
       validationsResults.push(
-        FormularyValidation.checkInput(this.formularyInputs[key])
+        await FormularyValidation.checkInput(this.formularyInputs[key])
       );
-    });
 
-    FormularyValidation.checkValidationResult(validationsResults);
+      FormularyValidation.checkValidationResult(validationsResults);
+    });
   }
 
-  static checkInput(input) {
+  static async checkInput(input) {
     switch (input.type) {
       case "username":
-        return this.validateUsername(input);
+        return await this.validateUsername(input);
       case "email":
-        return this.validateEmail(input);
+        return await this.validateEmail(input);
       case "password":
-        return this.validatePassword(input);
+        return await this.validatePassword(input);
     }
   }
 
-  static validateUsername(input) {
+  static async validateUsername(input) {
     if (input.value.trim() == "") {
       return this.displayValidationMessage(input, "error", "");
     }
@@ -90,8 +90,13 @@ class FormularyValidation {
         "O usuário não deve conter números."
       );
     }
-
-    this.seeUsageInDatabase(input);
+    if (await this.seeUsageInDatabase(input)) {
+      return this.displayValidationMessage(
+        input,
+        "error",
+        "O usuário já está em uso. Tente outro."
+      );
+    }
 
     return this.displayValidationMessage(input, "success", "");
   }
@@ -133,7 +138,7 @@ class FormularyValidation {
 
     return this.displayValidationMessage(input, "success", "");
   }
-  static validateEmail(input) {
+  static async validateEmail(input) {
     if (input.value.trim() == "") {
       return this.displayValidationMessage(input, "error", "");
     }
@@ -151,28 +156,36 @@ class FormularyValidation {
         "O email não possui um provedor válido\n(Gmail, Yahoo, Outlook, Hotmail)."
       );
     }
+    if (await this.seeUsageInDatabase(input)) {
+      return this.displayValidationMessage(
+        input,
+        "error",
+        "O email já está em uso. Tente outro."
+      );
+    }
 
     return this.displayValidationMessage(input, "success", "");
   }
-
   static async seeUsageInDatabase(input) {
     let request = new Request(
       `${document.location.origin}/api/login-validation`,
       {
         method: "GET",
-        headers:  {
+        headers: {
           authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY",
           data: input.value,
-          dataType: input.type
+          dataType: input.type,
         },
       }
     );
 
-    let response = await fetch(request).catch((error) => window.location = document.location.origin);
+    let response = await fetch(request).catch(
+      (error) => (window.location = document.location.origin)
+    );
     let data = await response.json();
 
     if ("error" in data) {
-      return "Um erro inesperado ocorreu. Tente novamente mais tarde.";
+      window.location = document.location.origin;
     }
 
     return data.content.alreadyUsed;
