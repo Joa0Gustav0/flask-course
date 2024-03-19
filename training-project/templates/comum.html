@@ -3,8 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='comum.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='cookies-popup.css') }}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='comum.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='cookies-popup.css') }}"
+    />
     {% if styles %} {% for style_path in styles %}
     <link rel="stylesheet" href="{{ style_path }}" />
     {% endfor %} {% endif %}
@@ -40,36 +46,65 @@
     </header>
     <main>{% block page_content %} {% endblock %}</main>
 
-    {% if not request.cookies.get("UnIm@RkEt_cookies_usage_permission") != None %}
-      <div class="cookies-request-container">
-        <div class="cookies-request-container__container">
-          <div>
-            <div class="cookies-request-container__headline">
-              <img class="cookies-request-container__headline__cookie-icon" src="{{ url_for('static', filename='media/cookie-icon.png') }}" alt="Ícone de um cookie.">
-              <h1 class="cookies-request-container__headline__text">
-                Seu conforto e segurança são prioridades.
-              </h1>
-            </div>
-            <p class="cookies-request-container__paragraph">
-              A Unimarket utiliza cookies para armazenar informações que auxiliam na sua navegação durante a sua sessão no website - Os cookies são expirados automaticamente quando o seu navegador for fechado. A qualquer momento, você pode revogar o uso de cookies nesse website acessando a interface de configurações de cookies do seu navegador. A Unimarket agradece a atenção.
-            </p>
-            <button class="cookies-request-container__submit-button">
-              Aceitar Cookies
-            </button>
+    <span class="notification-popup-container">
+      <h1 class="notification-popup-container__headline">
+        🦄 Hey! Notificação!
+      </h1>
+      <p class="notification-popup-container__message-text">
+        A sua conta foi criada com sucesso. Faça login e conheça o que o UniMarket tem a te oferecer!
+      </p>
+      <img src="{{ url_for('static', filename='media/unicorn-notification-icon.png') }}" alt="Ícone representativo de um unicórnio de brinquedo" class="notification-popup-container__floating-icon" />
+      <ion-icon name="close"></ion-icon>
+    </span>
+
+    {% if not request.cookies.get("UnIm@RkEt_cookies_usage_permission") != None
+    %}
+    <div class="cookies-request-container">
+      <div class="cookies-request-container__container">
+        <div>
+          <div class="cookies-request-container__headline">
+            <img
+              class="cookies-request-container__headline__cookie-icon"
+              src="{{ url_for('static', filename='media/cookie-icon.png') }}"
+              alt="Ícone de um cookie."
+            />
+            <h1 class="cookies-request-container__headline__text">
+              Seu conforto e segurança são prioridades.
+            </h1>
           </div>
-          <img class="cookies-request-container__ilustration" src="{{ url_for('static', filename='media/cookies-unicorn.png') }}" alt="Imagem de um unicórnio nas nuvens.">
+          <p class="cookies-request-container__paragraph">
+            A Unimarket utiliza cookies para armazenar informações que auxiliam
+            na sua navegação durante a sua sessão no website - Os cookies são
+            expirados automaticamente quando o seu navegador for fechado. A
+            qualquer momento, você pode revogar o uso de cookies nesse website
+            acessando a interface de configurações de cookies do seu navegador.
+            A Unimarket agradece a atenção.
+          </p>
+          <button class="cookies-request-container__submit-button">
+            Aceitar Cookies
+          </button>
         </div>
+        <img
+          class="cookies-request-container__ilustration"
+          src="{{ url_for('static', filename='media/cookies-unicorn.png') }}"
+          alt="Imagem de um unicórnio nas nuvens."
+        />
       </div>
-      <script src="{{ url_for('static', filename='cookies-handler.js') }}"></script>
+    </div>
+    <script src="{{ url_for('static', filename='cookies-handler.js') }}"></script>
     {% endif %}
 
     <script src="{{ url_for('static', filename='interactivity.js') }}"></script>
-    {% if scripts %}
-    {% for script_file in scripts %}
+    {% if scripts %} {% for script_file in scripts %}
     <script src="{{ script_file }}"></script>
-    {% endfor %}
-    {% endif %}
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    {% endfor %} {% endif %}
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
   </body>
 </html>
