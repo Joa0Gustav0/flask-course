@@ -46,7 +46,7 @@
     </header>
     <main>{% block page_content %} {% endblock %}</main>
 
-    <span class="notification-popup-container">
+    <!-- <span class="notification-popup-container">
       <h1 class="notification-popup-container__headline">
         🦄 Hey! Notificação!
       </h1>
@@ -54,8 +54,10 @@
         A sua conta foi criada com sucesso. Faça login e conheça o que o UniMarket tem a te oferecer!
       </p>
       <img src="{{ url_for('static', filename='media/unicorn-notification-icon.png') }}" alt="Ícone representativo de um unicórnio de brinquedo" class="notification-popup-container__floating-icon" />
-      <ion-icon name="close"></ion-icon>
-    </span>
+      <button class="notification-popup-container__close-button">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </span> -->
 
     {% if not request.cookies.get("UnIm@RkEt_cookies_usage_permission") != None
     %}
