@@ -52,13 +52,16 @@ class AppNotification {
   }
 
   highlightKeywords(entryMessage) {
+    if (!this.keywords) return entryMessage;
+
     let outputMessage = "";
 
     entryMessage = entryMessage.split(" ");
     entryMessage.forEach((word) => {
-      outputMessage += (this.keywords.includes(word)
-        ? `<span class='highlighted-text'>${word}</span>`
-        : word) + " ";
+      outputMessage +=
+        (this.keywords.includes(word)
+          ? `<span class='highlighted-text'>${word}</span>`
+          : word) + " ";
     });
 
     return outputMessage;
@@ -95,7 +98,10 @@ class AppNotification {
     setTimeout(() => targetElement.remove(), 1250);
   }
 }
-new AppNotification(
-  "A sua conta foi criada com sucesso. Faça login e conheça o que o UniMarket tem a te oferecer!",
-  ["conta", "criada", "com", "sucesso.", "UniMarket"]
-);
+
+//CREATES A NOTIFICATION OBJECT IF ONE IS SENT THROUGH BACK-END 💡
+const NOTIFICATION_SENDER = document.querySelector(".notification-sender");
+if (NOTIFICATION_SENDER) {
+  new AppNotification(NOTIFICATION_SENDER.classList[1].replace(/-/g, " "), null);
+  NOTIFICATION_SENDER.remove();
+}

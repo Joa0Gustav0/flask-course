@@ -1,5 +1,6 @@
-from flask import Flask, render_template, url_for, abort, redirect, request, session, make_response, send_file;
+from flask import Flask, render_template, url_for, abort, redirect, request, session, make_response, send_file, flash;
 app = Flask(__name__);
+app.secret_key = "helloworld";
 
 from markupsafe import escape;
 from data import MarketItems, Users, APIsStatus, LoginValidation, listFilesURL; 
@@ -40,6 +41,19 @@ def login() :
     focus_action = "on-login-view";
   else :
     focus_action = "on-register-view";
+  
+  if request.method == "POST" :
+    """ if focus_action == "on-login-view" :
+      return; """
+    if focus_action == "on-register-view" :
+      registration_status = Users.register({
+        "username" : request.form.get("username"),
+        "email" : request.form.get("email"),
+        "password" : request.form.get("password")
+      });
+    
+      flash(registration_status, "information");
+      return redirect("/login");
 
   return render_template(
     "login-register.html",

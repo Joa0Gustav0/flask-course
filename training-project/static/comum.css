@@ -276,6 +276,10 @@ main > section > .container {
 .notification-popup-container__close-button:hover ion-icon {
   border-color: var(--primary-color);
 }
+.notification-popup-container__close-button:active ion-icon {
+  color: white;
+  background-color: var(--primary-color);
+}
 .notification-popup-container__floating-icon {
   position: absolute;
   right: -58px;

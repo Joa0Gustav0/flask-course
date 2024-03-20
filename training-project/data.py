@@ -111,6 +111,23 @@ class Users :
     except :
       return None;
 
+  def register(user_data) :
+    try :
+      if None in list(user_data.values()) : raise Exception();
+
+      Crud().executeCrudAction(
+        "create", 
+        "INSERT INTO customers (CustomerUsername, CustomerEmail, CustomerPassword) VALUES ('{}', '{}', '{}');".format(
+          user_data["username"],
+          user_data["email"],
+          user_data["password"]
+        )
+      );
+
+      return "A sua conta foi criada com sucesso. Faça login e conheça o que o UniMarket tem a te oferecer!";
+    except :
+      return "Um erro inesperado ocorreu e seu registro não pode ser concluido. Tente novamente mais tarde.";
+
 class APIsStatus :
   def sendError(message) :
     return { 'error' : message };
@@ -138,3 +155,8 @@ class LoginValidation :
       }
     )
 
+""" print(Users.register({
+  "username" : "test@user2",
+  "email" : "test2@gmail.com",
+  "password" : "test2@pass123"
+})); """

@@ -179,9 +179,18 @@ class FormularyValidation {
       }
     );
 
-    let response = await fetch(request).catch(
-      (error) => (window.location = document.location.origin)
-    );
+    let response = await fetch(request).catch((error) => {
+      new AppNotification(
+        "A validação do formulário está apresentado falhas. Recarregue a página ou tente novamente mais tarde.",
+        null
+      );
+      return false;
+    });
+
+    if (!response) {
+      return true;
+    }
+
     let data = await response.json();
 
     if ("error" in data) {
