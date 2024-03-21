@@ -302,3 +302,25 @@ main > section > .container {
     transform: rotateZ(-10deg);
   }
 }
+
+.password-protector {
+  transition: all .25s;
+  position: absolute;
+  top: 3.5px;
+  left: 57.5px;
+
+  width: 20px;
+  height: 20px;
+}
+.password-protector:hover {
+  cursor: pointer;
+  transform: scale(107.5%, 107.5%);
+}
+.password-protector:active {
+  transform: scale(92.5%, 92.5%);
+}
+label:focus-within > .password-protector,
+.password-protector:hover,
+.password-protector.off {
+  color: var(--primary-color);
+}

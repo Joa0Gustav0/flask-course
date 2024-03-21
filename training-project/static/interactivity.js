@@ -99,9 +99,58 @@ class AppNotification {
   }
 }
 
+class PasswordProtector {
+  static detectNeedForProtection() {
+    let inputElements = Array.from(document.getElementsByTagName("input"));
+    let passwordInputs = inputElements.filter(
+      (input) => input.getAttribute("type") == "password"
+    );
+
+    passwordInputs.forEach(
+      (inputElement) => new PasswordProtector(inputElement)
+    );
+  }
+
+  constructor(passwordInputElement) {
+    this.passwordInput = passwordInputElement;
+    this.createProtectorElement();
+  }
+
+  createProtectorElement() {
+    let passwordInputLabel = this.passwordInput.parentNode;
+
+    passwordInputLabel.innerHTML += `<ion-icon 
+      class="password-protector" 
+      name="eye"
+      onClick="PasswordProtector.toggleState(this)"
+    ></ion-icon>`;
+  }
+
+  static toggleState(protector) {
+    let parentLabel = protector.parentNode;
+    let passwordInput = parentLabel.childNodes[1];
+
+    if (protector.getAttribute("name") == "eye") {
+      protector.setAttribute("name", "eye-off");
+      protector.classList.add("off");
+
+      passwordInput.setAttribute("type", "text");
+    } else {
+      protector.setAttribute("name", "eye");
+      protector.classList.remove("off");
+
+      passwordInput.setAttribute("type", "password");
+    }
+  }
+}
+PasswordProtector.detectNeedForProtection();
+
 //CREATES A NOTIFICATION OBJECT IF ONE IS SENT THROUGH BACK-END 💡
 const NOTIFICATION_SENDER = document.querySelector(".notification-sender");
 if (NOTIFICATION_SENDER) {
-  new AppNotification(NOTIFICATION_SENDER.classList[1].replace(/-/g, " "), null);
+  new AppNotification(
+    NOTIFICATION_SENDER.classList[1].replace(/-/g, " "),
+    null
+  );
   NOTIFICATION_SENDER.remove();
 }
