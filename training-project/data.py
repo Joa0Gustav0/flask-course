@@ -110,23 +110,12 @@ class Users :
   
     except :
       return None;
-
-  def register(user_data) :
-    try :
-      if None in list(user_data.values()) : raise Exception();
-
-      Crud().executeCrudAction(
-        "create", 
-        "INSERT INTO customers (CustomerUsername, CustomerEmail, CustomerPassword) VALUES ('{}', '{}', '{}');".format(
-          user_data["username"],
-          user_data["email"],
-          user_data["password"]
-        )
-      );
-
-      return "A sua conta foi criada com sucesso. Faça login e conheça o que o UniMarket tem a te oferecer!";
-    except :
-      return "Um erro inesperado ocorreu e seu registro não pode ser concluido. Tente novamente mais tarde.";
+  def getUserByID(userID) :
+    query = Crud().executeCrudAction("read", f"SELECT * FROM customers WHERE CustomerID = {userID};");
+    if query :
+      return query[0];
+    else :
+      return None;
 
 class APIsStatus :
   def sendError(message) :
@@ -137,7 +126,7 @@ class APIsStatus :
       'content' : content
     };
 
-class LoginValidation :
+class SignValidation :
   def checkAlreadyInUse(data_for_validation, data_type) :
     users = Users.getUsers();
 
@@ -155,8 +144,58 @@ class LoginValidation :
       }
     )
 
-""" print(Users.register({
-  "username" : "test@user2",
-  "email" : "test2@gmail.com",
-  "password" : "test2@pass123"
-})); """
+  def register(user_data) :
+    try :
+      if None in list(user_data.values()) : raise Exception();
+
+      Crud().executeCrudAction(
+        "create", 
+        "INSERT INTO customers (CustomerUsername, CustomerEmail, CustomerPassword) VALUES ('{}', '{}', '{}');".format(
+          user_data["username"],
+          user_data["email"],
+          user_data["password"]
+        )
+      );
+
+      return {
+        "message" : "A sua conta foi criada com sucesso. Faça login e conheça o que o UniMarket tem a te oferecer!",
+        "ok" : True
+      };
+    except :
+      return {
+        "message" : "Um erro inesperado ocorreu e seu registro não pode ser concluido. Tente novamente mais tarde.",
+        "ok" : False
+      };
+
+  def login(login_data) :
+    user_registerID = SignValidation.matchRegister(login_data);
+    if not user_registerID : return False;
+  
+    logged_user = Users.getUserByID(user_registerID);
+    if not logged_user : return False;
+
+    userID, user_username, user_email, user_password = logged_user;
+
+    return { 
+      "ID" : userID,
+      "username" : user_username,
+      "email" : user_email,
+    };
+  def matchRegister(login_data) :
+    try :
+      matching_registerID = Crud().executeCrudAction(
+        "read", 
+        "SELECT CustomerID FROM customers WHERE CustomerUsername = '{}' AND CustomerPassword = '{}';".format(
+          login_data["username"],
+          login_data["password"]
+        )
+      )[0][0];
+
+      return matching_registerID;
+    except :
+      return None;
+
+""" print(SignValidation.login({
+  "username" : "GustavoTeste",
+  "password" : "2409gugu@"
+})) """

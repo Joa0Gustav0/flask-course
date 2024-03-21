@@ -43,11 +43,12 @@ page_content %}
             id="email-input-error"
             class="actions-container__aside__form__input-label__input-error-text"
           ></p></label
-        ><label class="actions-container__aside__form__input-label"
+        ><label
+          class="actions-container__aside__form__input-label actions-container__aside__form__input-label--password"
           ><span class="actions-container__aside__form__input-label__text"
             >Senha</span
           ><input
-            type="text"
+            type="password"
             name="password"
             id="password-input"
             maxlength="20"
@@ -56,7 +57,8 @@ page_content %}
           <p
             id="password-input-error"
             class="actions-container__aside__form__input-label__input-error-text"
-          ></p
+          ></p>
+          <ion-icon name="eye"></ion-icon
         ></label>
 
         <input
@@ -87,29 +89,33 @@ page_content %}
             >Usuário</span
           ><input
             type="text"
-            name="username"
+            name="login-username"
             id="login-username-input"
             placeholder="Insira o seu nome de usuário..."
             maxlength="15"
+            required
             class="actions-container__aside__form__input-label__input" />
           <p
             id="login-username-input-error"
             class="actions-container__aside__form__input-label__input-error-text"
           ></p></label
-        ><label class="actions-container__aside__form__input-label"
+        ><label
+          class="actions-container__aside__form__input-label actions-container__aside__form__input-label--password"
           ><span class="actions-container__aside__form__input-label__text"
             >Senha</span
           ><input
             type="password"
-            name="password"
+            name="login-password"
             id="login-password-input"
             placeholder="Insira a sua senha..."
             maxlength="20"
+            required
             class="actions-container__aside__form__input-label__input" />
           <p
             id="login-password-input-error"
             class="actions-container__aside__form__input-label__input-error-text"
-          ></p
+          ></p>
+          <ion-icon name="eye"></ion-icon
         ></label>
         <a href="#" class="actions-container__aside__form__forgot-password-link"
           >Esqueceu seus dados?</a
@@ -119,7 +125,6 @@ page_content %}
           class="actions-container__aside__form__submit-button submit-button"
           type="submit"
           value="Fazer Login"
-          disabled
         />
       </form>
     </aside>

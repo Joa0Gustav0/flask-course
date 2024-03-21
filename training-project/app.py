@@ -1,9 +1,8 @@
 from flask import Flask, render_template, url_for, abort, redirect, request, session, make_response, send_file, flash;
 app = Flask(__name__);
-app.secret_key = "helloworld";
+app.secret_key = "M4dTAj8qWFEUnIm@rKeTdQmhgKwB6Z7";
 
-from markupsafe import escape;
-from data import MarketItems, Users, APIsStatus, LoginValidation, listFilesURL; 
+from data import MarketItems, Users, APIsStatus, SignValidation, listFilesURL; 
 import os;
 
 @app.route("/")
@@ -43,17 +42,36 @@ def login() :
     focus_action = "on-register-view";
   
   if request.method == "POST" :
-    """ if focus_action == "on-login-view" :
-      return; """
+    if focus_action == "on-login-view" :
+      login_form_data = {
+        "username" : request.form.get("login-username"),
+        "password" : request.form.get("login-password")
+      }
+
+      logged = SignValidation.login(login_form_data) if None not in list(login_form_data.values()) else False;
+
+      if logged:
+        session["logged_user"] = logged;
+
+        return redirect("/user/profile");
+      else :
+        flash("A ação de login não pode ser completada. Tente novamente.", "information");
+        return redirect("/login");
+    
     if focus_action == "on-register-view" :
-      registration_status = Users.register({
+      registration_status = SignValidation.register({
         "username" : request.form.get("username"),
         "email" : request.form.get("email"),
         "password" : request.form.get("password")
       });
     
-      flash(registration_status, "information");
-      return redirect("/login");
+      flash(registration_status["message"], "information");
+
+      if registration_status["ok"] :
+        return redirect("/login");
+      else :
+        return redirect("/register");
+
 
   return render_template(
     "login-register.html",
@@ -62,6 +80,10 @@ def login() :
     styles=listFilesURL("login-register.css"),
     scripts=listFilesURL("login-register.js", "login-register-form.js")
   );
+
+@app.route("/user/profile")
+def userProfile() :
+  return f"<h1>Olá, {session["logged_user"]["username"]}!</h1>";
 
 @app.route(f"/market/product/<int:product_id>")
 def productPage(product_id) :
@@ -102,7 +124,7 @@ def registerValidation() :
   if not request.headers.get("data") or not request.headers.get("dataType") :
     return APIsStatus.sendError('Data for validation does not follow the validation parameters.');
 
-  return LoginValidation.checkAlreadyInUse(
+  return SignValidation.checkAlreadyInUse(
     request.headers["data"], 
     request.headers["dataType"]
   );
