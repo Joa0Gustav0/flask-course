@@ -36,6 +36,9 @@ def market() :
 @app.route("/login", methods=["GET", "POST"])
 @app.route("/register", methods=["GET", "POST"])
 def login() :
+  if session.get("logged_user") :
+    return redirect("/user/profile");
+
   if "login" in request.path :
     focus_action = "on-login-view";
   else :
@@ -50,14 +53,19 @@ def login() :
 
       logged = SignValidation.login(login_form_data) if None not in list(login_form_data.values()) else False;
 
-      if logged:
+      if not logged.get("error"):
         session["logged_user"] = logged;
 
         return redirect("/user/profile");
-      else :
-        flash("A ação de login não pode ser completada. Tente novamente.", "information");
+      elif logged.get("error") :
+        flash(logged.get("error"), "information");
+
         return redirect("/login");
-    
+      else :
+        flash("A ação de login não pode ser completada. Tente novamente mais tarde.", "information");
+
+        return redirect("/login");
+  
     if focus_action == "on-register-view" :
       registration_status = SignValidation.register({
         "username" : request.form.get("username"),
@@ -83,7 +91,19 @@ def login() :
 
 @app.route("/user/profile")
 def userProfile() :
-  return f"<h1>Olá, {session["logged_user"]["username"]}!</h1>";
+  if not session.get("logged_user") :
+    flash("Você precisa fazer login para visualizar o seu perfil de usuário aqui no UniMarket!", "information");
+    return redirect("/login");
+
+  return render_template("profile.html");
+
+@app.route("/logout")
+def logout() :
+  if session.get("logged_user") :
+    session.pop("logged_user", None);
+    flash("Você se desconectou. 🔌", "information")
+
+  return redirect("/login");
 
 @app.route(f"/market/product/<int:product_id>")
 def productPage(product_id) :

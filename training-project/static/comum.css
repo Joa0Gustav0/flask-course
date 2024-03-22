@@ -95,7 +95,8 @@ body {
   text-align: center;
   padding: 5px 7.5px;
 }
-.header__container__navbar__nav-links__link::after {
+.header__container__navbar__nav-links__link::after,
+.header__container__navbar__nav-buttons--logged__button::after {
   transition: all 0.25s;
 
   position: absolute;
@@ -109,14 +110,29 @@ body {
   min-width: 0px;
   border-bottom: 2px solid white;
 }
-.header__container__navbar__nav-links__link:hover::after {
+.header__container__navbar__nav-links__link:hover::after,
+.header__container__navbar__nav-buttons--logged__button:hover::after {
   min-width: 100%;
 }
-.header__container__navbar__nav-links__link:hover {
+.header__container__navbar__nav-links__link:hover,
+.header__container__navbar__nav-buttons--logged__button:hover {
   cursor: pointer;
 }
-.header__container__navbar__nav-links__link:active::after {
+.header__container__navbar__nav-links__link:active::after,
+.header__container__navbar__nav-buttons--logged__button:active::after {
   min-width: 50%;
+}
+
+.header__container__navbar__nav-buttons--logged__button {
+  position: relative;
+
+  border: 0;
+  outline: none;
+  color: white;
+  font-size: 1.25em;
+  padding: 5px 7.5px;
+  background-color: transparent;
+  font-family: var(--secondary-font-stack);
 }
 
 main {

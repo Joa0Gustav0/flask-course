@@ -1,0 +1,9 @@
+{% extends 'comum.html' %}
+
+{% block title %}
+  Perfil
+{% endblock %}
+
+{% block page_content %}
+<h1>👋 Olá, {{ session.get("logged_user", default={ 'username' : 'uniCliente' }).get("username") }}!</h1>
+{% endblock %}

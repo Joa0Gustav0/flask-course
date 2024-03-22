@@ -158,7 +158,7 @@ class SignValidation :
       );
 
       return {
-        "message" : "A sua conta foi criada com sucesso. Faça login e conheça o que o UniMarket tem a te oferecer!",
+        "message" : "A sua conta foi criada com sucesso. Faça login e conheça o que o UniMarket tem a te oferecer! 🎉",
         "ok" : True
       };
     except :
@@ -169,10 +169,10 @@ class SignValidation :
 
   def login(login_data) :
     user_registerID = SignValidation.matchRegister(login_data);
-    if not user_registerID : return False;
+    if not user_registerID : return { 'error' : 'Nenhum usuário com esses dados de login foi encontrado. 🔎' };
   
     logged_user = Users.getUserByID(user_registerID);
-    if not logged_user : return False;
+    if not logged_user : return { 'error' : 'Um erro inesperado ocorreu durante a tentativa de login. Tente novamente mais tarde.' };
 
     userID, user_username, user_email, user_password = logged_user;
 

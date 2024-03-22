@@ -31,7 +31,30 @@
               >Mercado</a
             >
           </div>
-          <div class="header__container__navbar__nav-links">
+          <div
+            class="header__container__navbar__nav-links {% if session.get('logged_user') %} header__container__navbar__nav-buttons--logged {% endif %}"
+          >
+            {% if session.get("logged_user") %}
+            <button
+              class="header__container__navbar__nav-buttons--logged__button"
+              href="/login"
+            >
+              Olá, {{ session.get("logged_user").get("username") }}
+              <span
+                class="header__container__navbar__nav-buttons--logged__button__profile-symbol"
+                >{{ session.get("logged_user").get("username")[0] }}</span
+              >
+              <ion-icon
+                class="header__container__navbar__nav-buttons--logged__button__profile-handle"
+                name="chevron-down"
+              ></ion-icon>
+            </button>
+            <button
+              class="header__container__navbar__nav-buttons--logged__button"
+            >
+              Carrinho <ion-icon name="cart"></ion-icon>
+            </button>
+            {% else %}
             <a class="header__container__navbar__nav-links__link" href="/login"
               >Login</a
             >
@@ -40,6 +63,7 @@
               href="/register"
               >Registro</a
             >
+            {% endif %}
           </div>
         </nav>
       </div>
@@ -47,12 +71,11 @@
     <main>{% block page_content %} {% endblock %}</main>
 
     {% for notification in get_flashed_messages() %}
-    <span class="notification-sender {{ notification.replace(' ', '-') }}" ></span>
-    {% endfor %}
-
-
-    {% if not request.cookies.get("UnIm@RkEt_cookies_usage_permission") != None
-    %}
+    <span
+      class="notification-sender {{ notification.replace(' ', '-') }}"
+    ></span>
+    {% endfor %} {% if not
+    request.cookies.get("UnIm@RkEt_cookies_usage_permission") != None %}
     <div class="cookies-request-container">
       <div class="cookies-request-container__container">
         <div>
