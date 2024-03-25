@@ -81,7 +81,7 @@ class UserCart :
     self.cartExists = self.checkCartExistence();
 
   def checkCartExistence(self) :
-    cart_exists = UserCart.getCart(self.cartID);
+    cart_exists = self.getCart();
   
     return cart_exists;
 
@@ -121,25 +121,26 @@ class UserCart :
       if not entry_data.get('productID') or not entry_data.get('product_quantity') :
         raise Exception;
   
-      return tuple([entry_data.get('productID'), entry_data.get('product_quantity')]);
+      return [entry_data.get('productID'), entry_data.get('product_quantity')];
   
     except Exception:
       return APIsStatus.sendError('Data does not satisfies cart addition process parameters.');
 
   def getCart(self) :
-    cart = Crud().executeCrudAction(
+    string_cart = Crud().executeCrudAction(
       "read", 
       f"SELECT CartContent FROM customerscarts WHERE CustomerID = {self.cartID};"
     );
 
-    if cart :
+    if string_cart :
+      cart = ast.literal_eval(string_cart[0][0]);
+
+
       return APIsStatus.sendSuccess(
         "O carrinho foi encontrado.", cart
       )
     else :
-      return APIsStatus.sendError(
-        "O carrinho não foi encontrado ou nenhum produto foi adicionado a ele ainda."
-      );
+      return APIsStatus.sendError(404);
 
   def serveItemImage(self, item_name) :
     try :
@@ -272,7 +273,6 @@ class SignValidation :
     except :
       return None;
 
-""" print(SignValidation.login({
-  "username" : "GustavoTeste",
-  "password" : "2409gugu@"
-})) """
+print(
+  UserCart(36).getCart()
+)

@@ -80,6 +80,14 @@
         já <span class="highlighted-text">adicionou</span>!
       </p>
     </aside>
+
+    <script>
+      sessionStorage.setItem(
+        "logged_userID",
+        '{{ session.get("logged_user").get("ID") }}'
+      );
+    </script>
+    <script src="{{ url_for('static', filename='logged/user-cart-api-handler.js') }}"></script>
     {% endif %}
 
     <main>{% block page_content %} {% endblock %}</main>
@@ -126,6 +134,7 @@
     {% endif %}
 
     <script src="{{ url_for('static', filename='interactivity.js') }}"></script>
+
     {% if scripts %} {% for script_file in scripts %}
     <script src="{{ script_file }}"></script>
     {% endfor %} {% endif %}

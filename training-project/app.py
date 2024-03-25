@@ -132,25 +132,23 @@ def marketItemImage(item_name) :
 
   return image;
 
-@app.route("/api/users/<int:user_ID>/cart")
+@app.route("/api/users/<int:user_ID>/cart", methods=["GET", "POST"])
 def userCart(user_ID) :
   authorization = APIsStatus.validateAuthorization();
   if authorization.get('error') :
     return authorization;
 
-  action_to_cart = request.get('action');
-  if not action_to_cart:
-    return APIsStatus.sendError("A valid action was not set.");
+  action = request.method;
 
-  if action_to_cart == 'add' :
-    return UserCart(user_ID).addToCart(
-      {
-        'productID' : 1,
-        'product_quantity' : 2
-      }
-    )
-  elif action_to_cart == 'get' :
+  if action == "GET" :
     return UserCart(user_ID).getCart();
+  elif action == "POST" :
+    addition_data = {
+      'productID' : request.headers.get('productID'),
+      'product_quantity' : request.headers.get('product_quantity')
+    }
+
+    return UserCart(user_ID).addToCart(addition_data)
   else :
     return APIsStatus.sendError("A valid action was not set.");
 
