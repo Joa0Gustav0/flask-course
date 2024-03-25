@@ -68,6 +68,20 @@
         </nav>
       </div>
     </header>
+
+    {% if session.get("logged_user") %}
+    <aside class="cart-sidebar">
+      <h1 class="cart-sidebar__headline">
+        Carrinho
+        <ion-icon class="cart-sidebar__headline__icon" name="cart"></ion-icon>
+      </h1>
+      <p class="cart-sidebar__sub-headline">
+        Veja aqui os <span class="highlighted-text">produtinhos</span> que você
+        já <span class="highlighted-text">adicionou</span>!
+      </p>
+    </aside>
+    {% endif %}
+
     <main>{% block page_content %} {% endblock %}</main>
 
     {% for notification in get_flashed_messages() %}

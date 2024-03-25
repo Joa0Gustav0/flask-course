@@ -1,8 +1,9 @@
 import mysql.connector;
-from flask import url_for, send_file;
+from flask import url_for, send_file, request;
 from io import BytesIO;
 from PIL import Image; 
 import os;
+import ast;
 from google.cloud import storage;
 
 google_credentials_file_name = "unimarket-416714-a351455fb7b2.json";
@@ -74,6 +75,72 @@ class MarketItems :
   def getItemsByCategory(self, last_viewed_product_ID, category) :
     return Crud().executeCrudAction("read", f"SELECT * FROM marketitems WHERE ItemID = {last_viewed_product_ID} UNION SELECT * FROM marketitems WHERE ItemCategory = \'{category}\' AND ItemID != {last_viewed_product_ID} LIMIT 3;");
 
+class UserCart :
+  def __init__(self, userID) :
+    self.cartID = userID;
+    self.cartExists = self.checkCartExistence();
+
+  def checkCartExistence(self) :
+    cart_exists = UserCart.getCart(self.cartID);
+  
+    return cart_exists;
+
+  def addToCart(self, addition_data) :  
+    formated_data = UserCart.formatCartAdditionData(addition_data);
+
+    if isinstance(formated_data, dict) : 
+      return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.");
+
+    try :
+      if self.cartExists :
+        current_cart_content = self.cartExists.get('content');
+        current_cart_content.append(formated_data);
+
+        new_cart_content = current_cart_content;
+
+        Crud().executeCrudAction(
+          "create", 
+          f"UPDATE customerscart SET (CartContent = {new_cart_content}) WHERE CustomerID = {self.cartID};"
+        );
+        
+        return;
+      else :
+        Crud().executeCrudAction(
+          "create", 
+          f"INSERT INTO customerscarts (CustomerID, CartContent) VALUES ({self.cartID}, '[{formated_data}]');"
+        );
+    
+      return APIsStatus.sendSuccess(
+        "O produto foi adicionado ao carrinho com sucesso!", None
+      );
+    except :
+      return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.");
+
+  def formatCartAdditionData(entry_data) :
+    try :
+      if not entry_data.get('productID') or not entry_data.get('product_quantity') :
+        raise Exception;
+  
+      return tuple([entry_data.get('productID'), entry_data.get('product_quantity')]);
+  
+    except Exception:
+      return APIsStatus.sendError('Data does not satisfies cart addition process parameters.');
+
+  def getCart(self) :
+    cart = Crud().executeCrudAction(
+      "read", 
+      f"SELECT CartContent FROM customerscarts WHERE CustomerID = {self.cartID};"
+    );
+
+    if cart :
+      return APIsStatus.sendSuccess(
+        "O carrinho foi encontrado.", cart
+      )
+    else :
+      return APIsStatus.sendError(
+        "O carrinho não foi encontrado ou nenhum produto foi adicionado a ele ainda."
+      );
+
   def serveItemImage(self, item_name) :
     try :
       bucket = client_storage_manager.get_bucket("market_items");
@@ -118,6 +185,16 @@ class Users :
       return None;
 
 class APIsStatus :
+  def validateAuthorization() :
+    API_AUTHORIZATION_CODE = 'sLGDqCAyM7UnIm@rKeTf9BX58JvxY';
+
+    if not request.headers.get('authorization') :
+      return APIsStatus.sendError('API authorization not provided.');
+    elif not request.headers['authorization'] == API_AUTHORIZATION_CODE:
+      return APIsStatus.sendError('Incorrect API authorization code.');
+
+    return APIsStatus.sendSuccess("Authorization provided.", None);
+
   def sendError(message) :
     return { 'error' : message };
   def sendSuccess(message, content) :

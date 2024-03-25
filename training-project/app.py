@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, abort, redirect, request, ses
 app = Flask(__name__);
 app.secret_key = "M4dTAj8qWFEUnIm@rKeTdQmhgKwB6Z7";
 
-from data import MarketItems, Users, APIsStatus, SignValidation, listFilesURL; 
+from data import MarketItems, Users, UserCart, APIsStatus, SignValidation, listFilesURL; 
 import os;
 
 @app.route("/")
@@ -132,14 +132,35 @@ def marketItemImage(item_name) :
 
   return image;
 
+@app.route("/api/users/<int:user_ID>/cart")
+def userCart(user_ID) :
+  authorization = APIsStatus.validateAuthorization();
+  if authorization.get('error') :
+    return authorization;
+
+  action_to_cart = request.get('action');
+  if not action_to_cart:
+    return APIsStatus.sendError("A valid action was not set.");
+
+  if action_to_cart == 'add' :
+    return UserCart(user_ID).addToCart(
+      {
+        'productID' : 1,
+        'product_quantity' : 2
+      }
+    )
+  elif action_to_cart == 'get' :
+    return UserCart(user_ID).getCart();
+  else :
+    return APIsStatus.sendError("A valid action was not set.");
+
+
+
 @app.route("/api/login-validation", methods=["GET"])
 def registerValidation() :
-  API_AUTHORIZATION_CODE = 'sLGDqCAyM7UnIm@rKeTf9BX58JvxY';
-
-  if not request.headers.get('authorization') :
-    return APIsStatus.sendError('API authorization not provided.');
-  elif not request.headers['authorization'] == API_AUTHORIZATION_CODE:
-    return APIsStatus.sendError('Incorrect API authorization code.');
+  authorization = APIsStatus.validateAuthorization();
+  if authorization.get('error') :
+    return authorization;
 
   if not request.headers.get("data") or not request.headers.get("dataType") :
     return APIsStatus.sendError('Data for validation does not follow the validation parameters.');
