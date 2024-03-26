@@ -99,7 +99,7 @@ class UserCart :
     self.cartExists = self.checkCartExistence();
 
   def checkCartExistence(self) :
-    cart_exists = self.getCart();
+    cart_exists = self.getCart(False);
   
     return cart_exists;
 
@@ -107,7 +107,7 @@ class UserCart :
     formated_data = UserCart.formatCartAdditionData(addition_data);
 
     if isinstance(formated_data, dict) : 
-      return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.");
+      return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.1");
 
     try :
       if not self.cartExists.get('error') :
@@ -115,6 +115,7 @@ class UserCart :
         current_cart_content.append(formated_data);
 
         new_cart_content = UserCart.formatCartListData(current_cart_content);
+
 
         crud_status = Crud().executeCrudAction(
           "update", 
@@ -129,10 +130,10 @@ class UserCart :
       if crud_status == False : raise;
     
       return APIsStatus.sendSuccess(
-        "O produto foi adicionado ao carrinho com sucesso!", self.getCart()
+        "O produto foi adicionado ao carrinho com sucesso!", self.getCart(True)
       );
     except :
-      return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.");
+      return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.2");
 
   def formatCartAdditionData(entry_data) :
     try :
@@ -158,7 +159,7 @@ class UserCart :
   
     return products_in_list;
 
-  def getCart(self) :
+  def getCart(self, details) :
     string_cart = Crud().executeCrudAction(
       "read", 
       f"SELECT CartContent FROM customerscarts WHERE CustomerID = {self.cartID};"
@@ -168,7 +169,8 @@ class UserCart :
       cart = ast.literal_eval(string_cart[0][0]);
 
       return APIsStatus.sendSuccess(
-        "O carrinho foi encontrado.", UserCart.getCartContentInformations(cart)
+        "O carrinho foi encontrado.", 
+        UserCart.getCartContentInformations(cart) if details else cart
       )
     else :
       return APIsStatus.sendError(404);

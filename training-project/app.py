@@ -142,7 +142,7 @@ def userCart(user_ID) :
   action = request.method;
 
   if action == "GET" :
-    return UserCart(user_ID).getCart();
+    return UserCart(user_ID).getCart(True);
   elif action == "POST" :
     addition_data = ast.literal_eval(request.headers.get("inputData"));
     return UserCart(user_ID).addToCart(addition_data)
