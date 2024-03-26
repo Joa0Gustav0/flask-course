@@ -4,6 +4,7 @@ app.secret_key = "M4dTAj8qWFEUnIm@rKeTdQmhgKwB6Z7";
 
 from data import MarketItems, Users, UserCart, APIsStatus, SignValidation, listFilesURL; 
 import os;
+import ast;
 
 @app.route("/")
 def index() :
@@ -143,10 +144,7 @@ def userCart(user_ID) :
   if action == "GET" :
     return UserCart(user_ID).getCart();
   elif action == "POST" :
-    addition_data = {
-      'productID' : request.headers.get('productID'),
-      'product_quantity' : request.headers.get('product_quantity')
-    }
+    addition_data = ast.literal_eval(request.headers.get("inputData"));
 
     return UserCart(user_ID).addToCart(addition_data)
   else :

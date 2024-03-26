@@ -52,7 +52,7 @@ class Crud :
 
         crud_handlers["cursor"].close();
         crud_handlers["connection"].close();
-        return False;
+        return True;
       else :
         query = crud_handlers["cursor"].fetchall();
 
@@ -98,20 +98,20 @@ class UserCart :
 
         new_cart_content = current_cart_content;
 
-        Crud().executeCrudAction(
-          "create", 
-          f"UPDATE customerscart SET (CartContent = {new_cart_content}) WHERE CustomerID = {self.cartID};"
+        crud_status = Crud().executeCrudAction(
+          "update", 
+          f"UPDATE customerscarts SET CartContent = '{new_cart_content}' WHERE CustomerID = {self.cartID};"
         );
-        
-        return;
       else :
-        Crud().executeCrudAction(
+        crud_status = Crud().executeCrudAction(
           "create", 
           f"INSERT INTO customerscarts (CustomerID, CartContent) VALUES ({self.cartID}, '[{formated_data}]');"
         );
+      
+      if crud_status == False : raise;
     
       return APIsStatus.sendSuccess(
-        "O produto foi adicionado ao carrinho com sucesso!", None
+        "O produto foi adicionado ao carrinho com sucesso!", ''
       );
     except :
       return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.");
@@ -134,7 +134,6 @@ class UserCart :
 
     if string_cart :
       cart = ast.literal_eval(string_cart[0][0]);
-
 
       return APIsStatus.sendSuccess(
         "O carrinho foi encontrado.", cart
