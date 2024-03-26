@@ -16,7 +16,7 @@ APIRequest = new Request(
     method: "POST",
     headers: {
       authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY",
-      inputData: JSON.stringify({ productID: 1, product_quantity: 3 }),
+      inputData: JSON.stringify({ productID: 1, product_quantity: 4 }),
     },
   }
 );

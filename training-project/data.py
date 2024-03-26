@@ -92,11 +92,11 @@ class UserCart :
       return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.");
 
     try :
-      if self.cartExists :
+      if not self.cartExists.get('error') :
         current_cart_content = self.cartExists.get('content');
         current_cart_content.append(formated_data);
 
-        new_cart_content = current_cart_content;
+        new_cart_content = UserCart.formatCartListData(current_cart_content);
 
         crud_status = Crud().executeCrudAction(
           "update", 
@@ -105,7 +105,7 @@ class UserCart :
       else :
         crud_status = Crud().executeCrudAction(
           "create", 
-          f"INSERT INTO customerscarts (CustomerID, CartContent) VALUES ({self.cartID}, '[{formated_data}]');"
+          f"INSERT INTO customerscarts (CustomerID, CartContent) VALUES ({self.cartID},'[{formated_data}]');"
         );
       
       if crud_status == False : raise;
@@ -125,6 +125,20 @@ class UserCart :
   
     except Exception:
       return APIsStatus.sendError('Data does not satisfies cart addition process parameters.');
+
+  def formatCartListData(entry_list) :
+    products_in_list = [];
+
+    for element in entry_list :
+      if [element[0], 0] not in products_in_list : 
+        products_in_list.append([element[0], 0]);
+  
+    for product in products_in_list :
+      for element in entry_list :
+        if element[0] == product[0] :
+          product[1] += element[1];
+  
+    return products_in_list;
 
   def getCart(self) :
     string_cart = Crud().executeCrudAction(
@@ -271,7 +285,3 @@ class SignValidation :
       return matching_registerID;
     except :
       return None;
-
-print(
-  UserCart(36).getCart()
-)
