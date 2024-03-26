@@ -75,6 +75,24 @@ class MarketItems :
   def getItemsByCategory(self, last_viewed_product_ID, category) :
     return Crud().executeCrudAction("read", f"SELECT * FROM marketitems WHERE ItemID = {last_viewed_product_ID} UNION SELECT * FROM marketitems WHERE ItemCategory = \'{category}\' AND ItemID != {last_viewed_product_ID} LIMIT 3;");
 
+  def serveItemImage(self, item_name) :
+    try :
+      bucket = client_storage_manager.get_bucket("market_items");
+      bucket_blob = bucket.blob(str(item_name).lower().replace(" ", "-") + ".jpeg");
+
+      image_bytes = bucket_blob.download_as_bytes();
+    
+      converted_image = Image.open(BytesIO(image_bytes));
+
+      image_IO = BytesIO();
+      converted_image.save(image_IO, "JPEG", quality=70);
+      image_IO.seek(0);
+
+      return send_file(image_IO, mimetype="image/jpeg");
+    
+    except :
+      return False;
+
 class UserCart :
   def __init__(self, userID) :
     self.cartID = userID;
@@ -111,7 +129,7 @@ class UserCart :
       if crud_status == False : raise;
     
       return APIsStatus.sendSuccess(
-        "O produto foi adicionado ao carrinho com sucesso!", ''
+        "O produto foi adicionado ao carrinho com sucesso!", self.getCart()
       );
     except :
       return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.");
@@ -150,28 +168,33 @@ class UserCart :
       cart = ast.literal_eval(string_cart[0][0]);
 
       return APIsStatus.sendSuccess(
-        "O carrinho foi encontrado.", cart
+        "O carrinho foi encontrado.", UserCart.getCartContentInformations(cart)
       )
     else :
       return APIsStatus.sendError(404);
 
-  def serveItemImage(self, item_name) :
+  def getCartContentInformations(entry_cart) :
+    informations = [];
+
     try :
-      bucket = client_storage_manager.get_bucket("market_items");
-      bucket_blob = bucket.blob(str(item_name).lower().replace(" ", "-") + ".jpeg");
+      for product in entry_cart :
+        target_productID = product[0];
 
-      image_bytes = bucket_blob.download_as_bytes();
+        product_data = MarketItems().getItemByID(target_productID);
+
+        informations.append({
+          'name' : product_data[1],
+          'price' : product_data[2],
+          'picture' : f'/api/images/market-items/{product_data[1].lower().replace(" ", "-") + ".jpeg"}',
+          'description' : product_data[3],
+          'quantity' : product[1]
+        })
+
+      return informations;
+    except Exception :
+      return 404;
     
-      converted_image = Image.open(BytesIO(image_bytes));
 
-      image_IO = BytesIO();
-      converted_image.save(image_IO, "JPEG", quality=70);
-      image_IO.seek(0);
-
-      return send_file(image_IO, mimetype="image/jpeg");
-    
-    except :
-      return False;
 
 
 def listFilesURL(*style_files) :

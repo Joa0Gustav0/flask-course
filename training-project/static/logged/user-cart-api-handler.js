@@ -1,16 +1,16 @@
 userID = sessionStorage.getItem("logged_userID");
 
 //GET METHOD
-/* APIRequest = new Request(
+APIRequest = new Request(
   document.location.origin + `/api/users/${userID}/cart`, {
     method: "GET",
     headers: {
       authorization: 'sLGDqCAyM7UnIm@rKeTf9BX58JvxY',
     }
   }
-) */
+)
 
-APIRequest = new Request(
+/* APIRequest = new Request(
   document.location.origin + `/api/users/${userID}/cart`,
   {
     method: "POST",
@@ -19,7 +19,7 @@ APIRequest = new Request(
       inputData: JSON.stringify({ productID: 1, product_quantity: 4 }),
     },
   }
-);
+); */
 
 fetch(APIRequest)
   .then(async (res) => res.json())
