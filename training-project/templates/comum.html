@@ -11,7 +11,12 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='cookies-popup.css') }}"
     />
-    {% if styles %} {% for style_path in styles %}
+    {% if session.get("logged_user") %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='logged/cart.css') }}"
+    />
+    {% endif %} {% if styles %} {% for style_path in styles %}
     <link rel="stylesheet" href="{{ style_path }}" />
     {% endfor %} {% endif %}
     <title>🦄 UniMarket | {% block title %}{% endblock %}</title>
@@ -80,29 +85,8 @@
         já <span class="highlighted-text">adicionou</span>!
       </p>
       <ul class="cart-sidebar__products-list">
-        <!-- <li class="cart-sidebar__products-list__product-container">
-          <img
-            src=""
-            class="cart-sidebar__products-list__product-container__product-picture"
-          />
-          <div
-            class="cart-sidebar__products-list__product-container__product-informations"
-          >
-            <h1
-              class="cart-sidebar__products-list__product-container__product-informations__name"
-            ></h1>
-            <p
-              class="cart-sidebar__products-list__product-container__product-informations__description"
-            ></p>
-            <div
-              class="cart-sidebar__products-list__product-container__product-informations__bottom-line"
-            >
-              <p
-                class="cart-sidebar__products-list__product-container__product-informations__bottom-line__price"
-              ></p>
-            </div>
-          </div>
-        </li> -->
+        <!-- CART PRODUCTS HERE 🛒 -->
+        
       </ul>
     </aside>
 

@@ -38,8 +38,27 @@ class UserCart {
     const CART_CONTAINER = document.querySelector(
       ".cart-sidebar__products-list"
     );
+
+    if (!cartProducts) {
+      CART_CONTAINER.innerHTML = `
+        <div class="cart-sidebar__products-list__empty-sign">
+          <img
+            src="/static/media/empty-cart-icon.png"
+            alt=""
+            class="cart-sidebar__products-list__empty-sign__icon"
+          />
+          <p class="cart-sidebar__products-list__empty-sign__text">
+            Ohh... <br />
+            Ainda não há <span class="highlighted-text">produtos</span> aqui!
+          </p>
+        </div>
+      `
+      return;
+    }
+
     cartProducts.forEach((product) => {
       UserCart.productsInCart++;
+      CART_CONTAINER.classList.add("cart-sidebar__products-list--contains");
 
       CART_CONTAINER.innerHTML += `
         <li class="cart-sidebar__products-list__product-container">
@@ -74,30 +93,5 @@ class UserCart {
   }
 }
 
-//GET METHOD
-/* APIRequest = new Request(
-  document.location.origin + `/api/users/${userID}/cart`,
-  {
-    method: "GET",
-    headers: {
-      authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY",
-    },
-  }
-); */
-
-/* APIRequest = new Request(
-  document.location.origin + `/api/users/${userID}/cart`,
-  {
-    method: "POST",
-    headers: {
-      authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY",
-      inputData: JSON.stringify({ productID: 1, product_quantity: 4 }),
-    },
-  }
-); */
-
-/* fetch(APIRequest)
-  .then(async (res) => res.json())
-  .then((data) => console.log(data)); */
 
 new UserCart("GET", null).fetchCart();
