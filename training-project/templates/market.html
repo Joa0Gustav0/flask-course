@@ -2,8 +2,10 @@
 page_content %}
 <div class="container">
   <h1 class="content-headline">
-    Bem vinde ao
-    <span class="highlighted-text">mercado</span>, UniCliente!
+    {{ "Bem vide" if not session.get("logged_user") else "Boas-vindas" }} ao
+    <span class="highlighted-text">mercado</span>, {{ "UniCliente" if not
+    session.get("logged_user") else session.get("logged_user").get("username")
+    }}!
   </h1>
   {% if items == False %}
   <p class="content-sub-headline">

@@ -187,7 +187,7 @@ class UserCart :
         informations.append({
           'name' : product_data[1],
           'price' : product_data[2],
-          'picture' : f'/api/images/market-items/{product_data[1].lower().replace(" ", "-") + ".jpeg"}',
+          'picture' : f'/api/images/market-items/{product_data[1]}',
           'description' : product_data[3],
           'quantity' : product[1]
         })

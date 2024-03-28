@@ -36,7 +36,9 @@ class ImageLoader {
   }
 
   stop() {
-    this.imageLoaderElement.remove();
+    if (this.imageLoaderElement) {
+      this.imageLoaderElement.remove();
+    }
   }
 }
 
