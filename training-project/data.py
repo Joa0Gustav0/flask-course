@@ -162,11 +162,11 @@ class UserCart :
   def getCart(self, details) :
     string_cart = Crud().executeCrudAction(
       "read", 
-      f"SELECT CartContent FROM customerscarts WHERE CustomerID = {self.cartID};"
+      f"SELECT * FROM customerscarts WHERE CustomerID = {self.cartID};"
     );
 
     if string_cart :
-      cart = ast.literal_eval(string_cart[0][0]);
+      cart = ast.literal_eval(string_cart[0][1]);
 
       return APIsStatus.sendSuccess(
         "O carrinho foi encontrado.", 
@@ -185,6 +185,7 @@ class UserCart :
         product_data = MarketItems().getItemByID(target_productID);
 
         informations.append({
+          'ID' : target_productID,
           'name' : product_data[1],
           'price' : product_data[2],
           'picture' : f'/api/images/market-items/{product_data[1]}',
@@ -194,7 +195,7 @@ class UserCart :
 
       return informations;
     except Exception :
-      return 404;
+      return {404};
     
 
 

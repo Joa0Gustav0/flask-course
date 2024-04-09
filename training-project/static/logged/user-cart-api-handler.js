@@ -3,35 +3,46 @@ const USER_ID = sessionStorage.getItem("logged_userID");
 class UserCart {
   static productsInCart = 0;
 
-  constructor(action, additionData) {
-    this.action = action;
-    this.handleActionExecution(additionData);
+  getCart() {
+    this.method = "GET";
+    this.handleActionExecution();
   }
 
-  handleActionExecution(entryData) {
+  addToCart(additionalData) {
+    this.method = "POST";
+    this.entryData = additionalData;
+    this.handleActionExecution();
+  }
+
+  handleActionExecution() {
     let requestHeaders = {
       authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY",
     };
 
-    if (this.action === "POST") {
-      requestHeaders["inputData"] = JSON.stringify(entryData);
+    if (this.entryData) {
+      requestHeaders["inputData"] = this.entryData;
     }
 
     var APIRequest = new Request(
       document.location.origin + `/api/users/${USER_ID}/cart`,
       {
-        method: this.action,
+        method: this.method,
         headers: requestHeaders,
       }
     );
 
     this.APIRequest = APIRequest;
+    console.log("Pegando carrinho!");
+    this.fetchCart();
   }
 
   async fetchCart() {
     return fetch(this.APIRequest)
       .then(async (response) => await response.json())
-      .then((data) => this.renderCart(data.content));
+      .then((data) => {
+        console.log(data)
+        this.renderCart(data.content)
+      });
   }
 
   renderCart(cartProducts) {
@@ -52,17 +63,21 @@ class UserCart {
             Ainda não há <span class="highlighted-text">produtos</span> aqui!
           </p>
         </div>
-      `
+      `;
       return;
     }
 
+    CART_CONTAINER.innerHTML = '';
     cartProducts.forEach((product) => {
       UserCart.productsInCart++;
       CART_CONTAINER.classList.add("cart-sidebar__products-list--contains");
 
       CART_CONTAINER.innerHTML += `
         <li class="cart-sidebar__products-list__product-container">
-          <div class="image-loader decreased" id="cart-item-${UserCart.productsInCart}">
+          <div 
+            class="image-loader cart-decreased"
+            id="cart-item-${UserCart.productsInCart}"
+          >
             <div class="image-loader__loading-icon"></div>
           </div>
           <img
@@ -85,6 +100,27 @@ class UserCart {
               <p
                 class="cart-sidebar__products-list__product-container__product-informations__bottom-line__price"
               >R$ ${product.price}</p>
+              <div 
+                class="cart-sidebar__products-list__product-container__product-informations__bottom-line__quantity-container"
+              >
+                <button 
+                  class="cart-sidebar__products-list__product-container__product-informations__bottom-line__quantity-container__button"
+                  onclick="new UserCart().addToCart(JSON.stringify({ productID: ${product.ID} , product_quantity: -1 }))"
+                >
+                  <ion-icon name='remove'></ion-icon>
+                </button>
+                <p     
+                  class="cart-sidebar__products-list__product-container__product-informations__bottom-line__quantity-container__text"
+                >
+                  ${product.quantity} Uni.
+                </p>
+                <button 
+                  class="cart-sidebar__products-list__product-container__product-informations__bottom-line__quantity-container__button"
+                  onclick="new UserCart().addToCart(JSON.stringify({ productID: ${product.ID} , product_quantity: 1 }))"
+                >
+                  <ion-icon name='add'></ion-icon>
+                </button>
+              </div>
             </div>
           </div>
         </li>
@@ -93,5 +129,4 @@ class UserCart {
   }
 }
 
-
-new UserCart("GET", null).fetchCart();
+new UserCart().getCart();
