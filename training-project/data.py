@@ -107,15 +107,15 @@ class UserCart :
     formated_data = UserCart.formatCartAdditionData(addition_data);
 
     if isinstance(formated_data, dict) : 
-      return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.1");
+      return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.");
 
     try :
+      #If the user CONTAINS a cart 💡
       if not self.cartExists.get('error') :
         current_cart_content = self.cartExists.get('content');
         current_cart_content.append(formated_data);
 
         new_cart_content = UserCart.formatCartListData(current_cart_content);
-
 
         crud_status = Crud().executeCrudAction(
           "update", 
@@ -129,9 +129,7 @@ class UserCart :
       
       if crud_status == False : raise;
     
-      return APIsStatus.sendSuccess(
-        "O produto foi adicionado ao carrinho com sucesso!", self.getCart(True)
-      );
+      return self.getCart(True);
     except :
       return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.2");
 

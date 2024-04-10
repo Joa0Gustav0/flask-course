@@ -145,7 +145,7 @@ def userCart(user_ID) :
     return UserCart(user_ID).getCart(True);
   elif action == "POST" :
     addition_data = ast.literal_eval(request.headers.get("inputData"));
-    return UserCart(user_ID).addToCart(addition_data)
+    return UserCart(user_ID).addToCart(addition_data);
   else :
     return APIsStatus.sendError("A valid action was not set.");
 

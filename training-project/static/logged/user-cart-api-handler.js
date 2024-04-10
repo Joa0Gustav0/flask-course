@@ -32,7 +32,6 @@ class UserCart {
     );
 
     this.APIRequest = APIRequest;
-    console.log("Pegando carrinho!");
     this.fetchCart();
   }
 
