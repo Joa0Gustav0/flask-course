@@ -61,18 +61,22 @@ body {
   gap: 7.5px;
   border: 0;
   outline: none;
+  color: black;
   padding: 7.5px;
   border-radius: 5px;
   font-size: 1.125em;
+  text-decoration: none;
+  background-color: #e6e6e6;
 }
-.product-container__inspection-aside__actions-container__ca-button:hover {
-  cursor: pointer;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-}
-.product-container__inspection-aside__actions-container__ca-button:first-of-type {
+.product-container__inspection-aside__actions-container__ca-button--highlighted {
   color: white;
   background-color: var(--primary-color);
 }
-.product-container__inspection-aside__actions-container__ca-button:last-of-type {
-  background-color: #e6e6e6;
+.product-container__inspection-aside__actions-container__ca-button:hover {
+  cursor: pointer;
+  transform: scale(102.5%, 102.5%);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+.product-container__inspection-aside__actions-container__ca-button:active {
+  transform: scale(97.5%, 97.5%);
 }

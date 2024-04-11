@@ -10,3 +10,8 @@ function toggleCartSidebar() {
 
 CART_TOGGLE_BUTTON.addEventListener("click", () => toggleCartSidebar());
 HEADER_CART_TOGGLE_BUTTON.addEventListener("click", () => toggleCartSidebar());
+
+function addToCartFromProductPage(productID) {
+  new UserCart().addToCart(JSON.stringify({ productID: Number(productID) , product_quantity: 1 }));
+  CART_SIDEBAR.classList.add("active");
+}

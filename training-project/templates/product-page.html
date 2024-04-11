@@ -33,14 +33,25 @@
 
       <div class="product-container__inspection-aside__actions-container">
         <button
-          class="product-container__inspection-aside__actions-container__ca-button"
+          class="product-container__inspection-aside__actions-container__ca-button product-container__inspection-aside__actions-container__ca-button--highlighted"
         >
           Comprar Agora <ion-icon name="bag-outline"></ion-icon></button
-        ><button
+        >
+        {% if session.get('logged_user') %}
+        <button
           class="product-container__inspection-aside__actions-container__ca-button"
+          onclick="addToCartFromProductPage('{{ item[0] }}')"
         >
           Adicionar ao Carrinho <ion-icon name="cart-outline"></ion-icon>
         </button>
+        {% else %}
+        <a
+          href="/login"
+          class="product-container__inspection-aside__actions-container__ca-button"
+        >
+          Adicionar ao Carrinho <ion-icon name="cart-outline"></ion-icon>
+        </a>
+        {% endif %}
       </div>
     </div>
   </div>
