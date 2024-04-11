@@ -55,7 +55,7 @@
               ></ion-icon>
             </button>
             <button
-              class="header__container__navbar__nav-buttons--logged__button"
+              class="header__container__navbar__nav-buttons--logged__button header__container__navbar__nav-buttons__cart-button"
             >
               Carrinho <ion-icon name="cart"></ion-icon>
             </button>
@@ -76,6 +76,12 @@
 
     {% if session.get("logged_user") %}
     <aside class="cart-sidebar">
+      <button class="cart-sidebar__tab-button">
+        <ion-icon
+          class="cart-sidebar__tab-button__icon"
+          name="close"
+        ></ion-icon>
+      </button>
       <h1 class="cart-sidebar__headline">
         Carrinho
         <ion-icon class="cart-sidebar__headline__icon" name="cart"></ion-icon>
@@ -96,6 +102,7 @@
       );
     </script>
     <script src="{{ url_for('static', filename='logged/user-cart-api-handler.js') }}"></script>
+    <script src="{{ url_for('static', filename='logged/cart-interactivity.js') }}"></script>
     {% endif %}
 
     <main>{% block page_content %} {% endblock %}</main>

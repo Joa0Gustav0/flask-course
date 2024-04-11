@@ -110,7 +110,7 @@ class UserCart :
       return APIsStatus.sendError("Um erro inesperado ocorreu ao tentar adicionar o produto ao carrinho. Tente novamente mais tarde.");
 
     try :
-      #If the user CONTAINS a cart 💡
+      #If the user CONTAINS a cart ✅💡
       if not self.cartExists.get('error') :
         current_cart_content = self.cartExists.get('content');
         current_cart_content.append(formated_data);
@@ -121,6 +121,7 @@ class UserCart :
           "update", 
           f"UPDATE customerscarts SET CartContent = '{new_cart_content}' WHERE CustomerID = {self.cartID};"
         );
+      #If the user DO NOT CONTAINS a cart ❌💡
       else :
         crud_status = Crud().executeCrudAction(
           "create", 

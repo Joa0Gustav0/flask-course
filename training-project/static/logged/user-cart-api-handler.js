@@ -39,7 +39,6 @@ class UserCart {
     return fetch(this.APIRequest)
       .then(async (response) => await response.json())
       .then((data) => {
-        console.log(data)
         this.renderCart(data.content)
       });
   }
