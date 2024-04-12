@@ -147,14 +147,19 @@ class UserCart :
   def formatCartListData(entry_list) :
     products_in_list = [];
 
+    #Distinct elements for indexing cart 💡
     for element in entry_list :
       if [element[0], 0] not in products_in_list : 
         products_in_list.append([element[0], 0]);
-  
+
+    #Sets products quantities based on the indexes 💡
     for product in products_in_list :
       for element in entry_list :
         if element[0] == product[0] :
           product[1] += element[1];
+    
+    #Filter elements which quantity is at least 1 💡
+    products_in_list = list(filter(lambda product: product[1] >= 1, products_in_list))
   
     return products_in_list;
 
