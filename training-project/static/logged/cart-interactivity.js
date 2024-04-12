@@ -14,7 +14,17 @@ CART_TOGGLE_BUTTON.addEventListener("click", () => toggleCartSidebar());
 HEADER_CART_TOGGLE_BUTTON.addEventListener("click", () => toggleCartSidebar());
 
 function addToCartFromProductPage(productID) {
-  new UserCart().addToCart(JSON.stringify({ productID: Number(productID) , product_quantity: 1 }));
+  let QUANTITY_SELECT_ELEMENT = document.querySelector(
+    ".product-container__inspection-aside__actions-container__quantity-selector-label__selector"
+  );
+  let selectedQuantity = Number(QUANTITY_SELECT_ELEMENT.value);
+
+  new UserCart().addToCart(
+    JSON.stringify({
+      productID: Number(productID),
+      product_quantity: selectedQuantity,
+    })
+  );
   SCREEN_SAVER.classList.add("active");
   CART_SIDEBAR.classList.add("active");
 }

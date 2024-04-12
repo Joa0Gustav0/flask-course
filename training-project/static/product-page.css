@@ -51,6 +51,28 @@ body {
 
   gap: 7.5px;
 }
+.product-container__inspection-aside__actions-container__quantity-selector-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 5px;
+  font-size: 1.05em;
+  font-weight: 500;
+}
+.product-container__inspection-aside__actions-container__quantity-selector-label__selector {
+  border: 0;
+  padding: 5px;
+  outline: none;
+  border-bottom: 1px solid var(--primary-color);
+  font-size: 1em;
+}
+.product-container__inspection-aside__actions-container__quantity-selector-label__selector:hover {
+  cursor: pointer;
+}
+.product-container__inspection-aside__actions-container__quantity-selector-label__selector option::selection {
+  background-color: red;
+}
 .product-container__inspection-aside__actions-container__ca-button {
   transition: all 0.25s;
 
@@ -67,6 +89,9 @@ body {
   font-size: 1.125em;
   text-decoration: none;
   background-color: #e6e6e6;
+}
+.product-container__inspection-aside__actions-container__ca-button:first-of-type {
+  margin-top: 10px;
 }
 .product-container__inspection-aside__actions-container__ca-button--highlighted {
   color: white;

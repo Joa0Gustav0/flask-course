@@ -32,11 +32,24 @@
       </div>
 
       <div class="product-container__inspection-aside__actions-container">
+        <label for="quantity-selector" class="product-container__inspection-aside__actions-container__quantity-selector-label">
+          Quantidade: 
+          <select
+            id="quantity-selector"
+            class="product-container__inspection-aside__actions-container__quantity-selector-label__selector"
+          >
+            <option value="1" selected>1 unidade</option>
+            <option value="2">2 unidades</option>
+            <option value="3">3 unidades</option>
+            <option value="4">4 unidades</option>
+            <option value="5">5 unidades</option>
+          </select>
+        </label>
         <button
           class="product-container__inspection-aside__actions-container__ca-button product-container__inspection-aside__actions-container__ca-button--highlighted"
         >
-          Comprar Agora <ion-icon name="bag-outline"></ion-icon></button
-        >
+          Comprar Agora <ion-icon name="bag-outline"></ion-icon>
+        </button>
         {% if session.get('logged_user') %}
         <button
           class="product-container__inspection-aside__actions-container__ca-button"
