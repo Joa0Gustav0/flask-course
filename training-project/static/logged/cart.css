@@ -1,3 +1,19 @@
+.screen-saver {
+  transition: all .5s;
+
+  position: fixed;
+  top: 0;
+  left: calc(100% + 50px);
+
+  width: 100%;
+  z-index: 500;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+.screen-saver.active {
+  left: 0;
+}
+
 .cart-sidebar {
   transition: all .5s;
 

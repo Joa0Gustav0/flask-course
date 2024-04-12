@@ -39,7 +39,7 @@ class UserCart {
     return fetch(this.APIRequest)
       .then(async (response) => await response.json())
       .then((data) => {
-        this.renderCart(data.content)
+        this.renderCart(data.content);
       });
   }
 
@@ -65,7 +65,7 @@ class UserCart {
       return;
     }
 
-    CART_CONTAINER.innerHTML = '';
+    CART_CONTAINER.innerHTML = "";
     cartProducts.forEach((product) => {
       UserCart.productsInCart++;
       CART_CONTAINER.classList.add("cart-sidebar__products-list--contains");
@@ -80,7 +80,9 @@ class UserCart {
           </div>
           <img
             src="${product.picture}"
-            onload="new ImageLoader('cart-item-${UserCart.productsInCart}').stop()"
+            onload="new ImageLoader('cart-item-${
+              UserCart.productsInCart
+            }').stop()"
             class="cart-sidebar__products-list__product-container__product-picture"
           />
           <div
@@ -103,9 +105,13 @@ class UserCart {
               >
                 <button 
                   class="cart-sidebar__products-list__product-container__product-informations__bottom-line__quantity-container__button"
-                  onclick="new UserCart().addToCart(JSON.stringify({ productID: ${product.ID} , product_quantity: -1 }))"
+                  onclick="new UserCart().addToCart(JSON.stringify({ productID: ${
+                    product.ID
+                  } , product_quantity: -1 }))"
                 >
-                  <ion-icon name='remove'></ion-icon>
+                  <ion-icon name='${
+                    product.quantity > 1 ? "remove" : "trash-outline"
+                  }'></ion-icon>
                 </button>
                 <p     
                   class="cart-sidebar__products-list__product-container__product-informations__bottom-line__quantity-container__text"
@@ -114,7 +120,9 @@ class UserCart {
                 </p>
                 <button 
                   class="cart-sidebar__products-list__product-container__product-informations__bottom-line__quantity-container__button"
-                  onclick="new UserCart().addToCart(JSON.stringify({ productID: ${product.ID} , product_quantity: 1 }))"
+                  onclick="new UserCart().addToCart(JSON.stringify({ productID: ${
+                    product.ID
+                  } , product_quantity: 1 }))"
                 >
                   <ion-icon name='add'></ion-icon>
                 </button>
