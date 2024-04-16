@@ -80,6 +80,7 @@ body {
 .last-view-container__products_list__product-container__product-image {
   width: 100%;
   max-width: 225px;
+  aspect-ratio: 1/1;
 }
 .last-view-container__products_list__product-container__product-informations__product-price {
   position: absolute;
