@@ -47,8 +47,9 @@ class UserCart {
     const CART_CONTAINER = document.querySelector(
       ".cart-sidebar__products-list"
     );
-
-    if (!cartProducts) {
+    
+    if (!cartProducts || cartProducts.length <= 0) {
+      CART_CONTAINER.classList.remove("cart-sidebar__products-list--contains");
       CART_CONTAINER.innerHTML = `
         <div class="cart-sidebar__products-list__empty-sign">
           <img
