@@ -66,7 +66,7 @@ class MarketItems :
   def getAllItems(self) :
     query_parameters = request.args;
     try :
-      pagination_index = int(query_parameters.get("index", 1));
+      pagination_index = int(query_parameters.get("index", 0));
     except :
       pagination_index = 0;
     
@@ -74,7 +74,9 @@ class MarketItems :
       pagination_index = 0
 
     items = Crud().executeCrudAction("read", f"SELECT * FROM marketitems LIMIT 10 OFFSET {pagination_index * 10};");
-    return items if len(items) >= 1 else Crud().executeCrudAction("read", f"SELECT * FROM marketitems LIMIT 10 OFFSET 0;");
+    items = items if len(items) >= 1 else Crud().executeCrudAction("read", f"SELECT * FROM marketitems LIMIT 10 OFFSET 0;");
+  
+    return { "items" : items, "index" : pagination_index }
 
   def getItemByID(self, entry_item_id) :
     try :
