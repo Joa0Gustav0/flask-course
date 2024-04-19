@@ -151,6 +151,7 @@ body {
 
   gap: 25px;
   min-width: fit-content;
+  margin-top: 50px;
 }
 .pagination-container__button {
   transition: all .25s;

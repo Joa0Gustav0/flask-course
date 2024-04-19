@@ -32,6 +32,7 @@ def market() :
     items=MarketItems().getAllItems(),
     items_inspired_on_last_view=items_inspired_on_last_view,
     styles=listFilesURL("market.css"),
+    scripts=listFilesURL("market.js")
   );
 
 @app.route("/login", methods=["GET", "POST"])
@@ -123,6 +124,25 @@ def productPage(product_id) :
   )
   response.set_cookie("UnIm@RkEt_last_viewed_item", str(product_id));
   return response;
+
+@app.route("/api/market-items")
+def marketItems() :
+  authorization = APIsStatus.validateAuthorization();
+  if authorization.get('error') :
+    return authorization;
+
+  items = MarketItems().getAllItems();
+
+  items_JSON = [
+    {
+      "ID" : item_ID,
+      "name" : item_name,
+      "price" : item_price,
+      "description" : item_description,
+      "category" : item_category
+    } for item_ID, item_name, item_price, item_description, item_category in items
+  ]
+  return items_JSON;
 
 @app.route("/api/images/market-items/<item_name>")
 def marketItemImage(item_name) :
