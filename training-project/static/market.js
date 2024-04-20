@@ -6,6 +6,220 @@ function renderData(what, where, keep) {
   }
 }
 
+//SUBHEADLINE
+function renderSubHeadline(data) {
+  let marketSubHeadline = document.querySelector(".content-sub-headline");
+
+  let contentForRendering =
+    data && !("error" in data)
+      ? `🦄 Os <span class="highlighted-text">unicórnios</span> deixaram alguns produtos!!!`
+      : `🦄🔎 Ops! Os <span class="highlighted-text">unicórnios</span> não trouxeram os produtos.`;
+
+  renderData(contentForRendering, marketSubHeadline, false);
+}
+//LAST VIEW CONTAINER
+function renderLastViewContainer(data) {
+  let relatedCookie = getLastViewCookie();
+  if (relatedCookie) {
+    let lastViewedItems = getViewedCategoryItems(data, relatedCookie.value);
+    listLastViewItems(lastViewedItems);
+  }
+}
+function getLastViewCookie() {
+  try {
+    let stringifyiedCookie = document.cookie
+      .split("; ")
+      .filter((value) => value.startsWith("UnIm@RkEt_last_viewed_item"))[0];
+
+    let cookieArray = stringifyiedCookie.split("=");
+    let cookieObject = {
+      key: cookieArray[0],
+      value: Number(cookieArray[1]) - 1,
+    };
+
+    return cookieObject;
+  } catch {
+    return null;
+  }
+}
+function getViewedCategoryItems(data, itemID) {
+  let targetViewedItem = data[itemID];
+  let lastViewedItemCategory = targetViewedItem.category;
+
+  let allContextItems = data.filter(
+    (item) => item.category === lastViewedItemCategory
+  );
+  let mainContenxtItems = allContextItems.filter((value, index) => index <= 2);
+
+  return mainContenxtItems;
+}
+function listLastViewItems(items) {
+  let container = document.querySelector(".last-view-container");
+  container.classList.remove("disabled");
+
+  let containerList = document.querySelector(
+    ".last-view-container__products_list"
+  );
+
+  let getItemContent = (ID, name, description, price) => `
+    <a href="/market/product/${ID}">
+      <li class="last-view-container__products_list__product-container">
+        <div class="image-loader" id="last-viewed-item-${ID}">
+          <div class="image-loader__loading-icon"></div>
+        </div>
+        <img
+          src="/api/images/market-items/${name}"
+          alt="Imagem de ${name}"
+          onload="new ImageLoader('last-viewed-item-${ID}').stop()"
+          class="last-view-container__products_list__product-container__product-image"
+        />
+        <div
+          class="last-view-container__products_list__product-container__product-informations"
+        >
+          <h1
+            class="last-view-container__products_list__product-container__product-informations__product-name"
+          >
+            ${name}
+          </h1>
+          <p
+            class="last-view-container__products_list__product-container__product-informations__product-description"
+          >
+            ${description}
+          </p>
+          <p
+            class="last-view-container__products_list__product-container__product-informations__product-price"
+          >
+            R$ ${price}
+          </p>
+        </div>
+      </li>
+    </a>
+  `;
+  items.map((item) => {
+    renderData(
+      getItemContent(item.ID, item.name, item.description, item.price),
+      containerList,
+      true
+    );
+  });
+}
+//PRODUCTS LIST
+function renderItemsList(data) {
+  let list = document.querySelector(".products-list");
+  let getItem = (ID, name, description, price) => `
+    <a href="/market/product/${ID}">
+      <li class="products-list__product-container">
+        <div class="image-loader decreased" id="item-${ID}">
+          <div class="image-loader__loading-highlight"></div>
+        </div>
+
+        <img
+          src="/api/images/market-items/${name}"
+          alt="Imagem de ${name}"
+          onload="new ImageLoader('item-${ID}').stop()"
+          class="products-list__product-container__product-image"
+        />
+        <div class="products-list__product-container__product-informations">
+          <h1
+            class="products-list__product-container__product-informations__product-name"
+          >
+            ${name}
+          </h1>
+          <p
+            class="products-list__product-container__product-informations__product-description"
+          >
+            ${description}
+          </p>
+          <p
+            class="products-list__product-container__product-informations__product-price"
+          >
+            R$ ${price}
+          </p>
+        </div>
+      </li>
+    </a>
+  `;
+
+  let paginationIndex = getPaginationData(data).index;
+
+  data.forEach((item, index) => {
+    if (
+      index >= (paginationIndex - 1) * 10 &&
+      index <= (paginationIndex - 1) * 10 + 9
+    )
+      renderData(
+        getItem(item.ID, item.name, item.description, item.price),
+        list,
+        true
+      );
+  });
+}
+//PAGINATION
+function renderPaginationIndexer(data) {
+  let container = document.querySelector(".container");
+  let paginationData = getPaginationData(data);
+  console.log(paginationData);
+
+  let getContent = () => `
+    <div class="pagination-container">
+      ${
+        paginationData.index <= 1
+          ? `<a class="pagination-container__button disabled">
+            <ion-icon name="chevron-back"></ion-icon> Anterior
+          </a>`
+          : `<a href="?index=${
+              paginationData.index - 1
+            }" class="pagination-container__button">
+            <ion-icon name="chevron-back"></ion-icon> Anterior
+          </a>`
+      }
+      <p class="pagination-container__index-text">${paginationData.index}</p>
+      ${
+        paginationData.index == paginationData.availableCatalogIndexes
+          ? `<a class="pagination-container__button disabled">
+            Seguinte <ion-icon name="chevron-forward"></ion-icon>
+          </a>`
+          : `<a href="?index=${
+              paginationData.index + 1
+            }" class="pagination-container__button">
+            Seguinte <ion-icon name="chevron-forward"></ion-icon>
+          </a>`
+      }
+    </div>
+  `;
+  renderData(getContent(), container, true);
+}
+function getPaginationData(data) {
+  let currentURL = new URL(document.location.href);
+  let URLParameters = currentURL.searchParams;
+
+  let catalogLength = data.length + 1;
+  let paginationIndex = getPaginationIndex(catalogLength, URLParameters);
+
+  return {
+    index: paginationIndex,
+    catalogLength: catalogLength,
+    availableCatalogIndexes: Math.ceil(catalogLength / 10),
+  };
+}
+function getPaginationIndex(catalogLength, URLParameters) {
+  let indexingNumber = URLParameters.get("index");
+  let catalogIndexingNumber = Math.ceil(catalogLength / 10);
+
+  if (indexingNumber) {
+    indexingNumber = Number(indexingNumber);
+    if (indexingNumber > catalogIndexingNumber) {
+      return catalogIndexingNumber;
+    } else if (indexingNumber <= 0) {
+      return 1;
+    } else {
+      return indexingNumber;
+    }
+  } else {
+    return 1;
+  }
+}
+
 class MarketItems {
   static fetchData() {
     let request = new Request(document.location.origin + "/api/market-items", {
@@ -20,179 +234,11 @@ class MarketItems {
   }
 
   static consumeData(data) {
-    let marketSubHeadline = document.querySelector(".content-sub-headline");
-    renderData(
-      !data || "error" in data
-        ? `🦄🔎 Ops! Os <span class="highlighted-text">unicórnios</span> não trouxeram
-      os produtos.`
-        : `🦄 Os <span class="highlighted-text">unicórnios</span> deixaram alguns
-        produtos!!!`,
-      marketSubHeadline,
-      false
-    );
-
-    try {
-      let lastViewCookieArray = document.cookie
-        .split("; ")
-        .filter((value) => value.startsWith("UnIm@RkEt_last_viewed_item"))[0]
-        .split("=");
-      let lastViewCookie = {
-        key: lastViewCookieArray[0],
-        value: Number(lastViewCookieArray[1]),
-      };
-      if (data && lastViewCookie) {
-        let lastViewedCategory = data[lastViewCookie.value - 1].category;
-        let categoryItems = data.filter(
-          (item) => item.category === lastViewedCategory
-        );
-
-        let lastViewedItemsContainer = document.querySelector(
-          ".last-view-container"
-        );
-        lastViewedItemsContainer.innerHTML = `
-          <p class="last-view-container__headline">
-            <span class="highlighted-text">Olha só!</span> Produtos inspirados em seu
-            <span class="highlighted-text">último visto</span>?
-          </p>
-          <ul class="last-view-container__products_list"></ul>
-        `;
-        let lastViewProductsList = document.querySelector(
-          ".last-view-container__products_list"
-        );
-        categoryItems.map((item, index) => {
-          if (index <= 2)
-            renderData(
-              `
-            <a href="/market/product/${item.ID}">
-              <li class="last-view-container__products_list__product-container">
-                <div class="image-loader" id="last-viewed-item-${item.ID}">
-                  <div class="image-loader__loading-icon"></div>
-                </div>
-                <img
-                  src="/api/images/market-items/${item.name}"
-                  alt="Imagem de ${item.name}"
-                  onload="new ImageLoader('last-viewed-item-${item.ID}').stop()"
-                  class="last-view-container__products_list__product-container__product-image"
-                />
-                <div
-                  class="last-view-container__products_list__product-container__product-informations"
-                >
-                  <h1
-                    class="last-view-container__products_list__product-container__product-informations__product-name"
-                  >
-                    ${item.name}
-                  </h1>
-                  <p
-                    class="last-view-container__products_list__product-container__product-informations__product-description"
-                  >
-                    ${item.description}
-                  </p>
-                  <p
-                    class="last-view-container__products_list__product-container__product-informations__product-price"
-                  >
-                    R$ ${item.price}
-                  </p>
-                </div>
-              </li>
-            </a>
-            `,
-              lastViewProductsList,
-              true
-            );
-        });
-      }
-    } catch {}
-
-    let currentURL = new URL(document.location.href);
-    let URLParameters = currentURL.searchParams;
-    let productsQuantity = data.length + 1;
-    let paginationIndex = URLParameters.get("index")
-      ? Number(URLParameters.get("index")) > Math.ceil(productsQuantity / 10)
-        ? Math.ceil(productsQuantity / 10)
-        : Number(URLParameters.get("index")) <= 0
-        ? 1
-        : Number(URLParameters.get("index"))
-      : 0;
-
-    let productsList = document.querySelector(".products-list");
-    productsList.innerHTML = "";
+    renderSubHeadline(data);
     if (data) {
-      data.forEach((value, index) => {
-        if (
-          index >= (paginationIndex - 1) * 10 &&
-          index <= (paginationIndex - 1) * 10 + 9
-        )
-          renderData(
-            `
-          <a href="/market/product/${value.ID}">
-            <li class="products-list__product-container">
-              <div class="image-loader decreased" id="item-${value.ID}">
-                <div class="image-loader__loading-highlight"></div>
-              </div>
-
-              <img
-                src="/api/images/market-items/${value.name}"
-                alt="Imagem de ${value.name}"
-                onload="new ImageLoader('item-${value.ID}').stop()"
-                class="products-list__product-container__product-image"
-              />
-              <div class="products-list__product-container__product-informations">
-                <h1
-                  class="products-list__product-container__product-informations__product-name"
-                >
-                  ${value.name}
-                </h1>
-                <p
-                  class="products-list__product-container__product-informations__product-description"
-                >
-                  ${value.description}
-                </p>
-                <p
-                  class="products-list__product-container__product-informations__product-price"
-                >
-                  R$ ${value.price}
-                </p>
-              </div>
-            </li>
-          </a>
-          `,
-            productsList,
-            true
-          );
-      });
-
-      let container = document.querySelector(".container");
-      renderData(
-        `
-      <div class="pagination-container">
-        ${
-          paginationIndex <= 1
-            ? `<a class="pagination-container__button disabled">
-              <ion-icon name="chevron-back"></ion-icon> Anterior
-            </a>`
-            : `<a href="?index=${
-                paginationIndex - 1
-              }" class="pagination-container__button">
-              <ion-icon name="chevron-back"></ion-icon> Anterior
-            </a>`
-        }
-        <p class="pagination-container__index-text">${paginationIndex}</p>
-        ${
-          paginationIndex == Math.ceil(productsQuantity / 10)
-            ? `<a class="pagination-container__button disabled">
-              Seguinte <ion-icon name="chevron-forward"></ion-icon>
-            </a>`
-            : `<a href="?index=${
-                paginationIndex + 1
-              }" class="pagination-container__button">
-              Seguinte <ion-icon name="chevron-forward"></ion-icon>
-            </a>`
-        }
-      </div>
-      `,
-        container,
-        true
-      );
+      renderLastViewContainer(data);
+      renderItemsList(data);
+      renderPaginationIndexer(data);
     }
   }
 }

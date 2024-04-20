@@ -27,6 +27,9 @@ body {
   margin-bottom: 50px;
   min-height: fit-content;
 }
+.last-view-container.disabled {
+  display: none;
+}
 .last-view-container::after {
   position: absolute;
   left: 50%;

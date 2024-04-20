@@ -16,21 +16,9 @@ def index() :
 
 @app.route("/market")
 def market() :
-  last_viewed_item_ID = request.cookies.get("UnIm@RkEt_last_viewed_item");
-
-  if last_viewed_item_ID != None :
-    items_inspired_on_last_view = MarketItems().getItemsByCategory(
-      last_viewed_item_ID,
-      MarketItems().getItemByID(last_viewed_item_ID)[4]
-    )
-  else :
-    items_inspired_on_last_view = None
-
-
   return render_template(
     "market.html", 
     items=MarketItems().getAllItems(),
-    items_inspired_on_last_view=items_inspired_on_last_view,
     styles=listFilesURL("market.css"),
     scripts=listFilesURL("market.js")
   );
