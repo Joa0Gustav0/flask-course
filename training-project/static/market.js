@@ -6,6 +6,27 @@ function renderData(what, where, keep) {
   }
 }
 
+function getFilteringMode() {
+  let currentURL = new URL(document.location.href);
+  let URLParameters = currentURL.searchParams;
+
+  if (URLParameters.get("search") && !URLParameters.get("category")) {
+    return { filter: "/Search", value: URLParameters.get("search") };
+  } else if (URLParameters.get("category") && !URLParameters.get("search")) {
+    return { filter: "/Category", value: URLParameters.get("category") };
+  } else if (URLParameters.get("category") && URLParameters.get("search")) {
+    return {
+      filter: "/Both",
+      value: JSON.stringify({
+        search: URLParameters.get("search"),
+        category: URLParameters.get("category"),
+      }),
+    };
+  } else {
+    return null;
+  }
+}
+
 //SUBHEADLINE
 function renderSubHeadline(data) {
   let marketSubHeadline = document.querySelector(".content-sub-headline");
@@ -158,7 +179,6 @@ function renderItemsList(data) {
 function renderPaginationIndexer(data) {
   let container = document.querySelector(".container");
   let paginationData = getPaginationData(data);
-  console.log(paginationData);
 
   let getContent = () => `
     <div class="pagination-container">
@@ -222,21 +242,35 @@ function getPaginationIndex(catalogLength, URLParameters) {
 
 class MarketItems {
   static fetchData() {
-    let request = new Request(document.location.origin + "/api/market-items", {
-      headers: {
-        authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY",
-      },
-    });
+    let filter = getFilteringMode();
+    let filteringMode = filter ? filter.filter : "";
+
+    let requestHeaders = { authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY" };
+    if (filter) {
+      if ("value" in filter) {
+        requestHeaders.filterText = filter.value;
+      }
+    }
+
+    let request = new Request(
+      document.location.origin + "/api/market-items" + filteringMode,
+      {
+        headers: requestHeaders,
+      }
+    );
 
     fetch(request)
       .then(async (response) => await response.json())
-      .then((data) => MarketItems.consumeData(data));
+      .then((data) => MarketItems.consumeData(data, Boolean(filter)));
   }
 
-  static consumeData(data) {
+  static consumeData(data, hasFilter) {
+    console.log(data);
     renderSubHeadline(data);
     if (data) {
-      renderLastViewContainer(data);
+      if (!hasFilter) {
+        renderLastViewContainer(data);
+      }
       renderItemsList(data);
       renderPaginationIndexer(data);
     }
