@@ -18,7 +18,6 @@ def index() :
 def market() :
   return render_template(
     "market.html", 
-    items=MarketItems().getAllItems(),
     styles=listFilesURL("market.css"),
     scripts=listFilesURL("market.js")
   );
@@ -131,6 +130,26 @@ def marketItems() :
     } for item_ID, item_name, item_price, item_description, item_category in items
   ]
   return items_JSON;
+@app.route("/api/market-items/<filtering_mode>")
+def marketItemsCategory(filtering_mode) :
+  target_filter = str(filtering_mode).capitalize();
+
+  all_items = marketItems();
+  if len(all_items) <= 0 :
+    return APIsStatus.sendError("Os produtos não foram encontrados.");
+
+  filter_function = None;
+  filter_text = str(request.headers.get("filterText")).capitalize();
+
+  match target_filter :
+    case "Search" :
+      filter_function = lambda item: filter_text in str(item["name"]).capitalize()
+    case "Category" :
+      filter_function = lambda item: item["category"] == filter_text
+
+  filtered_items = list(filter(filter_function, all_items));
+  return filtered_items;
+  
 
 @app.route("/api/images/market-items/<item_name>")
 def marketItemImage(item_name) :
