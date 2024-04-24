@@ -283,6 +283,21 @@ function getFilteredData(data) {
 
   return data;
 }
+function recognizeFilteredData(filteredData) {
+  try {
+    //IT'S AN ARRAY
+    if (filteredData && filteredData.length >= 1) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+
+  return false;
+}
+function renderNotFoundSign() {
+  
+}
 
 class MarketItems {
   static filter = getFilteringMode();
@@ -298,15 +313,20 @@ class MarketItems {
   }
 
   static consumeData(data) {
-    console.log(data);
+    let filteredData = !data["error"] ? getFilteredData(data) : null;
+    let anyResults = recognizeFilteredData(filteredData);
 
-    let filteredData = getFilteredData(data);
+    console.log("Any results?", anyResults);
 
     renderSubHeadline(data);
-    if (data) {
+    if (data && !data["error"]) {
       renderLastViewContainer(data);
       renderItemsList(filteredData);
       renderPaginationIndexer(filteredData);
+    }
+
+    if (!data || data["error"] || !anyResults) {
+      renderNotFoundSign();
     }
   }
 }
