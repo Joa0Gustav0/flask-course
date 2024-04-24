@@ -11,16 +11,16 @@ function getFilteringMode() {
   let URLParameters = currentURL.searchParams;
 
   if (URLParameters.get("search") && !URLParameters.get("category")) {
-    return { filter: "/Search", value: URLParameters.get("search") };
+    return { filter: "search", value: URLParameters.get("search") };
   } else if (URLParameters.get("category") && !URLParameters.get("search")) {
-    return { filter: "/Category", value: URLParameters.get("category") };
+    return { filter: "category", value: URLParameters.get("category") };
   } else if (URLParameters.get("category") && URLParameters.get("search")) {
     return {
-      filter: "/Both",
-      value: JSON.stringify({
+      filter: "both",
+      value: {
         search: URLParameters.get("search"),
         category: URLParameters.get("category"),
-      }),
+      },
     };
   } else {
     return null;
@@ -180,6 +180,17 @@ function renderPaginationIndexer(data) {
   let container = document.querySelector(".container");
   let paginationData = getPaginationData(data);
 
+  let currentURL = new URL(document.location.href);
+  let URLParameters = currentURL.searchParams;
+
+  let importantParameters = `${
+    URLParameters.get("search") ? "&search=" + URLParameters.get("search") : ""
+  }${
+    URLParameters.get("category")
+      ? "&category=" + URLParameters.get("category")
+      : ""
+  }`;
+
   let getContent = () => `
     <div class="pagination-container">
       ${
@@ -189,7 +200,7 @@ function renderPaginationIndexer(data) {
           </a>`
           : `<a href="?index=${
               paginationData.index - 1
-            }" class="pagination-container__button">
+            }${importantParameters}" class="pagination-container__button">
             <ion-icon name="chevron-back"></ion-icon> Anterior
           </a>`
       }
@@ -201,7 +212,7 @@ function renderPaginationIndexer(data) {
           </a>`
           : `<a href="?index=${
               paginationData.index + 1
-            }" class="pagination-container__button">
+            }${importantParameters}" class="pagination-container__button">
             Seguinte <ion-icon name="chevron-forward"></ion-icon>
           </a>`
       }
@@ -240,39 +251,62 @@ function getPaginationIndex(catalogLength, URLParameters) {
   }
 }
 
-class MarketItems {
-  static fetchData() {
-    let filter = getFilteringMode();
-    let filteringMode = filter ? filter.filter : "";
+function getFilteredData(data) {
+  let filter = MarketItems.filter;
 
-    let requestHeaders = { authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY" };
-    if (filter) {
-      if ("value" in filter) {
-        requestHeaders.filterText = filter.value;
-      }
+  if (data && filter) {
+    switch (filter.filter) {
+      case "search":
+        return data.filter((item) =>
+          item.name.toLowerCase().includes(filter.value.toLowerCase())
+        );
+      case "category":
+        return data.filter(
+          (item) =>
+            filter.value.toLowerCase() == item.category.toLowerCase() ||
+            item.category.toLowerCase().includes(filter.value.toLowerCase())
+        );
+      case "both":
+        return data.filter(
+          (item) =>
+            item.name
+              .toLowerCase()
+              .includes(filter.value.search.toLowerCase()) &&
+            (filter.value.category.toLowerCase() ==
+              item.category.toLowerCase() ||
+              item.category
+                .toLowerCase()
+                .includes(filter.value.category.toLowerCase()))
+        );
     }
+  }
 
-    let request = new Request(
-      document.location.origin + "/api/market-items" + filteringMode,
-      {
-        headers: requestHeaders,
-      }
-    );
+  return data;
+}
+
+class MarketItems {
+  static filter = getFilteringMode();
+
+  static fetchData() {
+    let request = new Request(document.location.origin + "/api/market-items", {
+      headers: { authorization: "sLGDqCAyM7UnIm@rKeTf9BX58JvxY" },
+    });
 
     fetch(request)
       .then(async (response) => await response.json())
-      .then((data) => MarketItems.consumeData(data, Boolean(filter)));
+      .then((data) => MarketItems.consumeData(data));
   }
 
-  static consumeData(data, hasFilter) {
+  static consumeData(data) {
     console.log(data);
+
+    let filteredData = getFilteredData(data);
+
     renderSubHeadline(data);
     if (data) {
-      if (!hasFilter) {
-        renderLastViewContainer(data);
-      }
-      renderItemsList(data);
-      renderPaginationIndexer(data);
+      renderLastViewContainer(data);
+      renderItemsList(filteredData);
+      renderPaginationIndexer(filteredData);
     }
   }
 }

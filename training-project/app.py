@@ -131,37 +131,6 @@ def marketItems() :
     } for item_ID, item_name, item_price, item_description, item_category in items
   ]
   return items_JSON;
-@app.route("/api/market-items/<filtering_mode>")
-def marketItemsCategory(filtering_mode) :
-  target_filter = str(filtering_mode).capitalize();
-
-  all_items = marketItems();
-  if len(all_items) <= 0 :
-    return APIsStatus.sendError("Os produtos não foram encontrados.");
-
-  filter_function = None;
-  filter_text = str(request.headers.get("filterText")).lower();
-
-  match target_filter :
-    case "Search" :
-      filter_function = lambda item: filter_text in str(item["name"]).lower()
-    case "Category" :
-      filter_function = lambda item: item["category"] == filter_text
-    case "Both" :
-      filter_parameters = request.headers.get("filterText");
-      filter_parameters = json.loads(filter_parameters);
-
-      search_parameter = filter_parameters.get("search").lower();
-      category_parameter = filter_parameters.get("category").capitalize();
-
-      searched_items = list(filter(lambda item: search_parameter in str(item["name"]).lower(), all_items));
-      categorized_items = list(filter(lambda item: item["category"] == category_parameter, searched_items));
-
-      return categorized_items;
-
-
-  filtered_items = list(filter(filter_function, all_items));
-  return filtered_items;
   
 
 @app.route("/api/images/market-items/<item_name>")
