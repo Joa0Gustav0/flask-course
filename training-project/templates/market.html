@@ -8,6 +8,19 @@ page_content %}
     }}!
   </h1>
   <p class="content-sub-headline"></p>
+  <div class="no-query-results-sign-container disabled">
+    <img
+      class="no-query-results-sign-container__icon"
+      src="{{ url_for('static', filename='media/not-found-unicorn-icon.png') }}"
+      alt="Ícone representativo de um unicórnio com dúvidas."
+    />
+    <p class="no-query-results-sign-container__main-text">
+      Nenhum resultado foi encontrado.
+    </p>
+    <p class="no-query-results-sign-container__sub-text">
+      Tente efetuar uma pesquisa diferente com palavras-chaves mais genéricas.
+    </p>
+  </div>
   <div class="last-view-container disabled">
     <p class="last-view-container__headline">
       <span class="highlighted-text">Olha só!</span> Produtos inspirados em seu

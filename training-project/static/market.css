@@ -206,3 +206,32 @@ body {
   border-radius: 10px;
   background-color: var(--primary-color);
 }
+
+.no-query-results-sign-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  
+  width: 100%;
+  margin: 50px 0;
+  max-width: 315px;
+  text-align: center;
+}
+.no-query-results-sign-container.disabled {
+  display: none;
+}
+.no-query-results-sign-container__icon {
+  width: 100%;
+  opacity: .75;
+  max-width: 150px;
+  margin-bottom: 15px;
+}
+.no-query-results-sign-container__main-text {
+  font-size: 1.25em;
+  font-weight: 500;
+}
+.no-query-results-sign-container__sub-text {
+  font-size: 1.125em;
+  color: #636363;
+}

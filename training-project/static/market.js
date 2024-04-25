@@ -31,10 +31,9 @@ function getFilteringMode() {
 function renderSubHeadline(data) {
   let marketSubHeadline = document.querySelector(".content-sub-headline");
 
-  let contentForRendering =
-    data && !("error" in data)
-      ? `🦄 Os <span class="highlighted-text">unicórnios</span> deixaram alguns produtos!!!`
-      : `🦄🔎 Ops! Os <span class="highlighted-text">unicórnios</span> não trouxeram os produtos.`;
+  let contentForRendering = data
+    ? `🦄 Os <span class="highlighted-text">unicórnios</span> deixaram alguns produtos!!!`
+    : `🦄🔎 Ops! Os <span class="highlighted-text">unicórnios</span> não trouxeram os produtos.`;
 
   renderData(contentForRendering, marketSubHeadline, false);
 }
@@ -296,7 +295,8 @@ function recognizeFilteredData(filteredData) {
   return false;
 }
 function renderNotFoundSign() {
-  
+  let mainContainer = document.querySelector(".no-query-results-sign-container");
+  mainContainer.classList.remove("disabled");
 }
 
 class MarketItems {
@@ -318,7 +318,7 @@ class MarketItems {
 
     console.log("Any results?", anyResults);
 
-    renderSubHeadline(data);
+    renderSubHeadline(anyResults);
     if (data && !data["error"]) {
       renderLastViewContainer(data);
       renderItemsList(filteredData);
