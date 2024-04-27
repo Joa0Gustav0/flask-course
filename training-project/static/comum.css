@@ -75,6 +75,7 @@ body {
 }
 .header__container__navbar {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 
   width: 100%;
@@ -86,6 +87,7 @@ body {
   align-items: center;
 
   gap: 10px;
+  min-width: fit-content;
 }
 .header__container__navbar__nav-links__link {
   position: relative;
@@ -353,5 +355,57 @@ main > section > .container {
 label:focus-within > .password-protector,
 .password-protector:hover,
 .password-protector.off {
+  color: var(--primary-color);
+}
+
+.search-bar {
+  position: relative;
+
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  width: 100%;
+  margin: 0 35px;
+  height: fit-content;
+  background-color: white;
+  border-radius: 25px;
+}
+.search-bar__input {
+  border: 0;
+  width: 100%;
+  outline: none;
+  padding: 0 10px;
+  background-color: transparent;
+}
+.search-bar__submit {
+  transition: all .25s;
+
+  border: 0;
+  width: 27.5px;
+  height: 27.5px;
+  outline: none;
+  border-radius: 100%;
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+}
+.search-bar__submit:hover {
+  cursor: pointer;
+  border-color: white;
+  background-color: #7189ff75;
+}
+.search-bar__submit:active {
+  background-color: white;
+  border-color: var(--primary-color);
+}
+.search-bar__submit-icon {
+  position: absolute;
+  right: 3.5px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 17.5px;
+  height: 17.5px;
+  pointer-events: none;
   color: var(--primary-color);
 }

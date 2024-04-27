@@ -36,6 +36,19 @@
               >Mercado</a
             >
           </div>
+          {% if session.get("logged_user") %}
+          <form action="/market" class="search-bar" autocomplete="off">
+            <input
+              type="text"
+              name="search"
+              id="search-input"
+              maxlength="30"
+              class="search-bar__input"
+            />
+            <input type="submit" value="" class="search-bar__submit" />
+            <ion-icon name="search" class="search-bar__submit-icon"></ion-icon>
+          </form>
+          {% endif %}
           <div
             class="header__container__navbar__nav-links {% if session.get('logged_user') %} header__container__navbar__nav-buttons--logged {% endif %}"
           >
