@@ -376,6 +376,7 @@ label:focus-within > .password-protector,
   width: 100%;
   outline: none;
   padding: 0 10px;
+  font-size: .95em;
   background-color: transparent;
 }
 .search-bar__submit {

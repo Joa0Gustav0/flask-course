@@ -43,7 +43,11 @@ function renderLastViewContainer(data) {
   if (relatedCookie) {
     let lastViewedItems = getViewedCategoryItems(data, relatedCookie.value);
     listLastViewItems(lastViewedItems);
+
+    return true;
   }
+
+  return false;
 }
 function getLastViewCookie() {
   try {
@@ -299,6 +303,14 @@ function renderNotFoundSign() {
   mainContainer.classList.remove("disabled");
 }
 
+function disableGreetings() {
+  let greetingsElements = document.querySelectorAll(".greetings");
+
+  Array.from(greetingsElements).forEach((element) => {
+    element.classList.add("disabled");
+  })
+}
+
 class MarketItems {
   static filter = getFilteringMode();
 
@@ -316,11 +328,14 @@ class MarketItems {
     let filteredData = !data["error"] ? getFilteredData(data) : null;
     let anyResults = recognizeFilteredData(filteredData);
 
-    console.log("Any results?", anyResults);
-
     renderSubHeadline(anyResults);
     if (data && !data["error"]) {
-      renderLastViewContainer(data);
+      let lastViewCotainerRendering = renderLastViewContainer(data);
+
+      if (lastViewCotainerRendering && anyResults) {
+        disableGreetings();
+      }
+
       renderItemsList(filteredData);
       renderPaginationIndexer(filteredData);
     }

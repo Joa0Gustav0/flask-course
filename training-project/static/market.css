@@ -235,3 +235,7 @@ body {
   font-size: 1.125em;
   color: #636363;
 }
+
+.greetings.disabled {
+  display: none;
+}

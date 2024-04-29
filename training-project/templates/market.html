@@ -1,13 +1,13 @@
 {% extends "comum.html" %} {% block title %} Mercado {% endblock %} {% block
 page_content %}
 <div class="container">
-  <h1 class="content-headline">
+  <h1 class="content-headline greetings">
     {{ "Bem vinde" if not session.get("logged_user") else "Boas-vindas" }} ao
     <span class="highlighted-text">mercado</span>, {{ "UniCliente" if not
     session.get("logged_user") else session.get("logged_user").get("username")
     }}!
   </h1>
-  <p class="content-sub-headline"></p>
+  <p class="content-sub-headline greetings"></p>
   <div class="no-query-results-sign-container disabled">
     <img
       class="no-query-results-sign-container__icon"
