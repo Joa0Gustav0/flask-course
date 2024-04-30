@@ -333,7 +333,7 @@ class MarketItems {
       let lastViewCotainerRendering = renderLastViewContainer(data);
 
       if (lastViewCotainerRendering && anyResults) {
-        disableGreetings();
+        //disableGreetings();
       }
 
       renderItemsList(filteredData);
