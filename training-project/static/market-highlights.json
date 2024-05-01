@@ -2,21 +2,21 @@
   {
     "imageAlign" : "Center",
     "headline": "This is Lúcifer",
-    "subheadline": "Garanta inicializações ultra rápidas! Mergulhe em sessões de jogo sem demora!",
-    "backgroundColor": "8D68DC",
+    "subHeadline": "Garanta inicializações ultra rápidas! Mergulhe em sessões de jogo sem demora!",
+    "backgroundColor": "#8D68DC",
     "textColor": "#ECD5F5"
   },
   {
     "imageAlign" : "Left",
     "headline": "Fique de Olho!",
-    "subheadline": "Encontre aqui as melhores linhas de monitores e fique atento aos jogos!",
+    "subHeadline": "Encontre aqui as melhores linhas de monitores e fique atento aos jogos!",
     "backgroundColor": "#F7D02C",
     "textColor": "#0A0E3D"
   },
   {
     "imageAlign" : "Right",
     "headline": "Toque do Oriente",
-    "subheadline": "A linha Akko traz o conforto e a sofisticação para cada tecla pressionada. Com um toque oriental.",
+    "subHeadline": "A linha Akko traz o conforto e a sofisticação para cada tecla pressionada. Com um toque oriental.",
     "backgroundColor": "#EA7099",
     "textColor": "#FCEFEC"
   }

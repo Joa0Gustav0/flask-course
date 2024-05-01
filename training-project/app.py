@@ -20,7 +20,7 @@ def market() :
   return render_template(
     "market.html", 
     styles=listFilesURL("market.css"),
-    scripts=listFilesURL("market.js")
+    scripts=listFilesURL("market.js", "market-highlights-slide.js")
   );
 
 @app.route("/login", methods=["GET", "POST"])
