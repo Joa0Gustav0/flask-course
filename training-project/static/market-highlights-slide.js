@@ -1,5 +1,22 @@
 const HIGHLIGHTS_WRAPPER = document.querySelector(".highlights__wrapper");
 
+const HIGHLIGHTS_ELEMENT = document.querySelector(".highlights");
+HIGHLIGHTS_ELEMENT.addEventListener("mouseenter", () =>
+  HighlightsSlides.setControls(true)
+);
+HIGHLIGHTS_ELEMENT.addEventListener("mouseleave", () =>
+  HighlightsSlides.setControls(false)
+);
+
+const HIGHLIGHTS_CONTROLS = document.querySelectorAll(
+  ".highlights__controls__button"
+);
+HIGHLIGHTS_CONTROLS.forEach((element) =>
+  element.addEventListener("click", (e) =>
+    HighlightsSlides.controlButtonActs(e.target)
+  )
+);
+
 function renderNewSlide(slideContent) {
   HIGHLIGHTS_WRAPPER.innerHTML += slideContent;
 }
@@ -13,6 +30,24 @@ class HighlightsSlides {
     HighlightsSlides.highlightsCountage++;
     this.setNewSlide();
     this.setSlideStyle();
+  }
+
+  static controlsEnabled = false;
+  static setControls(set) {
+    let controlsElements = document.querySelector(".highlights__controls");
+
+    if (set) {
+      controlsElements.classList.add("active");
+      this.controlsEnabled = true;
+    } else {
+      controlsElements.classList.remove("active");
+      this.controlsEnabled = false;
+    }
+  }
+  static controlButtonActs(button) {
+    let slidingDirection = button.classList.contains("left") ? "left" : "right";
+
+    HighlightsSlides.animate(slidingDirection);
   }
 
   setNewSlide() {
@@ -98,11 +133,27 @@ class HighlightsSlides {
     });
   }
 
-  static animate() {
-    if (this.slideInView < this.highlightsCountage - 1) {
-      this.slideInView++;
-    } else {
-      this.slideInView = 0;
+  static animate(controls = false) {
+    if (controls) {
+      if (controls == "right") {
+        if (this.slideInView < this.highlightsCountage - 1) {
+          this.slideInView++;
+        } else {
+          this.slideInView = 0;
+        }
+      } else {
+        if (this.slideInView <= 0) {
+          this.slideInView = this.highlightsCountage - 1;
+        } else {
+          this.slideInView--;
+        }
+      }
+    } else if (this.controlsEnabled == false) {
+      if (this.slideInView < this.highlightsCountage - 1) {
+        this.slideInView++;
+      } else {
+        this.slideInView = 0;
+      }
     }
 
     let screenWidth = window.innerWidth - 10;
