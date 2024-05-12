@@ -286,8 +286,9 @@ body {
   font-family: var(--primary-font-stack);
 }
 .highlights__container__text-container__headline {
-  font-size: 2.125em;
   text-align: left;
+  font-size: 2.125em;
+  font-family: var(--secondary-font-stack);
 }
 .highlights__container__text-container__sub-headline {
   font-size: 1.125em;

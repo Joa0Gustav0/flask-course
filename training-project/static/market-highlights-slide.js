@@ -105,7 +105,7 @@ class HighlightsSlides {
       `.highlights__top-container--${HighlightsSlides.highlightsCountage}`
     );
 
-    containerElement.style.backgroundColor = this.informations.backgroundColor;
+    containerElement.style.backgroundImage = `linear-gradient(to bottom, ${this.informations.backgroundColor} 65%, transparent)`;
     headlineElement.style.color = this.informations.textColor;
     subHeadlineElement.style.color = this.informations.textColor;
   }
