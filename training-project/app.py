@@ -132,6 +132,13 @@ def marketItems() :
   ]
   return items_JSON;
   
+@app.route("/api/market-items/categories")
+def marketItemsCategories() :
+  authorization = APIsStatus.validateAuthorization();
+  if authorization.get('error') :
+    return authorization;
+
+  return MarketItems.getItemsCategories();
 
 @app.route("/api/images/market-items/<item_name>")
 def marketItemImage(item_name) :

@@ -32,8 +32,8 @@
             <a class="header__container__navbar__nav-links__link" href="/"
               >Início</a
             >
-            <a class="header__container__navbar__nav-links__link" href="/market"
-              >Mercado</a
+            <button class="header__container__navbar__nav-links__link button"
+              >Mercado</button
             >
           </div>
           {% if session.get("logged_user") %}
@@ -70,6 +70,7 @@
             </button>
             <button
               class="header__container__navbar__nav-buttons--logged__button header__container__navbar__nav-buttons__cart-button"
+              onclick="toggleCartSidebar()"
             >
               Carrinho <ion-icon name="cart"></ion-icon>
             </button>
@@ -91,7 +92,7 @@
     {% if session.get("logged_user") %}
     <div class="screen-saver"></div>
     <aside class="cart-sidebar">
-      <button class="cart-sidebar__tab-button">
+      <button class="cart-sidebar__tab-button" onclick="toggleCartSidebar()">
         <ion-icon
           class="cart-sidebar__tab-button__icon"
           name="close"
@@ -108,35 +109,6 @@
       <ul class="cart-sidebar__products-list">
         <!-- CART PRODUCTS HERE 🛒 -->
       </ul>
-      <!-- <div class="cart-sidebar__payment-results">
-        <div class="cart-sidebar__payment-results__information">
-          <p class="cart-sidebar__payment-results__information__title">
-            Produtos <span>(2)</span>
-          </p>
-          <p class="cart-sidebar__payment-results__information__sub-title">
-            R$34.919,91
-          </p>
-        </div>
-        <div class="cart-sidebar__payment-results__information">
-          <p class="cart-sidebar__payment-results__information__title">
-            Envios
-          </p>
-          <p class="cart-sidebar__payment-results__information__sub-title">
-            R$102,98
-          </p>
-        </div>
-        <div
-          class="cart-sidebar__payment-results__information cart-sidebar__payment-results__information--total"
-        >
-          <p class="cart-sidebar__payment-results__information__title">Total</p>
-          <p class="cart-sidebar__payment-results__information__sub-title">
-            R$35,022.89
-          </p>
-        </div>
-        <button class="cart-sidebar__payment-results__cabutton">
-          Continuar Compra
-        </button>
-      </div> -->
     </aside>
 
     <script>
@@ -193,6 +165,7 @@
     {% endif %}
 
     <script src="{{ url_for('static', filename='interactivity.js') }}"></script>
+    <script src="{{ url_for('static', filename='market-categories-handler.js') }}"></script>
 
     {% if scripts %} {% for script_file in scripts %}
     <script src="{{ script_file }}"></script>

@@ -75,6 +75,17 @@ class MarketItems :
   def getItemsByCategory(self, last_viewed_product_ID, category) :
     return Crud().executeCrudAction("read", f"SELECT * FROM marketitems WHERE ItemID = {last_viewed_product_ID} UNION SELECT * FROM marketitems WHERE ItemCategory = \'{category}\' AND ItemID != {last_viewed_product_ID} LIMIT 3;");
 
+  def getItemsCategories() :
+    try :
+      categories_untreated_list = Crud().executeCrudAction(
+        "read", "SELECT DISTINCT ItemCategory FROM marketitems;"
+      );
+    
+      categories = list(map(lambda element: element[0], categories_untreated_list));
+      return APIsStatus.sendSuccess("As categorias de produtos foram encontradas.", categories);
+    except :
+      return APIsStatus.sendError("Um erro ocorreu e as categorias não poderam ser encontradas.");
+
   def serveItemImage(self, item_name) :
     try :
       bucket = client_storage_manager.get_bucket("market_items");
