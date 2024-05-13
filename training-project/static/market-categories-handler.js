@@ -32,6 +32,18 @@ function renderHeaderMarketCategoriesContainer(content) {
   let header = document.querySelector(".header__container");
 
   header.innerHTML += content;
+
+  enableHeaderMarketCategoriesContainerInteractivity(content)
+}
+function enableHeaderMarketCategoriesContainerInteractivity() {
+  let marketHeaderButton = document.querySelector(".header__container__navbar__nav-links__link--market-button");
+  
+  marketHeaderButton.addEventListener("click", () => toggleMarketCategoriesContainer());
+}
+function toggleMarketCategoriesContainer() {
+  let container = document.querySelector(".header__container__market-categories-container");
+
+  container.classList.toggle("active");
 }
 
 class MarketCategories {

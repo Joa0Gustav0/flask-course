@@ -121,7 +121,7 @@ body {
   min-width: 0px;
   border-bottom: 2px solid white;
 }
-.header__container__navbar__nav-links__link:not(.button):hover::after,
+.header__container__navbar__nav-links__link:hover::after,
 .header__container__navbar__nav-buttons--logged__button:hover::after {
   min-width: 100%;
 }
@@ -129,7 +129,7 @@ body {
 .header__container__navbar__nav-buttons--logged__button:hover {
   cursor: pointer;
 }
-.header__container__navbar__nav-links__link:not(.button):active::after,
+.header__container__navbar__nav-links__link:active::after,
 .header__container__navbar__nav-buttons--logged__button:active::after {
   min-width: 50%;
 }
@@ -170,14 +170,18 @@ body {
 }
 
 .header__container__market-categories-container {
+  transition: all .5s;
+
   position: absolute;
-  top: calc(100% + 30px);
+  top: -30px;
   left: 0;
+  transform: translateY(-100%);
 
   display: flex;
 
   gap: 20px;
   width: 100%;
+  opacity: 0;
   font-weight: 600;
   list-style: none;
   border-radius: 5px;
@@ -185,6 +189,12 @@ body {
   background-color: white;
   font-family: var(--primary-font-stack);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+.header__container__market-categories-container.active {
+  top: calc(100% + 30px);
+  transform: translateY(0);
+
+  opacity: 1;
 }
 .header__container__market-categories-container a {
   position: relative;
