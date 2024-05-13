@@ -10,8 +10,8 @@ function toggleCartSidebar() {
   CART_SIDEBAR.classList.toggle("active");
 }
 
-CART_TOGGLE_BUTTON.addEventListener("click", () => toggleCartSidebar());
-HEADER_CART_TOGGLE_BUTTON.addEventListener("click", () => toggleCartSidebar());
+CART_TOGGLE_BUTTON.addEventListener("mousedown", () => toggleCartSidebar());
+HEADER_CART_TOGGLE_BUTTON.addEventListener("mousedown", () => toggleCartSidebar());
 
 function addToCartFromProductPage(productID) {
   let QUANTITY_SELECT_ELEMENT = document.querySelector(

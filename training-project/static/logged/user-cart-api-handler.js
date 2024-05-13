@@ -47,7 +47,7 @@ class UserCart {
     const CART_CONTAINER = document.querySelector(
       ".cart-sidebar__products-list"
     );
-    
+
     if (!cartProducts || cartProducts.length <= 0) {
       CART_CONTAINER.classList.remove("cart-sidebar__products-list--contains");
       CART_CONTAINER.innerHTML = `
@@ -63,6 +63,9 @@ class UserCart {
           </p>
         </div>
       `;
+
+      UserCart.removeCartPaymentResultsContainer();
+
       return;
     }
 
@@ -133,6 +136,92 @@ class UserCart {
         </li>
       `;
     });
+
+    UserCart.removeCartPaymentResultsContainer();
+    UserCart.createCartPaymentResultsContainer(cartProducts);
+  }
+
+  static getPaymentInformations(cartData) {
+    if (cartData.length < 2) {
+      return {
+        quantity: cartData[0].quantity,
+        subtotal:
+          "R$" + String((cartData[0].price * cartData[0].quantity).toFixed(2)),
+        shipping:
+          "R$" +
+          String(
+            (0.01 * (cartData[0].price * cartData[0].quantity)).toFixed(2)
+          ),
+        total:
+          "R$" +
+          String(
+            ((cartData[0].price * cartData[0].quantity) + 0.01 * (cartData[0].price * cartData[0].quantity)).toFixed(2)
+          ),
+      };
+    }
+
+    let productsQuantity = cartData.reduce(
+      (previous, current) => previous.quantity + current.quantity
+    );
+    let productsPrice = cartData.reduce(
+      (previous, current) =>
+        previous.price * previous.quantity + current.price * current.quantity
+    );
+    let shippingPrice = 0.01 * productsPrice;
+    let totalPrice = productsPrice + shippingPrice;
+
+    return {
+      quantity: productsQuantity,
+      subtotal: "R$" + String(productsPrice.toFixed(2)),
+      shipping: "R$" + String(shippingPrice.toFixed(2)),
+      total: "R$" + String(totalPrice.toFixed(2)),
+    };
+  }
+  static removeCartPaymentResultsContainer() {
+    let paymentResultsContainer = document.querySelector(
+      ".cart-sidebar__payment-results"
+    );
+
+    if (paymentResultsContainer) {
+      paymentResultsContainer.remove();
+    }
+  }
+  static createCartPaymentResultsContainer(cartData) {
+    let cart = document.querySelector(".cart-sidebar");
+
+    let paymentInformations = this.getPaymentInformations(cartData);
+
+    cart.innerHTML += `
+    <div class="cart-sidebar__payment-results">
+      <div class="cart-sidebar__payment-results__information">
+        <p class="cart-sidebar__payment-results__information__title">
+          Produtos <span>(${paymentInformations.quantity})</span>
+        </p>
+        <p class="cart-sidebar__payment-results__information__sub-title">
+          ${paymentInformations.subtotal}
+        </p>
+      </div>
+      <div class="cart-sidebar__payment-results__information">
+        <p class="cart-sidebar__payment-results__information__title">
+          Envios
+        </p>
+        <p class="cart-sidebar__payment-results__information__sub-title">
+          ${paymentInformations.shipping}
+        </p>
+      </div>
+      <div
+        class="cart-sidebar__payment-results__information cart-sidebar__payment-results__information--total"
+      >
+        <p class="cart-sidebar__payment-results__information__title">Total</p>
+        <p class="cart-sidebar__payment-results__information__sub-title">
+          ${paymentInformations.total}
+        </p>
+      </div>
+      <button class="cart-sidebar__payment-results__cabutton">
+        Continuar a Compra
+      </button>
+    </div>
+    `;
   }
 }
 
