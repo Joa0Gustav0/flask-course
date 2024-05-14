@@ -32,11 +32,15 @@
             <a class="header__container__navbar__nav-links__link" href="/"
               >Início</a
             >
-            <button class="header__container__navbar__nav-links__link header__container__navbar__nav-links__link--market-button button"
-              >Mercado</button
+            <button
+              class="header__container__navbar__nav-links__link header__container__navbar__nav-links__link--market-button button"
             >
+              Mercado<ion-icon
+                class="header__container__navbar__nav-links__link--market-button__icon"
+                name="chevron-down"
+              ></ion-icon>
+            </button>
           </div>
-          {% if session.get("logged_user") %}
           <form action="/market" class="search-bar" autocomplete="off">
             <input
               type="text"
@@ -49,7 +53,6 @@
             <input type="submit" value="" class="search-bar__submit" />
             <ion-icon name="search" class="search-bar__submit-icon"></ion-icon>
           </form>
-          {% endif %}
           <div
             class="header__container__navbar__nav-links {% if session.get('logged_user') %} header__container__navbar__nav-buttons--logged {% endif %}"
           >
@@ -67,6 +70,22 @@
                 class="header__container__navbar__nav-buttons--logged__button__profile-handle"
                 name="chevron-down"
               ></ion-icon>
+              <div
+                class="header__container__navbar__nav-buttons--logged__button__profile-selector"
+              >
+                <a
+                  href="/user/profile"
+                  class="header__container__navbar__nav-buttons--logged__button__profile-selector__options"
+                >
+                  Ver Perfil
+                </a>
+                <a
+                  href="/logout"
+                  class="header__container__navbar__nav-buttons--logged__button__profile-selector__options"
+                >
+                  Desconectar 🔌
+                </a>
+              </div>
             </button>
             <button
               class="header__container__navbar__nav-buttons--logged__button header__container__navbar__nav-buttons__cart-button"

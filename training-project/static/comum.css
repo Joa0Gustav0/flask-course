@@ -94,6 +94,10 @@ body {
 .header__container__navbar__nav-links__link {
   position: relative;
 
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
   color: white;
   font-size: 1.125em;
   text-align: center;
@@ -155,15 +159,20 @@ body {
   background-color: white;
   color: var(--primary-color);
 }
+.header__container__navbar__nav-links__link--market-button__icon,
 .header__container__navbar__nav-buttons--logged__button__profile-handle {
   transition: all 0.25s;
 
   position: relative;
 }
+.header__container__navbar__nav-links__link--market-button:hover
+  .header__container__navbar__nav-links__link--market-button__icon,
 .header__container__navbar__nav-buttons--logged__button:hover
   .header__container__navbar__nav-buttons--logged__button__profile-handle {
   transform: scale(125%, 125%);
 }
+.header__container__navbar__nav-links__link--market-button:active
+  .header__container__navbar__nav-links__link--market-button__icon,
 .header__container__navbar__nav-buttons--logged__button:active
   .header__container__navbar__nav-buttons--logged__button__profile-handle {
   transform: scale(100%, 100%) translateY(5px);
@@ -236,6 +245,56 @@ body {
 }
 .header__container__market-categories-container a:active::after {
   width: 50%;
+}
+
+.header__container__navbar__nav-buttons--logged__button {
+  position: relative;
+}
+.header__container__navbar__nav-buttons--logged__button__profile-selector {
+  position: absolute;
+  top: calc(100% + 15px);
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  
+  gap: 7.5px;
+  width: 100%;
+  padding: 10px;
+  pointer-events: fill;
+  border-radius: 0 0 7.5px 7.5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.075);
+}
+.header__container__navbar__nav-buttons--logged__button__profile-selector::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  display: flex;
+
+  content: " ";
+  width: calc(100% - 20px);
+  border-bottom: 1px solid rgba(112, 136, 255, 0.25);
+}
+.header__container__navbar__nav-buttons--logged__button__profile-selector__options {
+  transition: all .125s;
+
+  width: 100%;
+  color: rgba(0, 0, 0, 0.85);
+  padding: 5px;
+  font-size: .9em;
+  text-align: left;
+  border-radius: 5px;
+  font-family: var(--primary-font-stack);
+}
+.header__container__navbar__nav-buttons--logged__button__profile-selector__options:hover {
+  color: var(--primary-color);
+  background-color: #f7f7f7;
+}
+.header__container__navbar__nav-buttons--logged__button__profile-selector__options:active {
+  background-color: rgba(112, 136, 255, 0.25);
 }
 
 main {
