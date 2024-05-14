@@ -39,6 +39,9 @@ body {
   font-size: 20px;
   color: #636363;
 }
+.hero-section a {
+  width: fit-content;
+}
 .hero-section__text-content-container__ca-button,
 .bottom-section__ca-aside__ca-button {
   transition: all 0.25s;
