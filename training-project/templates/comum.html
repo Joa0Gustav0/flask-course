@@ -58,8 +58,8 @@
           >
             {% if session.get("logged_user") %}
             <button
-              class="header__container__navbar__nav-buttons--logged__button"
-              href="/login"
+              class="header__container__navbar__nav-buttons--logged__button header__container__navbar__nav-buttons--logged__button--profile-button"
+              onclick="toggleHeaderProfileSelector()"
             >
               Olá, {{ session.get("logged_user").get("username") }}
               <span
@@ -115,6 +115,7 @@
         <ion-icon
           class="cart-sidebar__tab-button__icon"
           name="close"
+          onclick="toggleCartSidebar()"
         ></ion-icon>
       </button>
       <h1 class="cart-sidebar__headline">
@@ -185,6 +186,7 @@
 
     <script src="{{ url_for('static', filename='interactivity.js') }}"></script>
     <script src="{{ url_for('static', filename='market-categories-handler.js') }}"></script>
+    <script src="{{ url_for('static', filename='header-profile-selector.js') }}"></script>
 
     {% if scripts %} {% for script_file in scripts %}
     <script src="{{ script_file }}"></script>
